@@ -13,7 +13,7 @@ lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
 ### Public node
 
 ```
-lto set-node --network L https://nodes.lto.network
+lto set-node https://nodes.lto.network
 ```
 
 ### Anchor
@@ -25,8 +25,8 @@ lto anchor --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b8
 ### Associations
 
 ```
-lto association issue --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --associationType 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --associationType 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto association issue --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 ```
 
 ### Transfer
@@ -38,7 +38,8 @@ lto transfer --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 1000000000
 ### Mass-transfer
 
 ```
-lto mass-transfer <<< "3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK:1000000000 3JxcLqcAKiUyvvLS8fk9SCS4taaCKUCqqLz:800000000"
+echo "3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK 1000000000
+3JxcLqcAKiUyvvLS8fk9SCS4taaCKUCqqLz 800000000" | lto mass-transfer
 ```
 
 ### Leasing
