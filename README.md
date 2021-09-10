@@ -4,7 +4,7 @@
 
 ```
 lto accounts create
-echo "my seed" | lto seed --name foobar
+echo "my seed" | lto accounts seed --name foobar
 lto accounts list
 lto accounts set-default foobar
 lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
