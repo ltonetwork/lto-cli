@@ -38,8 +38,8 @@ lto transfer --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 1000000000
 ### Mass-transfer
 
 ```
-echo "3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK:1000000000
-3JxcLqcAKiUyvvLS8fk9SCS4taaCKUCqqLz:800000000" | lto mass-transfer
+echo "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj:1000000000
+3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz:800000000" | lto mass-transfer
 ```
 
 ### Leasing
