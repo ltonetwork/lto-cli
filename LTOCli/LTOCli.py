@@ -1,6 +1,7 @@
 import argparse
 import sys
 import Config
+import os
 
 from Commands import Account
 from Commands import Transfer
@@ -19,6 +20,10 @@ from Commands import MassTransfer
 
 
 def main():
+    if not os.path.exists('L'):
+        os.mkdir(path='./L')
+    if not os.path.exists('T'):
+        os.mkdir(path='./T')
     parser = argparse.ArgumentParser(description='LTO Network CLI client')
     parser.add_argument('list', type=str, nargs='+')
     parser.add_argument('--name', type=str, nargs=1)
