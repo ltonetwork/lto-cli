@@ -1,7 +1,7 @@
 import configparser
-from PyCLTO.AccountFactory import AccountFactory
+from LTO.AccountFactory import AccountFactory
 import Config
-from PyCLTO.PublicNode import PublicNode
+from LTO.PublicNode import PublicNode
 
 CHAIN_ID = 'L'
 URL = 'https://nodes.lto.network'

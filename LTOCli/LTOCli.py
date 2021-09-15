@@ -11,13 +11,8 @@ from Commands import Leasing
 from Commands import Sponsorhip
 from Commands import MassTransfer
 
-# URL = 'https://testnet.lto.network'
-# URL = 'https://nodes.lto.network'
-# CHAIN_ID = 'L'
-
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
-
 
 def main():
     if not os.path.exists('L'):
@@ -35,17 +30,7 @@ def main():
     parser.add_argument('--type', type=int, nargs=1)
     parser.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin)
 
-    #args = parser.parse_args(['accounts', 'seed', '--name', 'main', '--network', 'T'])
-    #args = parser.parse_args(['transfer','--recipient', '3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj','--amount', '200000000'])
-    #args = parser.parse_args(['accounts','set-default', 'main'])
-    # args = parser.parse_args(['anchor','--hash', 'e3b0c44298fc1c149afbf4c8946fb92417ae41e4649b934ca495981b7852b855'])
-    # args = parser.parse_args(['association','revoke', '--recipient', '3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj', '--associationType', '3', '--hash', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'])
-    #args = parser.parse_args(['lease','create', '--recipient', '3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj', '--amount', '300000000'])
-    # args = parser.parse_args(['lease','cancel', '--leaseId', '939cfFmtJx6v7mG1xQVjcDH2dNzDdUpCTTyc8J4tBZ98'])
-    # args = parser.parse_args(['set-node','--network','T', 'https://testnet.lto.network'])
-    #args = parser.parse_args(['set-node',  'https://testnet.lto.network','--network', 'T',])
     args = parser.parse_args()
-
     processArgs(args, parser)
 
 

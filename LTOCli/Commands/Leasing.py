@@ -1,6 +1,6 @@
-from PyCLTO.LTONetworkCLI import HandleDefaultNew as handle
-from PyCLTO.Transactions.Lease import Lease
-from PyCLTO.Transactions.CancelLease import CancelLease
+import HandleDefault as handle
+from LTO.Transactions.Lease import Lease
+from LTO.Transactions.CancelLease import CancelLease
 
 def func(args, recipient, amount, leaseId):
     if args[1] not in ['create', 'cancel']:

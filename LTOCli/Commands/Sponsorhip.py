@@ -1,6 +1,6 @@
-from PyCLTO.LTONetworkCLI import HandleDefaultNew as handle
-from PyCLTO.Transactions.Sponsorship import Sponsorship
-from PyCLTO.Transactions.CancelSponsorship import CancelSponsorship
+import HandleDefault as handle
+from LTO.Transactions.Sponsorship import Sponsorship
+from LTO.Transactions.CancelSponsorship import CancelSponsorship
 
 def func(args, recipient):
     if args[1] not in ['create', 'cancel'] and not recipient:

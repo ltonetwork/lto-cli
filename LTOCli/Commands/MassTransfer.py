@@ -1,5 +1,5 @@
-from PyCLTO.Transactions.MassTransferLto import MassTransferLTO
-import PyCLTO.LTONetworkCLI.HandleDefaultNew as handle
+from LTO.Transactions.MassTransfer import MassTransfer
+import HandleDefault as handle
 
 
 def func(stdin):
@@ -7,7 +7,7 @@ def func(stdin):
         raise Exception("Transfers not present")
 
     transfers = processInput(stdin)
-    transaction = MassTransferLTO(transfers)
+    transaction = MassTransfer(transfers)
     transaction.signWith(handle.getAccount())
     transaction.broadcastTo(handle.getNode())
 

@@ -1,5 +1,5 @@
-from PyCLTO.LTONetworkCLI import HandleDefaultNew as handle
-from PyCLTO.Transactions.Anchor import Anchor
+import HandleDefault as handle
+from LTO.Transactions.Anchor import Anchor
 
 def func(hash):
     if not hash:

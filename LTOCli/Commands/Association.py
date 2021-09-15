@@ -1,6 +1,6 @@
-from PyCLTO.LTONetworkCLI import HandleDefaultNew as handle
-from PyCLTO.Transactions.Association import Association
-from PyCLTO.Transactions.RevokeAssociation import RevokeAssociation
+import HandleDefault as handle
+from LTO.Transactions.Association import Association
+from LTO.Transactions.RevokeAssociation import RevokeAssociation
 
 def func(args, associationType, recipient, hash):
 
