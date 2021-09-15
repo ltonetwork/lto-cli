@@ -1,4 +1,5 @@
 .idea/
 .DS_Store
-.L/
-.T/
+
+/LTOCli/L/
+/LTOCli/T/
