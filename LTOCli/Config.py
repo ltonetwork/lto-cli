@@ -43,21 +43,15 @@ def writeToFile(path, account, secName):
             setDefaultAccount(secName, account.address)
 
 def nameAlreadyPresent(name):
-    print('here')
     config = configparser.ConfigParser()
     if os.path.exists('L/accounts.ini'):
         config.read('L/accounts.ini')
-        print("first if")
         if name in config.sections():
-            print("first if return true")
             return True
     config.clear()
     if os.path.exists('T/accounts.ini'):
         config.read('T/accounts.ini')
-        print("second if")
         if name in config.sections():
-            print("second if return true")
-
             return True
     return False
 
