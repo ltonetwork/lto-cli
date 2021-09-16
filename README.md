@@ -13,7 +13,7 @@ lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
 ### Public node
 
 ```
-lto set-node https://nodes.lto.network
+lto set-node https://nodes.lto.network --network L
 ```
 
 ### Anchor
