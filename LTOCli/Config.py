@@ -71,8 +71,11 @@ def getAddressFromName(name):
     return address, chainId
 
 def setDefaultAccount(name, address = ''):
+    chainId = ''
     if not address:
         address, chainId = getAddressFromName(name)
+    if not chainId:
+        chainId = str(base58.b58decode(address))[6]
     config = configparser.ConfigParser()
     if os.path.exists('L/config.ini'):
         config.read('L/config.ini')
@@ -80,6 +83,13 @@ def setDefaultAccount(name, address = ''):
             savedChainId = config.get('Node', 'chainid')
             if savedChainId and savedChainId != chainId:
                 print('Attention!, Account belongs to a different network than the stored one')
+        else:
+            config.add_section('Node')
+            config.set('Node', 'chainId', chainId)
+            if chainId == 'L':
+                config.set('Node', 'url', 'https://nodes.lto.netowrk')
+            else:
+                config.set('Node', 'url', 'https://testnet.lto.netowrk')
         if 'Default' not in config.sections():
             config.add_section('Default')
             config.set('Default', 'account', address)
@@ -89,8 +99,13 @@ def setDefaultAccount(name, address = ''):
     else:
         config.add_section('Default')
         config.set('Default', 'account', address)
+        config.add_section('Node')
+        config.set('Node', 'chainId', chainId)
+        if chainId == 'L':
+            config.set('Node', 'url', 'https://nodes.lto.netowrk')
+        else:
+            config.set('Node', 'url', 'https://testnet.lto.netowrk')
     config.write(open('L/config.ini', 'w'))
-
 
 
 def listAccounts():
