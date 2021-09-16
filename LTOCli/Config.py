@@ -24,12 +24,15 @@ def writeToFile(path, account, secName):
         else:
             raise Exception('{} already present'.format(error))
     else:
-        config.add_section(secName)
-        config.set(secName, 'Address', account.address)
-        config.set(secName, 'PublicKey', base58.b58encode(account.publicKey.__bytes__()))
-        config.set(secName, 'PrivateKey', base58.b58encode(account.privateKey.__bytes__()))
-        config.set(secName, 'Seed', account.seed)
-        config.write(open(path, 'w'))
+        if not nameAlreadyPresent(secName):
+            config.add_section(secName)
+            config.set(secName, 'Address', account.address)
+            config.set(secName, 'PublicKey', base58.b58encode(account.publicKey.__bytes__()))
+            config.set(secName, 'PrivateKey', base58.b58encode(account.privateKey.__bytes__()))
+            config.set(secName, 'Seed', account.seed)
+            config.write(open(path, 'w'))
+        else:
+            raise Exception('{} already present'.format(error))
 
     config.clear()
     if not os.path.exists('L/config.ini'):
@@ -40,11 +43,22 @@ def writeToFile(path, account, secName):
             setDefaultAccount(secName, account.address)
 
 def nameAlreadyPresent(name):
+    print('here')
     config = configparser.ConfigParser()
-    config.read('L/accounts.ini')
-    config.read('T/accounts.ini')
-    if name in config.sections():
-        return True
+    if os.path.exists('L/accounts.ini'):
+        config.read('L/accounts.ini')
+        print("first if")
+        if name in config.sections():
+            print("first if return true")
+            return True
+    config.clear()
+    if os.path.exists('T/accounts.ini'):
+        config.read('T/accounts.ini')
+        print("second if")
+        if name in config.sections():
+            print("second if return true")
+
+            return True
     return False
 
 def getAddressFromName(name):
