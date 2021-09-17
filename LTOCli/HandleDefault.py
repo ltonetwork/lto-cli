@@ -1,6 +1,6 @@
 import configparser
 from LTO.AccountFactory import AccountFactory
-import Config
+from LTOCli import Config
 from LTO.PublicNode import PublicNode
 
 CHAIN_ID = 'L'

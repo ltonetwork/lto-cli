@@ -1,4 +1,4 @@
-import HandleDefault as handle
+from LTOCli import HandleDefault as handle
 from LTO.Transactions.Association import Association
 from LTO.Transactions.RevokeAssociation import RevokeAssociation
 

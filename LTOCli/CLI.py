@@ -1,15 +1,16 @@
 import argparse
 import sys
-import Config
+
 import os
 
-from Commands import Account
-from Commands import Transfer
-from Commands import Anchor
-from Commands import Association
-from Commands import Leasing
-from Commands import Sponsorhip
-from Commands import MassTransfer
+from LTOCli import Config
+from LTOCli.Commands import Account
+from LTOCli.Commands import Transfer
+from LTOCli.Commands import Anchor
+from LTOCli.Commands import Association
+from LTOCli.Commands import Leasing
+from LTOCli.Commands import Sponsorhip
+from LTOCli.Commands import MassTransfer
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
@@ -38,6 +39,7 @@ def main():
 
 
 def processArgs(arguments, parser):
+    print(arguments)
     args         = arguments.list
     name         = arguments.name
     hash         = arguments.hash

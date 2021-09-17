@@ -1,5 +1,5 @@
 from LTO.Transactions.MassTransfer import MassTransfer
-import HandleDefault as handle
+from LTOCli import HandleDefault as handle
 
 
 def func(stdin):

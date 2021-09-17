@@ -1,4 +1,4 @@
-import HandleDefault as handle
+from LTOCli import HandleDefault as handle
 from LTO.Transactions.Sponsorship import Sponsorship
 from LTO.Transactions.CancelSponsorship import CancelSponsorship
 
