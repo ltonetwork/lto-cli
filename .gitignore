@@ -5,3 +5,5 @@
 /LTOCli/T/
 /LTOCli/Commands/__pycache__/
 __pycache__/
+/tests/htmlcov/
+/tests/.pytest_cache/
