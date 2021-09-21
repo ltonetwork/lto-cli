@@ -21,7 +21,7 @@ class TestConfig:
             Config.writeToFile('L/config.ini', self.account, secName='')
 
         with pytest.raises(Exception):
-            with mock.patch.object(Config,'nameAlreadyPresent', return_value= True):
+            with mock.patch.object(Config, 'nameAlreadyPresent', return_value= True):
                 Config.writeToFile('L/config.ini', self.account, secName='')
 
     @mock.patch.object(os.path, 'exists', return_value = True)
@@ -31,7 +31,7 @@ class TestConfig:
             Config.writeToFile('L/config.ini', self.account, secName='')
 
         with pytest.raises(Exception):
-            with mock.patch.object(Config,'nameAlreadyPresent', return_value= True):
+            with mock.patch.object(Config, 'nameAlreadyPresent', return_value= True):
                 Config.writeToFile('L/config.ini', self.account, secName='')
 
     def testGetAddressFromName(self):

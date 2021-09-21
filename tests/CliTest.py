@@ -1,6 +1,6 @@
 from unittest import mock
 import pytest
-from LTOCli import CLI
+import CLI
 import argparse
 
 

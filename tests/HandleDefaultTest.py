@@ -2,10 +2,9 @@ import configparser
 
 import pytest
 from configparser import ConfigParser
-from LTOCli import HandleDefault
+import HandleDefault
 from unittest import mock
-from LTOCli import Config
-from LTO.PublicNode import PublicNode
+import Config
 
 
 class TestHandleDefault:

@@ -1,15 +1,15 @@
-from LTOCli.Commands import Account
+from Commands import Account
 from unittest import mock
 import pytest
 import configparser
-from LTOCli import Config
+import Config
 from LTO.AccountFactory import AccountFactory
 
 class TestAccount:
 
     @mock.patch.object(Config, 'writeToFile')
     def testFunc(self, mock):
-        Account.func(args=['0','create'], secName=[], network=['T'], stdin=[])
+        Account.func(args=['0', 'create'], secName=[], network=['T'], stdin=[])
         mock.assert_called()
 
     @mock.patch.object(Config, 'listAccounts')

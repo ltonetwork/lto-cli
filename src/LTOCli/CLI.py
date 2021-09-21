@@ -4,13 +4,11 @@ import sys
 import os
 
 from LTOCli import Config
-from LTOCli.Commands import Account
-from LTOCli.Commands import Transfer
-from LTOCli.Commands import Anchor
-from LTOCli.Commands import Association
-from LTOCli.Commands import Leasing
-from LTOCli.Commands import Sponsorhip
-from LTOCli.Commands import MassTransfer
+from Commands import Transfer
+from Commands import Anchor
+from Commands import Leasing
+from Commands import Sponsorhip, Association, Account
+from Commands import MassTransfer
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
@@ -49,9 +47,6 @@ def processArgs(arguments, parser):
     network      = arguments.network
     type         = arguments.type
     stdin        = arguments.stdin.read().splitlines() if not sys.stdin.isatty() else []
-    #stdin = ['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj:700000000', '3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz:1000000']
-    #stdin2 = ['3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK:1000000000 3JxcLqcAKiUyvvLS8fk9SCS4taaCKUCqqLz:800000000']
-    #stdinSeed = ['cool strike recall mother true topic road bright nature dilemma glide shift return mesh strategy']
 
     if name:
         name = name[0]

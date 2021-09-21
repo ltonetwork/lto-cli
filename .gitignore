@@ -1,9 +1,9 @@
 .idea/
 .DS_Store
 
-/LTOCli/L/
-/LTOCli/T/
-/LTOCli/Commands/__pycache__/
+/src/LTOCli/L/
+/src/LTOCli/T/
+/src/LTOCli/Commands/__pycache__/
 __pycache__/
 /tests/htmlcov/
 /tests/.pytest_cache/

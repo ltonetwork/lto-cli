@@ -1,5 +1,5 @@
 from LTO.AccountFactory import AccountFactory
-from LTOCli import Config
+from src.LTOCli import Config
 
 
 def func(args, secName, network, stdin):
