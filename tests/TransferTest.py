@@ -1,4 +1,4 @@
-from Commands import Transfer as Tran
+from LTOCli.Commands import Transfer as Tran
 from unittest import mock
 from LTO.Transaction import Transaction
 import pytest

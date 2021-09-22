@@ -5,7 +5,7 @@ import HandleDefault
 
 from LTO.Transactions.Association import Association
 
-from Commands import Association  as Ass
+from LTOCli.Commands import Association  as Ass
 from LTO.Transactions.RevokeAssociation import RevokeAssociation
 
 class TestAssociation:

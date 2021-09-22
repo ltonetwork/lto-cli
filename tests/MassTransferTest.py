@@ -3,7 +3,7 @@ from LTO.Transaction import Transaction
 import pytest
 import HandleDefault
 from LTO.Transactions.MassTransfer import MassTransfer
-from Commands import MassTransfer as MasT
+from LTOCli.Commands import MassTransfer as MasT
 
 
 class TestMassTransfer:

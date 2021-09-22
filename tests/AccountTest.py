@@ -1,4 +1,4 @@
-from Commands import Account
+from LTOCli.Commands import Account
 from unittest import mock
 import pytest
 import configparser

@@ -4,11 +4,11 @@ import sys
 import os
 
 from LTOCli import Config
-from Commands import Transfer
-from Commands import Anchor
-from Commands import Leasing
-from Commands import Sponsorhip, Association, Account
-from Commands import MassTransfer
+from LTOCli.Commands import Transfer
+from LTOCli.Commands import Anchor
+from LTOCli.Commands import Leasing
+from LTOCli.Commands import Sponsorhip, Association, Account
+from LTOCli.Commands import MassTransfer
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
