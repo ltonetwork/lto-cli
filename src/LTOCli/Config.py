@@ -87,7 +87,7 @@ def setDefaultAccount(name, address = ''):
             config.add_section('Node')
             config.set('Node', 'chainId', chainId)
             if chainId == 'L':
-                config.set('Node', 'url', 'https://nodes.lto.netowrk')
+                config.set('Node', 'url', 'https://nodes.lto.network')
             else:
                 config.set('Node', 'url', 'https://testnet.lto.netowrk')
         if 'Default' not in config.sections():
@@ -102,7 +102,7 @@ def setDefaultAccount(name, address = ''):
         config.add_section('Node')
         config.set('Node', 'chainId', chainId)
         if chainId == 'L':
-            config.set('Node', 'url', 'https://nodes.lto.netowrk')
+            config.set('Node', 'url', 'https://nodes.lto.network')
         else:
             config.set('Node', 'url', 'https://testnet.lto.netowrk')
     config.write(open('L/config.ini', 'w'))
