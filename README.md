@@ -56,7 +56,7 @@ echo "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj:1000000000
 3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz:800000000" | lto mass-transfer
 ```
 
-`Recipient/amount pairs are read from stdin.`
+_Recipient/amount pairs are read from stdin._
 
 ### Leasing
 
