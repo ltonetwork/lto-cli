@@ -1,4 +1,16 @@
-# LTO Network CLI client
+![github-banner](https://user-images.githubusercontent.com/100821/108692834-6a115200-74fd-11eb-92df-ee07bf62b386.png)
+
+# CLI client
+
+## Installation
+
+```
+pip install lto-cli
+```
+
+[pip](https://pip.pypa.io/en/stable/) is the package installer for Python.
+
+## Setup
 
 ### Manage accounts
 
@@ -13,8 +25,10 @@ lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
 ### Public node
 
 ```
-lto set-node https://nodes.lto.network --network L
+lto set-node https://nodes.lto.network
 ```
+
+## Transactions
 
 ### Anchor
 
@@ -42,6 +56,8 @@ echo "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj:1000000000
 3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz:800000000" | lto mass-transfer
 ```
 
+`Recipient/amount pairs are read from stdin.`
+
 ### Leasing
 
 ```
@@ -56,7 +72,7 @@ lto sponsorship create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 lto sponsorship cancel --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 ```
 
-### Common options
+## Common options
 
 ```
 --network CHAINID
@@ -65,3 +81,26 @@ lto sponsorship cancel --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 --no-broadcast
 --unsigned
 ```
+
+#### `--network`
+
+Use `--network T` to use testnet instead of mainnet. You need to setup accounts specifically for testnet.
+
+#### `--account`
+
+Select one of the accounts configured during setup. The account can be referenced by name or address. The name is only known locally.
+If this option is omited, the default account is used.
+
+#### `--sponsor`
+
+Choose an account to sponsor the transaction. The sponsor will co-sign the transaction and pay the transaction fee.
+
+_This feature is not yet available as it requires the Cobalt update to be activated._
+
+#### `--no-broadcast`
+
+Create and sign the transaction, but don't broadcast it to the node. The JSON will be outputted.
+
+#### `unsigned`
+
+Create the transaction, but don't sign it. This option should only be used in combination with `--no-broadcast`.
