@@ -6,9 +6,9 @@ def func(hash):
         raise Exception('No hash was passed')
 
     hash = hash[0]
-
-    transaction = Anchor(hash)
-    transaction.signWith(handle.getAccount())
-    transaction.broadcastTo(handle.getNode())
+    print(hash)
+    #transaction = Anchor(hash)
+    #transaction.signWith(handle.getAccount())
+    #transaction.broadcastTo(handle.getNode())
 
 

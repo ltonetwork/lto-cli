@@ -18,7 +18,7 @@ def main():
         os.mkdir(path='./L')
     if not os.path.exists('T'):
         os.mkdir(path='./T')
-    parser = argparse.ArgumentParser(description='LTO Network CLI client')
+    parser = argparse.ArgumentParser(description='LTO Network CLI client', usage=argparse.SUPPRESS)
     parser.add_argument('list', type=str, nargs='+')
     parser.add_argument('--name', type=str, nargs=1)
     parser.add_argument('--hash', type=str, nargs=1)
@@ -27,7 +27,7 @@ def main():
     parser.add_argument('--leaseId', type=str, nargs=1)
     parser.add_argument('--network', type=str, nargs=1)
     parser.add_argument('--type', type=int, nargs=1)
-    parser.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help=argparse.SUPPRESS)
 
     args = parser.parse_args()
     processArgs(args, parser)
@@ -37,7 +37,6 @@ def main():
 
 
 def processArgs(arguments, parser):
-    print(arguments)
     args         = arguments.list
     name         = arguments.name
     hash         = arguments.hash
