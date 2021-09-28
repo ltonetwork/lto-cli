@@ -1,6 +1,6 @@
 import argparse
 import sys
-
+from pathlib import Path
 import os
 
 from LTOCli import Config
@@ -14,10 +14,13 @@ from LTOCli.Commands import MassTransfer
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
 
 def main():
-    if not os.path.exists('L'):
-        os.mkdir(path='./L')
-    if not os.path.exists('T'):
-        os.mkdir(path='./T')
+    from pathlib import Path
+    path = Path.home()
+    if not os.path.exists(path='{}/lto'.format(path)):
+        os.mkdir(path='{}/lto'.format(path))
+        os.mkdir(path='{}/lto/L'.format(path))
+        os.mkdir(path='{}/lto/T'.format(path))
+
 
     parser = argparse.ArgumentParser(prog='lto', description='LTO Network CLI client',  usage=argparse.SUPPRESS)
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
