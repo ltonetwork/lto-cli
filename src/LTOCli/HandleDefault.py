@@ -6,7 +6,7 @@ from LTO.PublicNode import PublicNode
 CHAIN_ID = 'L'
 URL = 'https://nodes.lto.network'
 
-def getSeedFromAddress(address):
+def getSeedFromAddress(address, parser):
     config = configparser.ConfigParser()
     config.read('L/accounts.ini')
     secName = Config.findAccountSection(address, config)
@@ -15,21 +15,21 @@ def getSeedFromAddress(address):
         config.read('T/accounts.ini')
         secName = Config.findAccountSection(address, config)
         if not secName:
-            raise Exception ('No account found matching with default value')
+            parser.error("No account found matching with default value, type 'lto accounts --help' for instructions")
         else:
             return config.get(secName, 'seed')
     else:
         return config.get(secName, 'seed')
 
 
-def getAccount():
+def getAccount(parser):
     global CHAIN_ID
     config = configparser.ConfigParser()
     config.read('L/config.ini')
     if 'Default' not in config.sections():
-        raise Exception('No Default account set')
+        parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
     address = config.get('Default', 'account')
-    seed = getSeedFromAddress(address)
+    seed = getSeedFromAddress(address, parser)
     if 'Node' in config.sections():
         CHAIN_ID = config.get('Node', 'chainId')
     account = AccountFactory(CHAIN_ID).createFromSeed(seed)

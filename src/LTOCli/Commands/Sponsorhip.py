@@ -2,14 +2,14 @@ from LTOCli import HandleDefault as handle
 from LTO.Transactions.Sponsorship import Sponsorship
 from LTO.Transactions.CancelSponsorship import CancelSponsorship
 
-def func(nameSpace):
+def func(nameSpace,parser):
 
     if nameSpace.option[0] == 'create':
         transaction = Sponsorship(nameSpace.recipient[0])
-        transaction.signWith(handle.getAccount())
+        transaction.signWith(handle.getAccount(parser))
         transaction.broadcastTo(handle.getNode())
     else:
         # cancel case
         transaction = CancelSponsorship(nameSpace.recipient[0])
-        transaction.signWith(handle.getAccount())
+        transaction.signWith(handle.getAccount(parser))
         transaction.broadcastTo(handle.getNode())

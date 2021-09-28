@@ -9,7 +9,7 @@ def func(nameSpace, parser):
         parser.error('Type lto mass-transfer --help for instructions')
     transfers = processInput(stdin)
     transaction = MassTransfer(transfers)
-    transaction.signWith(handle.getAccount())
+    transaction.signWith(handle.getAccount(parser))
     transaction.broadcastTo(handle.getNode())
 
 
