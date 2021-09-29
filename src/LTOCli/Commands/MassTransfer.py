@@ -1,7 +1,7 @@
 from LTO.Transactions.MassTransfer import MassTransfer
 from LTOCli import HandleDefault as handle
 import sys
-from LTOCli import Config
+import re
 
 def func(nameSpace, parser):
     stdin = nameSpace.stdin.read().splitlines() if not sys.stdin.isatty() else []
@@ -13,9 +13,10 @@ def func(nameSpace, parser):
     transaction.broadcastTo(handle.getNode())
 
 
+
 def processInput(stdin):
     transfers = []
     for x in stdin:
-        recipient, amount = x.split(':')
+        recipient, amount = re.split('[,;:=\s]+', x)
         transfers.append({'recipient': recipient, 'amount': int(amount)})
     return transfers
