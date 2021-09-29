@@ -12,9 +12,10 @@ def func(nameSpace, parser):
         Config.writeToFile('{}/accounts.ini'.format(CHAIN_ID), account, secName, parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'list':
-        listAcc = Config.listAccounts()
-        for x in listAcc[0]:
+        list1, list2 = Config.listAccounts()
+        for x in (list1 + list2):
             print(x)
+
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'set-default':
         CHAIN_ID = nameSpace.network[0] if nameSpace.network else 'L'

@@ -11,7 +11,10 @@ def func(nameSpace, parser):
     transaction = MassTransfer(transfers)
     transaction.signWith(handle.getAccount(parser))
     if vars(nameSpace)['unsigned'] is False:
-        transaction.signWith(handle.getAccount(parser))
+        if vars(nameSpace)['account']:
+            transaction.signWith(handle.getAccountFromOption(parser, nameSpace['account'][0]))
+        else:
+            transaction.signWith(handle.getAccount(parser))
         if vars(nameSpace)['no_broadcast'] is False:
             transaction.broadcastTo(handle.getNode())
     elif vars(nameSpace)['no_broadcast'] is False:
