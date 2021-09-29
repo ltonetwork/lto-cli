@@ -82,8 +82,9 @@ def main():
 
 
     nameSpace = parser.parse_args()
-    #nameSpace = parser.parse_args(['accounts','seed','--help'])
+    #nameSpace = parser.parse_args(['accounts'])
     #nameSpace = parser.parse_args()
+
     processArgs(nameSpace, parser)
 
 def processArgs(nameSpace, parser):
@@ -113,7 +114,7 @@ def processArgs(nameSpace, parser):
         Config.setnode(nameSpace)
 
     else:
-        print("Type 'lto --help' for instructions")
+        parser.print_help()
 
 
 if __name__ == '__main__':
