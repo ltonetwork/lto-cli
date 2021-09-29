@@ -4,14 +4,13 @@ import sys
 import argparse
 
 def func(nameSpace, parser):
-
-
+    Config.createDirectory()
     if vars(nameSpace)['subparser-name-accounts'] == 'create':
         CHAIN_ID = nameSpace.network[0] if nameSpace.network else 'L'
         secName = nameSpace.name[0] if nameSpace.name else ''
         factory = AccountFactory(CHAIN_ID)
         account = factory.create()
-        Config.writeToFile('{}/accounts.ini'.format(CHAIN_ID), account, secName)
+        Config.writeToFile('{}/accounts.ini'.format(CHAIN_ID), account, secName, parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'list':
         listAcc = Config.listAccounts()

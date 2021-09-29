@@ -1,9 +1,10 @@
 from LTOCli import HandleDefault as handle
 from LTO.Transactions.Association import Association
 from LTO.Transactions.RevokeAssociation import RevokeAssociation
+from LTOCli import Config
 
 def func(nameSpace, parser):
-
+    Config.createDirectory()
     associationType = nameSpace.type[0]
     recipient = nameSpace.recipient[0]
     hash = ''

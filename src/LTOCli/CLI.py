@@ -14,14 +14,6 @@ from LTOCli.Commands import MassTransfer
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
 
 def main():
-    from pathlib import Path
-    path = Path.home()
-    if not os.path.exists(path='{}/lto'.format(path)):
-        os.mkdir(path='{}/lto'.format(path))
-        os.mkdir(path='{}/lto/L'.format(path))
-        os.mkdir(path='{}/lto/T'.format(path))
-
-
     parser = argparse.ArgumentParser(prog='lto', description='LTO Network CLI client',  usage=argparse.SUPPRESS)
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
@@ -86,8 +78,8 @@ def main():
 
 
 
-    #nameSpace = parser.parse_args(['lease', 'cancel', '--leaseId', 'kjhkh'])
-    nameSpace = parser.parse_args(['--help'])
+    nameSpace = parser.parse_args(['accounts', 'create'])
+    #nameSpace = parser.parse_args(['--help'])
     #nameSpace = parser.parse_args()
     processArgs(nameSpace, parser)
 
@@ -95,8 +87,10 @@ def processArgs(nameSpace, parser):
 
     if vars(nameSpace)['subparser-name'] == 'accounts':
         Account.func(nameSpace, parser)
+
     elif vars(nameSpace)['subparser-name'] == 'anchor':
         Anchor.func(nameSpace, parser)
+
     elif vars(nameSpace)['subparser-name'] == 'transfer':
         Transfer.func(nameSpace, parser)
 
@@ -113,6 +107,7 @@ def processArgs(nameSpace, parser):
         Leasing.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'set-node':
+        Config.createDirectory()
         Config.setnode(nameSpace)
 
 

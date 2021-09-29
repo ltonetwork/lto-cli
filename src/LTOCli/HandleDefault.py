@@ -2,17 +2,21 @@ import configparser
 from LTO.AccountFactory import AccountFactory
 from LTOCli import Config
 from LTO.PublicNode import PublicNode
+from pathlib import Path
+
 
 CHAIN_ID = 'L'
 URL = 'https://nodes.lto.network'
+path = Path.home()
+#path = Path.joinpath(Path.home(), 'lto')
 
 def getSeedFromAddress(address, parser):
     config = configparser.ConfigParser()
-    config.read('L/accounts.ini')
+    config.read('{}/lto/L/accounts.ini'.format(path))
     secName = Config.findAccountSection(address, config)
     if not secName:
         config.clear()
-        config.read('T/accounts.ini')
+        config.read('{}/lto/T/accounts.ini'.format(path))
         secName = Config.findAccountSection(address, config)
         if not secName:
             parser.error("No account found matching with default value, type 'lto accounts --help' for instructions")
@@ -25,7 +29,7 @@ def getSeedFromAddress(address, parser):
 def getAccount(parser):
     global CHAIN_ID
     config = configparser.ConfigParser()
-    config.read('L/config.ini')
+    config.read('{}/lto/L/config.ini'.format(path))
     if 'Default' not in config.sections():
         parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
     address = config.get('Default', 'account')
@@ -38,7 +42,7 @@ def getAccount(parser):
 def getNode():
     global URL
     config = configparser.ConfigParser()
-    config.read('L/config.ini')
+    config.read('{}/lto/L/config.ini'.format(path))
     if 'Node' in config.sections():
         URL = config.get('Node', 'url')
     node = PublicNode(URL)
