@@ -10,8 +10,13 @@ def func(nameSpace, parser):
     transfers = processInput(stdin)
     transaction = MassTransfer(transfers)
     transaction.signWith(handle.getAccount(parser))
-    if vars(nameSpace)['no_broadcast'] == False:
-        transaction.broadcastTo(handle.getNode())
+    if vars(nameSpace)['unsigned'] is False:
+        transaction.signWith(handle.getAccount(parser))
+        if vars(nameSpace)['no_broadcast'] is False:
+            transaction.broadcastTo(handle.getNode())
+    elif vars(nameSpace)['no_broadcast'] is False:
+        parser.error(
+            "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto mass-transfer --help' for more informations ")
 
 
 

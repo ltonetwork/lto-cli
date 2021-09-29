@@ -13,11 +13,21 @@ def func(nameSpace, parser):
     if nameSpace.option[0]== 'issue':
         transaction = Association(recipient=recipient, associationType=associationType, anchor=hash)
         transaction.signWith(handle.getAccount(parser))
-        if vars(nameSpace)['no_broadcast'] == False:
-            transaction.broadcastTo(handle.getNode())
+        if vars(nameSpace)['unsigned'] is False:
+            transaction.signWith(handle.getAccount(parser))
+            if vars(nameSpace)['no_broadcast'] is False:
+                transaction.broadcastTo(handle.getNode())
+        elif vars(nameSpace)['no_broadcast'] is False:
+            parser.error(
+                "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more informations ")
     else:
         # revoke case
         transaction = RevokeAssociation(recipient=recipient, associationType=associationType, anchor=hash)
         transaction.signWith(handle.getAccount(parser))
-        if vars(nameSpace)['no_broadcast'] == False:
-            transaction.broadcastTo(handle.getNode())
+        if vars(nameSpace)['unsigned'] is False:
+            transaction.signWith(handle.getAccount(parser))
+            if vars(nameSpace)['no_broadcast'] is False:
+                transaction.broadcastTo(handle.getNode())
+        elif vars(nameSpace)['no_broadcast'] is False:
+            parser.error(
+                "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association revoke --help' for more informations ")

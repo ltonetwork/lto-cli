@@ -44,6 +44,7 @@ def main():
     parser_anchor = subparsers.add_parser(name='anchor', help="Create an Anchor Transaction, type 'lto anchor --help' for more information")
     parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain")
     parser_anchor.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_anchor.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     # --------------------------------------------------------------
     parser_association = subparsers.add_parser('association', help="Create an Association Transaction, type 'lto association --help' for more information")
     parser_association.add_argument('option', type=str, choices=['issue', 'revoke'], nargs=1, help='issue / revoke')
@@ -51,6 +52,7 @@ def main():
     parser_association.add_argument('--recipient', type=str, nargs=1, required=True, help= 'The recipient')
     parser_association.add_argument('--type', type=int, nargs=1, required=True, help='The association type')
     parser_association.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_association.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     # --------------------------------------------------------------
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')
@@ -60,20 +62,19 @@ def main():
     parser_lease_create.add_argument('--recipient', type=str, nargs=1, required=True)
     parser_lease_create.add_argument('--amount', type=int, nargs=1, required=True)
     parser_lease_create.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
-
+    parser_lease_create.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
 
 
     parser_lease_cancel = lease_subparser.add_parser('cancel', help="To cancel a lease --leaseId is required")
     parser_lease_cancel.add_argument('--leaseId', type=str, nargs=1, required=True)
     parser_lease_cancel.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
-
-
+    parser_lease_cancel.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     # --------------------------------------------------------------
     parser_massTransfer = subparsers.add_parser('mass-transfer', help="Create an Mass-Transfer Transaction, type 'lto mass-transfer --help' for more information")
     parser_massTransfer.add_argument('stdin', nargs='?', type=argparse.FileType('r'),
                                      default=sys.stdin, help="Takes the transfers as input: echo 'address1:amount address2:amount' | lto mass-transfer")
     parser_massTransfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
-
+    parser_massTransfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     # --------------------------------------------------------------
     parser_setNode = subparsers.add_parser('set-node', help="Allows to set the preferred node to connect to and an optional network parameter, type 'lto set-node --help' for more information")
     parser_setNode.add_argument('url', type=str, nargs=1, help="url of the node to connect to")
@@ -83,11 +84,15 @@ def main():
     parser_sponsorship.add_argument('option', choices=['create', 'cancel'], help='create / cancel', type=str, nargs=1)
     parser_sponsorship.add_argument('--recipient', type=str, nargs=1, required = True)
     parser_sponsorship.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_sponsorship.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+
     # --------------------------------------------------------------
     parser_transfer = subparsers.add_parser('transfer', help="Create a Transfer Transaction, type 'lto transfer --help' for more information")
     parser_transfer.add_argument('--recipient', type=str, nargs=1, required=True)
     parser_transfer.add_argument('--amount', type=int, nargs=1, required=True)
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+
 
 
 
@@ -95,8 +100,8 @@ def main():
 
 
     #nameSpace = parser.parse_args()
-    nameSpace = parser.parse_args(['sponsorship', 'create', '--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--no-broadcast'])
-    #, '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount', '100', '--no-broadcast'])
+    #nameSpace = parser.parse_args(['sponsorship', 'create', '--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--no-broadcast'])
+    nameSpace = parser.parse_args(['transfer','--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount', '100'])
     #nameSpace = parser.parse_args()
 
     processArgs(nameSpace, parser)
