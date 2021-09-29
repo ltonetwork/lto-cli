@@ -101,6 +101,6 @@ _This feature is not yet available as it requires the Cobalt update to be activa
 
 Create and sign the transaction, but don't broadcast it to the node. The JSON will be outputted.
 
-#### `unsigned`
+#### `--unsigned`
 
 Create the transaction, but don't sign it. This option should only be used in combination with `--no-broadcast`.
