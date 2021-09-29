@@ -14,6 +14,8 @@ from LTOCli.Commands import MassTransfer
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
 
 def main():
+    Config.checkDirectory()
+
     parser = argparse.ArgumentParser(prog='lto', description='LTO Network CLI client',  usage=argparse.SUPPRESS)
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
@@ -107,7 +109,6 @@ def processArgs(nameSpace, parser):
         Leasing.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'set-node':
-        Config.createDirectory()
         Config.setnode(nameSpace)
 
 

@@ -4,7 +4,6 @@ import sys
 from LTOCli import Config
 
 def func(nameSpace, parser):
-    Config.createDirectory()
     stdin = nameSpace.stdin.read().splitlines() if not sys.stdin.isatty() else []
     if not stdin:
         parser.error('Type lto mass-transfer --help for instructions')

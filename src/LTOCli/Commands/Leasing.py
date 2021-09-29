@@ -4,7 +4,6 @@ from LTO.Transactions.CancelLease import CancelLease
 from LTOCli import Config
 
 def func(nameSpace, parser):
-    Config.createDirectory()
     if vars(nameSpace)['subparser-name-lease'] == 'create':
         transaction = Lease(recipient=nameSpace.recipient[0], amount=nameSpace.amount[0])
         transaction.signWith(handle.getAccount(parser))

@@ -228,7 +228,7 @@ def setnode(nameSpace):
     config.write(open('{}/lto/L/config.ini'.format(path), 'w'))
 
 
-def createDirectory():
+def checkDirectory():
     if not os.path.exists(path='{}/lto'.format(path)):
         os.mkdir(path='{}/lto'.format(path))
         os.mkdir(path='{}/lto/L'.format(path))
