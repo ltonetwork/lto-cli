@@ -7,9 +7,11 @@ def func(nameSpace,parser):
     if nameSpace.option[0] == 'create':
         transaction = Sponsorship(nameSpace.recipient[0])
         transaction.signWith(handle.getAccount(parser))
-        transaction.broadcastTo(handle.getNode())
+        if vars(nameSpace)['no_broadcast'] == False:
+            transaction.broadcastTo(handle.getNode())
     else:
         # cancel case
         transaction = CancelSponsorship(nameSpace.recipient[0])
         transaction.signWith(handle.getAccount(parser))
-        transaction.broadcastTo(handle.getNode())
+        if vars(nameSpace)['no_broadcast'] == False:
+            transaction.broadcastTo(handle.getNode())

@@ -7,4 +7,5 @@ def func(nameSpace, parser):
     amount = nameSpace.amount[0]
     transaction = Transfer(recipient, amount)
     transaction.signWith(handle.getAccount(parser))
-    transaction.broadcastTo(handle.getNode())
+    if vars(nameSpace)['no_broadcast'] == False:
+        transaction.broadcastTo(handle.getNode())

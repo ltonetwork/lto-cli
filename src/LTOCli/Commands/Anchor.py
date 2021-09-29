@@ -5,7 +5,8 @@ from LTOCli import Config
 def func(nameSpace, parser):
     transaction = Anchor(nameSpace.hash[0])
     transaction.signWith(handle.getAccount(parser))
-    transaction.broadcastTo(handle.getNode())
+    if vars(nameSpace)['no_broadcast'] == False:
+        transaction.broadcastTo(handle.getNode())
     
 
 

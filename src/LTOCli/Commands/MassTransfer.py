@@ -10,7 +10,8 @@ def func(nameSpace, parser):
     transfers = processInput(stdin)
     transaction = MassTransfer(transfers)
     transaction.signWith(handle.getAccount(parser))
-    transaction.broadcastTo(handle.getNode())
+    if vars(nameSpace)['no_broadcast'] == False:
+        transaction.broadcastTo(handle.getNode())
 
 
 

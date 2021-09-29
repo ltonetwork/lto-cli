@@ -3,7 +3,7 @@ from LTO.Transaction import Transaction
 import pytest
 import HandleDefault
 
-from LTOCli.Commands import Sponsorhip as Spo
+from LTOCli.Commands import Sponsorship as Spo
 from LTO.Transactions.Sponsorship import Sponsorship
 
 from LTO.Transactions.CancelSponsorship import CancelSponsorship
