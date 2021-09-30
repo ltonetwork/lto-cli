@@ -28,6 +28,14 @@ lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
 lto set-node https://nodes.lto.network
 ```
 
+### Broadcast
+
+Takes as input a transaction (signed or unsigned) and broadcast it to the network
+
+```
+echo $TX_JSON | lto broadcast
+```
+
 ## Transactions
 
 ### Anchor

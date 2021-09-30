@@ -8,7 +8,7 @@ from LTOCli.Commands import Transfer
 from LTOCli.Commands import Anchor
 from LTOCli.Commands import Leasing
 from LTOCli.Commands import Sponsorship, Association, Account
-from LTOCli.Commands import MassTransfer
+from LTOCli.Commands import MassTransfer, Broadcast
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
@@ -36,8 +36,7 @@ def main():
     parser_remove.add_argument('address', type=str, nargs=1)
 
     parser_seed = accounts_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto accounts seed --help")
-    parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin,
-                             help="Takes the seeds as input: echo 'my seed' | lto accounts seed")
+    parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto accounts seed")
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter (ex. L, T)')
     # --------------------------------------------------------------
@@ -55,6 +54,19 @@ def main():
     parser_association.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_association.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_association.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    # --------------------------------------------------------------
+
+
+    parser_broadcast = subparsers.add_parser('broadcast', help="Create remove and manage accounts, type 'lto accounts --help' for more informations")
+    parser_broadcast.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the json transaction as input: echo '$TX_JSON' | lto broadcast")
+
+    #parser_broadcast.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
+
+
+
+
+
+
     # --------------------------------------------------------------
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')
@@ -120,6 +132,17 @@ def main():
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
 
+
+
+
+
+
+
+    #nameSpace = parser.parse_args()
+    #nameSpace = parser.parse_args(['transfer', '--account', 'gino'])
+    #nameSpace = parser.parse_args(['transfer','--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount', '100', '--account', 'gino', '--unsigned', '--no-broadcast'])
+    #nameSpace = parser.parse_args(['transfer','--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount','100000000', '--account', 'tizio', '--no-broadcast'])
+    #nameSpace = parser.parse_args(['sponsorship', 'list-inbound'])
     nameSpace = parser.parse_args()
     processArgs(nameSpace, parser)
 
@@ -148,6 +171,9 @@ def processArgs(nameSpace, parser):
 
     elif vars(nameSpace)['subparser-name'] == 'set-node':
         Config.setnode(nameSpace)
+
+    elif vars(nameSpace)['subparser-name'] == 'broadcast':
+        Broadcast.func(nameSpace, parser)
 
     else:
         parser.print_help()
