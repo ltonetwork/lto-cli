@@ -6,7 +6,6 @@ from LTO.PublicNode import PublicNode
 
 def func(nameSpace,parser):
     if vars(nameSpace)['subparser-name-sponsorship'] == 'create':
-    #if nameSpace.option[0] == 'create':
         transaction = Sponsorship(nameSpace.recipient[0])
         transaction.signWith(handle.getAccount(parser))
         if vars(nameSpace)['unsigned'] is False:
@@ -20,7 +19,6 @@ def func(nameSpace,parser):
             parser.error(
                 "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto sponsorship create --help' for more informations ")
     elif vars(nameSpace)['subparser-name-sponsorship'] == 'cancel':
-        # cancel case
         transaction = CancelSponsorship(nameSpace.recipient[0])
         transaction.signWith(handle.getAccount(parser))
         if vars(nameSpace)['unsigned'] is False:
