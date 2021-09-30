@@ -12,7 +12,7 @@ def func(nameSpace, parser):
     transaction.signWith(handle.getAccount(parser))
     if vars(nameSpace)['unsigned'] is False:
         if vars(nameSpace)['account']:
-            transaction.signWith(handle.getAccountFromOption(parser, nameSpace['account'][0]))
+            transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
         else:
             transaction.signWith(handle.getAccount(parser))
         if vars(nameSpace)['no_broadcast'] is False:

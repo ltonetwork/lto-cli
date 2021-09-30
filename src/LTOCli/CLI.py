@@ -59,6 +59,13 @@ def main():
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')
 
+    parser_lease_list = lease_subparser.add_parser('list', help="Returns the list of leasing that the user has conceded")
+    parser_lease_list.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
+
+    parser_lease_list_inbound = lease_subparser.add_parser('list-inbound', help="Returns the list of leasing in favor of the user")
+    parser_lease_list_inbound.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
+
+
     parser_lease_create = lease_subparser.add_parser('create', help='To create a lease, --recipient and --amount are required')
     parser_lease_create.add_argument('--recipient', type=str, nargs=1, required=True)
     parser_lease_create.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
@@ -84,11 +91,27 @@ def main():
     parser_setNode.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter (ex. L, T)')
     # --------------------------------------------------------------
     parser_sponsorship = subparsers.add_parser('sponsorship', help="Create an Sponsorship Transaction, type 'lto sponsorship --help' for more information")
-    parser_sponsorship.add_argument('option', choices=['create', 'cancel'], help='create / cancel', type=str, nargs=1)
-    parser_sponsorship.add_argument('--recipient', type=str, nargs=1, required = True)
-    parser_sponsorship.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
-    parser_sponsorship.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
-    parser_sponsorship.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    sponsorship_subparser = parser_sponsorship.add_subparsers(dest='subparser-name-sponsorship')
+
+
+    parser_sponsorship_create = sponsorship_subparser.add_parser('create',  help='To create a sponsorhip the --recipient is required')
+    parser_sponsorship_create.add_argument('--recipient', type=str, nargs=1, required=True)
+    parser_sponsorship_create.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_sponsorship_create.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_sponsorship_create.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+
+    parser_sponsorship_cancel = sponsorship_subparser.add_parser('cancel', help='To cancel a sponsorhip the --recipient is required')
+    parser_sponsorship_cancel.add_argument('--recipient', type=str, nargs=1, required = True)
+    parser_sponsorship_cancel.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_sponsorship_cancel.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_sponsorship_cancel.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+
+    # The end-point needs to be added
+    #parser_sponsorship_list = sponsorship_subparser.add_parser('list', help="Returns the list of accounts that the user is sponsoring")
+    #parser_sponsorship_list.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
+
+    parser_sponsorship_list_inbound = sponsorship_subparser.add_parser('list-inbound', help="Returns the list of accounts that are sponsoring the user")
+    parser_sponsorship_list_inbound.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the account previously stored, The account can be referenced by name or address, if this option is omitted, the default account is used")
     # --------------------------------------------------------------
     parser_transfer = subparsers.add_parser('transfer', help="Create a Transfer Transaction, type 'lto transfer --help' for more information")
     parser_transfer.add_argument('--recipient', type=str, nargs=1, required=True)
@@ -97,17 +120,7 @@ def main():
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
 
-
-
-
-
-
-
-    #nameSpace = parser.parse_args()
-    #nameSpace = parser.parse_args(['transfer', '--account', 'gino'])
-    #nameSpace = parser.parse_args(['transfer','--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount', '100', '--account', 'gino', '--unsigned', '--no-broadcast'])
-    nameSpace = parser.parse_args(['accounts', 'list'])
-
+    nameSpace = parser.parse_args()
     processArgs(nameSpace, parser)
 
 def processArgs(nameSpace, parser):
