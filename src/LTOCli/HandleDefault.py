@@ -3,6 +3,7 @@ from LTO.AccountFactory import AccountFactory
 from LTOCli import Config
 from LTO.PublicNode import PublicNode
 from pathlib import Path
+import json
 
 CHAIN_ID = 'L'
 URL = 'https://nodes.lto.network'
@@ -77,3 +78,7 @@ def getAccountFromOption(parser, input):
             config.read('{}/lto/T/accounts.ini'.format(path))
             CHAIN_ID = 'T'
         return AccountFactory(CHAIN_ID).createFromSeed(config.get(input, 'seed'))
+
+
+def prettyPrint(transaction):
+    print(json.dumps(transaction.toJson(), indent=2))

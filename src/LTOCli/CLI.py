@@ -7,8 +7,11 @@ from LTOCli import Config
 from LTOCli.Commands import Transfer
 from LTOCli.Commands import Anchor
 from LTOCli.Commands import Leasing
-from LTOCli.Commands import Sponsorship, Association, Account
-from LTOCli.Commands import MassTransfer, Broadcast
+from LTOCli.Commands import Sponsorship
+from LTOCli.Commands import Association
+from LTOCli.Commands import Account
+from LTOCli.Commands import MassTransfer
+from LTOCli.Commands import Broadcast
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
@@ -55,18 +58,9 @@ def main():
     parser_association.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_association.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     # --------------------------------------------------------------
-
-
     parser_broadcast = subparsers.add_parser('broadcast', help="Create remove and manage accounts, type 'lto accounts --help' for more informations")
     parser_broadcast.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the json transaction as input: echo '$TX_JSON' | lto broadcast")
-
-    #parser_broadcast.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
-
-
-
-
-
-
+    parser_broadcast.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     # --------------------------------------------------------------
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')

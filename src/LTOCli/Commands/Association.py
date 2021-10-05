@@ -19,7 +19,7 @@ def func(nameSpace, parser):
             else:
                 transaction.signWith(handle.getAccount(parser))
             if vars(nameSpace)['no_broadcast'] is False:
-                transaction.broadcastTo(handle.getNode())
+                transaction = transaction.broadcastTo(handle.getNode())
         elif vars(nameSpace)['no_broadcast'] is False:
             parser.error(
                 "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more informations ")
@@ -33,7 +33,9 @@ def func(nameSpace, parser):
             else:
                 transaction.signWith(handle.getAccount(parser))
             if vars(nameSpace)['no_broadcast'] is False:
-                transaction.broadcastTo(handle.getNode())
+                transaction = transaction.broadcastTo(handle.getNode())
         elif vars(nameSpace)['no_broadcast'] is False:
             parser.error(
                 "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association revoke --help' for more informations ")
+
+    handle.prettyPrint(transaction)
