@@ -12,7 +12,6 @@ def func(nameSpace, parser):
             transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
         else:
             transaction.signWith(handle.getAccount(parser))
-
         if vars(nameSpace)['no_broadcast'] is False:
             transaction = transaction.broadcastTo(handle.getNode())
     elif vars(nameSpace)['no_broadcast'] is False:

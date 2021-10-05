@@ -9,3 +9,4 @@ __pycache__/
 /tests/.pytest_cache/
 /src/LTOCli/Config.pyc
 /src/LTOCli/__init__.pyc
+/src/LTOCli/test.py
