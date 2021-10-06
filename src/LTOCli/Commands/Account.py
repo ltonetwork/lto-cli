@@ -32,8 +32,9 @@ def func(nameSpace, parser):
         factory = AccountFactory(chainId)
         seed = nameSpace.stdin.read().splitlines() if not sys.stdin.isatty() else []
         if not seed:
-            parser.error('Type lto accounts seed --help for instructions') # add the correct message here
+            parser.error("Seed missing, type 'lto accounts seed --help' for instructions")
         account = factory.createFromSeed(seed[0])
-        Config.writeToFile('{}/accounts.ini'.format(chainId), account, secName, parser)
+        Config.writeToFile(chainId, account, secName, parser)
+
     else:
         parser.error('Type lto accounts --help for instructions')
