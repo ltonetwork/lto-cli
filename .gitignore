@@ -10,3 +10,4 @@ __pycache__/
 /src/LTOCli/Config.pyc
 /src/LTOCli/__init__.pyc
 /src/LTOCli/test.py
+/tests/.coverage

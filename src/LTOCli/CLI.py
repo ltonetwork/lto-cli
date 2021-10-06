@@ -127,19 +127,7 @@ def main():
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
 
-
-
-
-
-
-
-    #nameSpace = parser.parse_args()
-    #nameSpace = parser.parse_args(['transfer', '--account', 'gino'])
-    #nameSpace = parser.parse_args(['transfer','--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount', '100', '--account', 'gino', '--unsigned', '--no-broadcast'])
-    #nameSpace = parser.parse_args(['transfer','--recipient', '3N5PoiMisnbNPseVXcCa5WDRLLHkj7dz4Du', '--amount','100000000', '--account', 'tizio', '--no-broadcast'])
-    #nameSpace = parser.parse_args(['sponsorship', 'list-inbound'])
-    nameSpace = parser.parse_args()
-    processArgs(nameSpace, parser)
+    processArgs(parser.parse_args(), parser)
 
 def processArgs(nameSpace, parser):
 
