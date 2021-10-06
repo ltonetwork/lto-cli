@@ -12,12 +12,12 @@ def func(nameSpace, parser):
 
     if nameSpace.option[0]== 'issue':
         transaction = Association(recipient=recipient, associationType=associationType, anchor=hash)
-        transaction.signWith(handle.getAccount(parser))
+        transaction.signWith(handle.getDefaultAccount(parser))
         if vars(nameSpace)['unsigned'] is False:
             if vars(nameSpace)['account']:
-                transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
+                transaction.signWith(handle.getAccountFromName(vars(nameSpace)['account'][0], parser))
             else:
-                transaction.signWith(handle.getAccount(parser))
+                transaction.signWith(handle.getDefaultAccount(parser))
             if vars(nameSpace)['no_broadcast'] is False:
                 transaction = transaction.broadcastTo(handle.getNode())
         elif vars(nameSpace)['no_broadcast'] is False:
@@ -26,12 +26,12 @@ def func(nameSpace, parser):
     else:
         # revoke case
         transaction = RevokeAssociation(recipient=recipient, associationType=associationType, anchor=hash)
-        transaction.signWith(handle.getAccount(parser))
+        transaction.signWith(handle.getDefaultAccount(parser))
         if vars(nameSpace)['unsigned'] is False:
             if vars(nameSpace)['account']:
-                transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
+                transaction.signWith(handle.getAccountFromName(vars(nameSpace)['account'][0], parser))
             else:
-                transaction.signWith(handle.getAccount(parser))
+                transaction.signWith(handle.getDefaultAccount(parser))
             if vars(nameSpace)['no_broadcast'] is False:
                 transaction = transaction.broadcastTo(handle.getNode())
         elif vars(nameSpace)['no_broadcast'] is False:

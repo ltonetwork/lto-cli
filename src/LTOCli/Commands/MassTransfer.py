@@ -9,12 +9,12 @@ def func(nameSpace, parser):
         parser.error('Type lto mass-transfer --help for instructions')
     transfers = processInput(stdin)
     transaction = MassTransfer(transfers)
-    transaction.signWith(handle.getAccount(parser))
+    transaction.signWith(handle.getDefaultAccount(parser))
     if vars(nameSpace)['unsigned'] is False:
         if vars(nameSpace)['account']:
-            transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
+            transaction.signWith(handle.getAccountFromName(vars(nameSpace)['account'][0], parser))
         else:
-            transaction.signWith(handle.getAccount(parser))
+            transaction.signWith(handle.getDefaultAccount(parser))
         if vars(nameSpace)['no_broadcast'] is False:
             transaction = transaction.broadcastTo(handle.getNode())
     elif vars(nameSpace)['no_broadcast'] is False:

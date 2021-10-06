@@ -1,6 +1,6 @@
 from LTOCli import HandleDefault as handle
 from LTO.Transactions.Transfer import Transfer
-from LTOCli import Config
+
 
 def func(nameSpace, parser):
     recipient = nameSpace.recipient[0]
@@ -9,9 +9,9 @@ def func(nameSpace, parser):
 
     if vars(nameSpace)['unsigned'] is False:
         if vars(nameSpace)['account']:
-            transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
+            transaction.signWith(handle.getAccountFromName(vars(nameSpace)['account'][0], parser))
         else:
-            transaction.signWith(handle.getAccount(parser))
+            transaction.signWith(handle.getDefaultAccount(parser))
         if vars(nameSpace)['no_broadcast'] is False:
             transaction = transaction.broadcastTo(handle.getNode())
     elif vars(nameSpace)['no_broadcast'] is False:

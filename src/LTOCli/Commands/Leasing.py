@@ -9,12 +9,12 @@ import json
 def func(nameSpace, parser):
     if vars(nameSpace)['subparser-name-lease'] == 'create':
         transaction = Lease(recipient=nameSpace.recipient[0], amount=nameSpace.amount[0])
-        transaction.signWith(handle.getAccount(parser))
+        transaction.signWith(handle.getDefaultAccount(parser))
         if vars(nameSpace)['unsigned'] is False:
             if vars(nameSpace)['account']:
-                transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
+                transaction.signWith(handle.getAccountFromName(vars(nameSpace)['account'][0], parser))
             else:
-                transaction.signWith(handle.getAccount(parser))
+                transaction.signWith(handle.getDefaultAccount(parser))
             if vars(nameSpace)['no_broadcast'] is False:
                 transaction = transaction.broadcastTo(handle.getNode())
         elif vars(nameSpace)['no_broadcast'] is False:
@@ -24,12 +24,12 @@ def func(nameSpace, parser):
 
     elif vars(nameSpace)['subparser-name-lease'] == 'cancel':
         transaction = CancelLease(leaseId=nameSpace.leaseId[0])
-        transaction.signWith(handle.getAccount(parser))
+        transaction.signWith(handle.getDefaultAccount(parser))
         if vars(nameSpace)['unsigned'] is False:
             if vars(nameSpace)['account']:
-                transaction.signWith(handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]))
+                transaction.signWith(handle.getAccountFromName(vars(nameSpace)['account'][0], parser))
             else:
-                transaction.signWith(handle.getAccount(parser))
+                transaction.signWith(handle.getDefaultAccount(parser))
             if vars(nameSpace)['no_broadcast'] is False:
                 transaction = transaction.broadcastTo(handle.getNode())
         elif vars(nameSpace)['no_broadcast'] is False:
@@ -48,9 +48,9 @@ def func(nameSpace, parser):
         node = PublicNode('http://testnet.lto.network')
 
         if vars(nameSpace)['account']:
-            address = handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]).address
+            address = handle.getAccountFromName(vars(nameSpace)['account'][0], parser).address
         else:
-            address = handle.getAccount(parser).address
+            address = handle.getDefaultAccount(parser).address
 
 
         def leaseList(address):
@@ -70,9 +70,9 @@ def func(nameSpace, parser):
         node = PublicNode('http://testnet.lto.network')
 
         if vars(nameSpace)['account']:
-            address = handle.getAccountFromOption(parser, vars(nameSpace)['account'][0]).address
+            address = handle.getAccountFromName(vars(nameSpace)['account'][0], parser).address
         else:
-            address = handle.getAccount(parser).address
+            address = handle.getDefaultAccount(parser).address
 
         def leaseList(address):
             return node.wrapper(api='/leasing/active/{}'.format(address))
