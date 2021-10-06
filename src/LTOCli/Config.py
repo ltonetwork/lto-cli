@@ -133,6 +133,16 @@ def removeDefaultAccount(address):
             config.remove_section('Default')
             config.write(open(Path.joinpath(path, 'Default/config.ini'), 'w'))
 
+def setNode(nameSpace):
+    node = nameSpace.url[0]
+    checkDirectory('Default')
+    config = ConfigParser()
+    config.read(Path.joinpath(path, 'Default/config.ini'))
+    if not 'Node' in config.sections():
+        config.add_section('Node')
+    config.set('Node', 'url', node)
+    config.write(open(Path.joinpath(path, 'Default/config.ini'), 'w'))
+
 # ---------------------------------------------------------------------------------------------------
 
 def writeToFile2(path_, account, secName, parser):
@@ -324,7 +334,7 @@ def findAccountSection(address, config):
     return ''
 
 
-def setnode(nameSpace):
+def setnode2(nameSpace):
     node = nameSpace.url[0]
     # network = chainID
     # node = url (https://...)

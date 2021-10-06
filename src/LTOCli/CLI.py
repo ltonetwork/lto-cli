@@ -96,7 +96,6 @@ def main():
     # --------------------------------------------------------------
     parser_setNode = subparsers.add_parser('set-node', help="Allows to set the preferred node to connect to and an optional network parameter, type 'lto set-node --help' for more information")
     parser_setNode.add_argument('url', type=str, nargs=1, help="url of the node to connect to")
-    parser_setNode.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter (ex. L, T)')
     # --------------------------------------------------------------
     parser_sponsorship = subparsers.add_parser('sponsorship', help="Create a Sponsorship Transaction, type 'lto sponsorship --help' for more information")
     sponsorship_subparser = parser_sponsorship.add_subparsers(dest='subparser-name-sponsorship')
@@ -166,7 +165,7 @@ def processArgs(nameSpace, parser):
         Leasing.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'set-node':
-        Config.setnode(nameSpace)
+        Config.setNode(nameSpace)
 
     elif vars(nameSpace)['subparser-name'] == 'broadcast':
         Broadcast.func(nameSpace, parser)
