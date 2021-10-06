@@ -37,26 +37,13 @@ def func(nameSpace, parser):
                 "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto lease cancel --help' for more informations ")
         handle.prettyPrint(transaction)
 
-
-
-
-
-
-
     elif vars(nameSpace)['subparser-name-lease'] == 'list':  # The lease that I'm giving
-
-        node = PublicNode('http://testnet.lto.network')
-
+        node = handle.getNode()
         if vars(nameSpace)['account']:
             address = handle.getAccountFromName(vars(nameSpace)['account'][0], parser).address
         else:
             address = handle.getDefaultAccount(parser).address
-
-
-        def leaseList(address):
-            return node.wrapper(api='/leasing/active/{}'.format(address))
-
-        value = leaseList(address)
+        value = node.leaseList(address)
         flag = 0
         for x in value:
             if x['sender'] == address:  # outbound
@@ -66,18 +53,12 @@ def func(nameSpace, parser):
             print("No outbound lease found")
 
     elif vars(nameSpace)['subparser-name-lease'] == 'list-inbound':  # The lease that I've received
-
-        node = PublicNode('http://testnet.lto.network')
-
+        node = handle.getNode()
         if vars(nameSpace)['account']:
             address = handle.getAccountFromName(vars(nameSpace)['account'][0], parser).address
         else:
             address = handle.getDefaultAccount(parser).address
-
-        def leaseList(address):
-            return node.wrapper(api='/leasing/active/{}'.format(address))
-
-        value = leaseList(address)
+        value = node.leaseList(address)
         flag = 0
         for x in value:
             if x['recipient'] == address:  # inbound

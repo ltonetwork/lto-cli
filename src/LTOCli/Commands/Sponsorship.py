@@ -39,17 +39,12 @@ def func(nameSpace,parser):
         pass
 
     elif vars(nameSpace)['subparser-name-sponsorship'] == 'list-inbound':
-        node = PublicNode('http://testnet.lto.network')
-
+        node = handle.getNode()
         if vars(nameSpace)['account']:
             address = handle.getAccountFromName(vars(nameSpace)['account'][0], parser).address
         else:
             address = handle.getDefaultAccount(parser).address
-
-        def sponsorshipList(address):
-            return node.wrapper(api='/sponsorship/status/{}'.format(address))
-
-        value = sponsorshipList(address)
+        value = node.sponsorshipList(address)
         if value['sponsor']:
             for x in value['sponsor']:
                 print(x)
