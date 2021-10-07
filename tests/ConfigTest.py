@@ -30,3 +30,8 @@ class TestConfig:
     def testFindAccountFound(self):
         with mock.patch.object(builtins, 'next', return_value = ['ds','sdf','Accounts.ini']):
             assert Config.findAccount() == False
+
+    def testFindAccountInConfig(self):
+        with mock.patch.object(configparser.RawConfigParser, 'sections', return_value = ['dsfds', ['fdsfsdf']]):
+            with mock.patch.object(configparser.RawConfigParser, 'get', return_value = 'test'):
+                assert Config.findAccountInConfig(config=configparser.RawConfigParser) == False
