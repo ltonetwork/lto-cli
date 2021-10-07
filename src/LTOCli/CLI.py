@@ -19,7 +19,30 @@ from LTOCli.Commands import Broadcast
 def main():
     Config.checkDirectory()
 
-    parser = argparse.ArgumentParser(prog='lto', description='LTO Network CLI client, visit the github page for more information https://github.com/ltonetwork/lto-cli',  usage=argparse.SUPPRESS)
+    parser = argparse.ArgumentParser(prog='lto', description=''
+'          _____       _____                    _______ \n'
+'         /\    \     /\    \                  /::\    \ \n'
+'        /::\____\   /::\    \                /::::\    \ \n'
+'       /:::/    /   \:::\    \              /::::::\    \ \n'
+'      /:::/    /     \:::\    \            /::::::::\    \ \n'
+'     /:::/    /       \:::\    \          /:::/~~\:::\    \ \n'
+'    /:::/    /         \:::\    \        /:::/    \:::\    \ \n'
+'   /:::/    /          /::::\    \      /:::/    / \:::\    \ \n'
+'  /:::/    /          /::::::\    \    /:::/____/   \:::\____\ \n'
+' /:::/    /          /:::/\:::\    \  |:::|    |     |:::|    | \n'
+'/:::/____/          /:::/  \:::\____\ |:::|____|     |:::|____| \n'
+'\:::\    \         /:::/    \::/    /  \:::\    \   /:::/    / \n'
+' \:::\    \       /:::/    / \/____/    \:::\    \ /:::/    / \n'
+'  \:::\    \     /:::/    /              \:::\    /:::/    / \n'
+'   \:::\    \   /:::/    /                \:::\__/:::/    / \n'
+'    \:::\    \  \::/    /                  \::::::::/    / \n'
+'     \:::\    \  \/____/                    \::::::/    / \n'
+'      \:::\    \                             \::::/    / \n'
+'       \:::\____\                             \::/____/ \n'
+'        \::/    /                               \n'
+'         \/____/ \n\n'
+                                                             'LTO Network CLI client, visit the github page for more information https://github.com/ltonetwork/lto-cli',
+                                     usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
     # --------------------------------------------------------------

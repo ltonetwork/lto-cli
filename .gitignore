@@ -11,3 +11,5 @@ __pycache__/
 /src/LTOCli/__init__.pyc
 /src/LTOCli/test.py
 /tests/.coverage
+/src/lto_cli.egg-info/
+/dist/
