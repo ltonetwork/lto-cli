@@ -51,12 +51,15 @@ def main():
 
     parser_create = accounts_subparser.add_parser('create', help="Allow to create an account with two optional parameter, --name and --network")
     parser_create.add_argument('--name', required=False, type=str, nargs=1)
-    parser_create.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter (ex. L, T)')
+    parser_create.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
     parser_list = accounts_subparser.add_parser('list', help="Returns the list of accounts stored locally")
+    parser_list.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
 
     parser_setDefault = accounts_subparser.add_parser('set-default', help="Sets the specified account as default account")
     parser_setDefault.add_argument('address', type=str, nargs=1)
+
 
     parser_remove = accounts_subparser.add_parser('remove', help="Remove the specified account, the account can be identified by address or name")
     parser_remove.add_argument('address', type=str, nargs=1)
@@ -64,7 +67,7 @@ def main():
     parser_seed = accounts_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto accounts seed --help")
     parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto accounts seed")
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
-    parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter (ex. L, T)')
+    parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     # --------------------------------------------------------------
     parser_anchor = subparsers.add_parser(name='anchor', help="Create an Anchor Transaction, type 'lto anchor --help' for more information")
     parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain")
@@ -119,6 +122,7 @@ def main():
     # --------------------------------------------------------------
     parser_setNode = subparsers.add_parser('set-node', help="Allows to set the preferred node to connect to and an optional network parameter, type 'lto set-node --help' for more information")
     parser_setNode.add_argument('url', type=str, nargs=1, help="url of the node to connect to")
+    parser_setNode.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     # --------------------------------------------------------------
     parser_sponsorship = subparsers.add_parser('sponsorship', help="Create a Sponsorship Transaction, type 'lto sponsorship --help' for more information")
     sponsorship_subparser = parser_sponsorship.add_subparsers(dest='subparser-name-sponsorship')

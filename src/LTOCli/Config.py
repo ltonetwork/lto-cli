@@ -7,7 +7,8 @@ import os
 from pathlib import Path
 
 CHAIN_ID = 'L'
-#path = Path.home()
+DEFAULT_URL_MAINNET = 'https://nodes.lto.network'
+DEFAULT_URL_TESTNET = 'https://testnet.lto.network'
 path = Path.joinpath(Path.home(), 'lto')
 
 def writeToFile(chainId, account, secName, parser):
@@ -29,7 +30,8 @@ def writeToFile(chainId, account, secName, parser):
         config.set(secName, 'PrivateKey', base58.b58encode(account.privateKey.__bytes__()))
         config.set(secName, 'Seed', account.seed)
         config.write(open(Path.joinpath(relativePath, 'Accounts.ini'), 'w'))
-        writeDefaultAccount(account)
+        print(account.address)
+        writeDefaultAccount(account, chainId)
 
     else:
         if not findAccount(address=account.address, name=secName):
@@ -39,7 +41,8 @@ def writeToFile(chainId, account, secName, parser):
             config.set(secName, 'PrivateKey', base58.b58encode(account.privateKey.__bytes__()))
             config.set(secName, 'Seed', account.seed)
             config.write(open(Path.joinpath(relativePath, 'Accounts.ini'), 'w'))
-            writeDefaultAccount(account)
+            print(account.address)
+            writeDefaultAccount(account, chainId)
         else:
             parser.error("An account with the same id is already present, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
 
@@ -68,25 +71,36 @@ def findAccountInConfig(config, address='', name=''):
 
 
 #  Change is set to false, so it won't change the predetermined default account
-def writeDefaultAccount(account, change = False):
-    checkDirectory('Default')
-    localPath = Path.joinpath(path,'Default/config.ini')
+def writeDefaultAccount(account, chainId, change = False):
+
+    # to remove:
+    if not os.path.exists(Path.joinpath(path, chainId)):
+        raise Exception('The path does not exist!')
+    # ########
+
+    localPath = Path.joinpath(path, '{}/config.ini'.format(chainId))
     config = ConfigParser()
     config.read(localPath)
     if not config.sections():
         config.add_section('Default')
         config.set('Default', 'Address', account.address)
-        config.write(open(Path.joinpath(path,'Default/config.ini'), 'w'))
+        if chainId == 'L':
+            config.add_section('Node')
+            config.set('Node', 'url', DEFAULT_URL_MAINNET)
+        elif chainId == 'T':
+            config.add_section('Node')
+            config.set('Node', 'url', DEFAULT_URL_TESTNET)
+        config.write(open(localPath, 'w'))
     else:
         if not 'Default' in config.sections():
             config.add_section('Default')
             config.set('Default', 'Address', account.address)
-            config.write(open(Path.joinpath(path,'Default/config.ini'), 'w'))
+            config.write(open(localPath, 'w'))
         elif change:
             config.remove_section('Default')
             config.add_section('Default')
             config.set('Default', 'Address', account.address)
-            config.write(open(Path.joinpath(path,'Default/config.ini'), 'w'))
+            config.write(open(localPath, 'w'))
 
 
 def listAccounts():
@@ -110,7 +124,7 @@ def setDefaultAccount(name, parser):
             "No account found with this id, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
     else:
         account = Account(seed=value[0][0], privateKey=value[0][1], publicKey=value[0][2], address=value[0][3])
-        writeDefaultAccount(account, change=True)
+        writeDefaultAccount(account, value[1], change=True)
 
 def removeAccount(name, parser):
     value = findAccount(name=name)
@@ -123,22 +137,24 @@ def removeAccount(name, parser):
         address = config.get(name, 'address')
         config.remove_section(name)
         config.write(open(Path.joinpath(path, '{}/Accounts.ini'.format(value[1])), 'w'))
-        removeDefaultAccount(address)
+        removeDefaultAccount(address, value[1])
 
-def removeDefaultAccount(address):
+def removeDefaultAccount(address, chainId):
     config = ConfigParser()
-    config.read(Path.joinpath(path, 'Default/config.ini'))
+    config.read(Path.joinpath(path, '{}/config.ini'.format(chainId)))
     if 'Default' in config.sections():
         if address == config.get('Default', 'address'):
             config.remove_section('Default')
-            config.write(open(Path.joinpath(path, 'Default/config.ini'), 'w'))
+            config.write(open(Path.joinpath(path, '{}/config.ini'.format(chainId)), 'w'))
 
 def setNode(nameSpace):
+    chainId = nameSpace.network[0] if nameSpace.network else 'L'
+    chainId = chainId.upper() if not chainId.isupper() else chainId
     node = nameSpace.url[0]
-    checkDirectory('Default')
+    checkDirectory(chainId)
     config = ConfigParser()
-    config.read(Path.joinpath(path, 'Default/config.ini'))
+    config.read(Path.joinpath(path, '{}/config.ini'.format(chainId)))
     if not 'Node' in config.sections():
         config.add_section('Node')
     config.set('Node', 'url', node)
-    config.write(open(Path.joinpath(path, 'Default/config.ini'), 'w'))
+    config.write(open(Path.joinpath(path, '{}/config.ini'.format(chainId)), 'w'))

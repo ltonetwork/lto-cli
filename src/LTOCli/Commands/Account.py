@@ -7,12 +7,15 @@ def func(nameSpace, parser):
         chainId = nameSpace.network[0] if nameSpace.network else 'L'
         if not (chainId.isalpha() and len(chainId) == 1):
             parser.error('The --network parameter accepts only CHAR type')
+        chainId = chainId.upper() if not chainId.isupper() else chainId
         secName = nameSpace.name[0] if nameSpace.name else ''
         factory = AccountFactory(chainId)
         account = factory.create()
         Config.writeToFile(chainId, account, secName, parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'list':
+        chainId = nameSpace.network[0] if nameSpace.network else 'L'
+        chainId = chainId.upper() if not chainId.isupper() else chainId
         list = Config.listAccounts()
         for account in list:
             print('Network:', account[0], 'Accounts:', account[1:][0])
@@ -28,6 +31,7 @@ def func(nameSpace, parser):
         chainId = nameSpace.network[0] if nameSpace.network else 'L'
         if not (chainId.isalpha() and len(chainId) == 1):
             parser.error('The --network parameter accepts only CHAR type')
+        chainId = chainId.upper() if not chainId.isupper() else chainId
         secName = nameSpace.name[0] if nameSpace.name else ''
         factory = AccountFactory(chainId)
         seed = nameSpace.stdin.read().splitlines() if not sys.stdin.isatty() else []
