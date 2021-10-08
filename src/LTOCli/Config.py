@@ -176,8 +176,10 @@ def removeDefaultAccount(address, chainId):
             config.remove_section('Default')
             config.write(open(Path.joinpath(path, '{}/config.ini'.format(chainId)), 'w'))
 
-def setNode(nameSpace):
+def setNode(nameSpace, parser):
     chainId = nameSpace.network[0] if nameSpace.network else 'L'
+    if not (chainId.isalpha() and len(chainId) == 1):
+        parser.error('The --network parameter accepts only CHAR type')
     chainId = chainId.upper() if not chainId.isupper() else chainId
     node = nameSpace.url[0]
     checkDirectory(chainId)

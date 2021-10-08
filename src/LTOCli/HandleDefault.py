@@ -16,27 +16,37 @@ path = Path.joinpath(Path.home(), 'lto')
 def prettyPrint(transaction):
     print(json.dumps(transaction.toJson(), indent=2))
 
-def getNode():
-    global URL
+def getNode(chainId, parser):
+    localPath = Path.joinpath(path, "{}/config.ini".format(chainId))
+    if not os.path.exists(localPath):
+        parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chainId))
     config = ConfigParser()
-    localPath = Path.joinpath(path, 'Default/config.ini')
+    config.read(localPath)
+    if not 'Node' in config.sections():
+        parser.error("No node set for this network, type 'lto set-node --help' for instructions")
+    else:
+        return PublicNode(config.get('Node', 'url'))
+
+
+def getAccount(chainId, parser, name = ''):
+    localPath = Path.joinpath(path, "{}/accounts.ini".format(chainId))
 
     if not os.path.exists(localPath):
-        return PublicNode(URL)
-    else:
-        config.read(localPath)
-        if not 'Node' in config.sections():
-            return PublicNode(URL)
-        else:
-            return PublicNode(config.get('Node', 'url'))
+        parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chainId))
 
-def getDefaultAccount(parser):
-    relativePath = Path.joinpath(path, 'Default/config.ini')
-    if not os.path.exists(relativePath):
-        parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
+    config = ConfigParser()
+    config.read(localPath)
+    if name:
+        if name in config.sections():
+            return AccountFactory(chainId).createFromSeed(config.get(name, 'seed'))
+        else:
+            parser.error("No account found for {} network with name {}, type 'lto accounts --help' for instructions".format(chainId, name))
     else:
-        config = ConfigParser()
-        config.read(relativePath)
+        localPath = Path.joinpath(path, "{}/config.ini".format(chainId))
+        if not os.path.exists(localPath):
+            parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chainId))
+        config.clear()
+        config.read(localPath)
         if not 'Default' in config.sections():
             parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
         else:
@@ -48,12 +58,10 @@ def getDefaultAccount(parser):
             else:
                 return AccountFactory(value[1]).createFromSeed(value[0][0])
 
-def getAccountFromName(name, parser):
-    value = Config.findAccount(address=name, name = name)
-    if not value:
-        parser.error("No matching account found, type 'lto accounts --help' for information on how to create an "
-                     "account, or 'lto accounts list' for a list of all locally stored accounts")
-    else:
-        return AccountFactory(value[1]).createFromSeed(value[0][0])
+
+def check(chainId, parser):
+    if not (chainId.isalpha() and len(chainId) == 1):
+        parser.error('The --network parameter accepts only CHAR type')
+    return chainId.upper() if not chainId.isupper() else chainId
 
 
