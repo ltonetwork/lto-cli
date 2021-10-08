@@ -23,7 +23,7 @@ def writeToFile(chainId, account, secName, parser):
     config = ConfigParser()
     config.read(Path.joinpath(relativePath, 'Accounts.ini'))
 
-    if not config.sections(): # the file is not present
+    if not config.sections() and not findAccount(address=account.address, name=secName):
         config.add_section(secName)
         config.set(secName, 'Address', account.address)
         config.set(secName, 'PublicKey', base58.b58encode(account.publicKey.__bytes__()))
@@ -102,8 +102,36 @@ def writeDefaultAccount(account, chainId, change = False):
             config.set('Default', 'Address', account.address)
             config.write(open(localPath, 'w'))
 
+def listAccounts(chainId, parser):
+    list = []
+    localPath = Path.joinpath(path, "{}/accounts.ini".format(chainId))
+    if not os.path.exists(localPath):
+        parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chainId))
+    else:
+        config = ConfigParser()
+        config.read(localPath)
+        for section in config.sections():
+            list.append([section , config.get(section, 'address')])
+    return list
 
-def listAccounts():
+
+def printListAccounts(chainId, parser):
+    listAcc = listAccounts(chainId, parser)
+
+    # get the default Address
+
+    # print
+    '''for account in list:
+        if not account[0] == account[1]:
+            print(account[1], " - ", account[0])
+        else:
+            print(account[1])'''
+
+
+
+
+
+def listAccountsComplete():
     list = []
     directories = next(os.walk(path), (None, None, []))[1]
     for chainId in directories:
@@ -112,6 +140,7 @@ def listAccounts():
             config.read(Path.joinpath(path, '{}/Accounts.ini'.format(chainId)))
             list.append([chainId, config.sections()])
     return list
+
 
 def checkDirectory(dir=''):
     if not os.path.exists(Path.joinpath(path, dir)):

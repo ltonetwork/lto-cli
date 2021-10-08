@@ -10,7 +10,6 @@ from LTO.PublicNode import PublicNode
 
 CHAIN_ID = 'L'
 URL = 'https://nodes.lto.network'
-#path = Path.home()
 
 path = Path.joinpath(Path.home(), 'lto')
 

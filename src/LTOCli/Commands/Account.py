@@ -16,9 +16,8 @@ def func(nameSpace, parser):
     elif vars(nameSpace)['subparser-name-accounts'] == 'list':
         chainId = nameSpace.network[0] if nameSpace.network else 'L'
         chainId = chainId.upper() if not chainId.isupper() else chainId
-        list = Config.listAccounts()
-        for account in list:
-            print('Network:', account[0], 'Accounts:', account[1:][0])
+        Config.printListAccounts(chainId, parser)
+
 
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'set-default':
