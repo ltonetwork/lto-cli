@@ -71,12 +71,7 @@ def findAccountInConfig(config, address='', name=''):
 
 
 #  Change is set to false, so it won't change the predetermined default account
-def writeDefaultAccount(account, chainId, change = False):
-
-    # to remove:
-    if not os.path.exists(Path.joinpath(path, chainId)):
-        raise Exception('The path does not exist!')
-    # ########
+def writeDefaultAccount(account, chainId, change=False):
 
     localPath = Path.joinpath(path, '{}/config.ini'.format(chainId))
     config = ConfigParser()
