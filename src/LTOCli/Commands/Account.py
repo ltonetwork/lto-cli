@@ -26,6 +26,9 @@ def func(nameSpace, parser):
     elif vars(nameSpace)['subparser-name-accounts'] == 'remove':
         Config.removeAccount(nameSpace.address[0], parser)
 
+    elif vars(nameSpace)['subparser-name-accounts'] == 'show':
+        Config.show(nameSpace.address[0], parser)
+
     elif vars(nameSpace)['subparser-name-accounts'] == 'seed':
         chainId = nameSpace.network[0] if nameSpace.network else 'L'
         if not (chainId.isalpha() and len(chainId) == 1):

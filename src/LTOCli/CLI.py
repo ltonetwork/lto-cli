@@ -62,6 +62,9 @@ def main():
     parser_remove = accounts_subparser.add_parser('remove', help="Remove the specified account, the account can be identified by address or name")
     parser_remove.add_argument('address', type=str, nargs=1)
 
+    parser_show = accounts_subparser.add_parser('show', help="Show the information about the account")
+    parser_show.add_argument('address', type=str, nargs=1, help="The address field can be filled with either address or name")
+
     parser_seed = accounts_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto accounts seed --help")
     parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto accounts seed")
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)

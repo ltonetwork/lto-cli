@@ -202,3 +202,17 @@ def setNode(nameSpace, parser):
         config.add_section('Node')
     config.set('Node', 'url', node)
     config.write(open(Path.joinpath(path, '{}/config.ini'.format(chainId)), 'w'))
+
+def show(id, parser):
+    value = findAccount(address=id, name=id)
+    if not value:
+        parser.error("No matching account fo {}, type 'lto accounts --help' for instructions")
+    else:
+        if id != value[0][3]:
+            print('Name    : ', id)
+        print('Address : ', value[0][3])
+        print('Sign    :')
+        print('   SecretKey  : ',value[0][1] )
+        print('   PublicKey  : ',value[0][2] )
+        print('Seed    : ', value[0][0])
+
