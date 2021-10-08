@@ -114,21 +114,26 @@ def listAccounts(chainId, parser):
             list.append([section , config.get(section, 'address')])
     return list
 
+def getDefaultAddrFromChainId(chainId):
+    localPath = Path.joinpath(path, "{}/config.ini".format(chainId))
+    config = ConfigParser()
+    config.read(localPath)
+    if not 'Default' in config.sections():
+        return ''
+    else:
+        return config.get('Default', 'address')
 
 def printListAccounts(chainId, parser):
     listAcc = listAccounts(chainId, parser)
+    address = getDefaultAddrFromChainId(chainId)
 
-    # get the default Address
 
-    # print
-    '''for account in list:
+    for account in listAcc:
+        temp = ' * {}'.format(account[1]) if account[1] == address else '   {}'.format(account[1])
         if not account[0] == account[1]:
-            print(account[1], " - ", account[0])
+            print(temp, " - ", account[0])
         else:
-            print(account[1])'''
-
-
-
+            print(temp)
 
 
 def listAccountsComplete():
@@ -140,7 +145,6 @@ def listAccountsComplete():
             config.read(Path.joinpath(path, '{}/Accounts.ini'.format(chainId)))
             list.append([chainId, config.sections()])
     return list
-
 
 def checkDirectory(dir=''):
     if not os.path.exists(Path.joinpath(path, dir)):
@@ -167,6 +171,14 @@ def removeAccount(name, parser):
         config.remove_section(name)
         config.write(open(Path.joinpath(path, '{}/Accounts.ini'.format(value[1])), 'w'))
         removeDefaultAccount(address, value[1])
+        deleteIfEmpty(Path.joinpath(path, '{}/Accounts.ini'.format(value[1])))
+
+def deleteIfEmpty(pathDelete):
+    config = ConfigParser()
+    config.read(pathDelete)
+    if not config.sections():
+        os.remove(pathDelete)
+
 
 def removeDefaultAccount(address, chainId):
     config = ConfigParser()
@@ -175,6 +187,7 @@ def removeDefaultAccount(address, chainId):
         if address == config.get('Default', 'address'):
             config.remove_section('Default')
             config.write(open(Path.joinpath(path, '{}/config.ini'.format(chainId)), 'w'))
+            deleteIfEmpty(Path.joinpath(path, '{}/config.ini'.format(chainId)))
 
 def setNode(nameSpace, parser):
     chainId = nameSpace.network[0] if nameSpace.network else 'L'
