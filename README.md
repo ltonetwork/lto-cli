@@ -20,6 +20,7 @@ echo "my seed" | lto accounts seed --name foobar
 lto accounts list
 lto accounts set-default foobar
 lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
+lto accounts show 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
 ```
 
 ### Public node
