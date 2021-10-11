@@ -71,6 +71,8 @@ _Recipient/amount pairs are read from stdin._
 ```
 lto lease create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 1000000000
 lto lease cancel --leaseid 6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
+lto lease list
+lto lease list-inbound
 ```
 
 ### Sponsorship
@@ -78,6 +80,7 @@ lto lease cancel --leaseid 6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
 ```
 lto sponsorship create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 lto sponsorship cancel --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
+lto sponsorship list-inbound
 ```
 
 ## Common options
