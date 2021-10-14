@@ -1,4 +1,4 @@
-from LTO.AccountFactory import AccountFactory
+from LTO.Accounts.AccountFactoryED25519 import AccountED25519 as AccountFactory
 from LTOCli import Config
 import sys
 
