@@ -20,12 +20,21 @@ echo "my seed" | lto accounts seed --name foobar
 lto accounts list
 lto accounts set-default foobar
 lto accounts remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
+lto accounts show 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL
 ```
 
 ### Public node
 
 ```
 lto set-node https://nodes.lto.network
+```
+
+### Broadcast
+
+Takes as input a transaction (signed or unsigned) and broadcast it to the network
+
+```
+echo $TX_JSON | lto broadcast
 ```
 
 ## Transactions
@@ -63,6 +72,8 @@ _Recipient/amount pairs are read from stdin._
 ```
 lto lease create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 1000000000
 lto lease cancel --leaseid 6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
+lto lease list
+lto lease list-inbound
 ```
 
 ### Sponsorship
@@ -70,6 +81,7 @@ lto lease cancel --leaseid 6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
 ```
 lto sponsorship create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 lto sponsorship cancel --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
+lto sponsorship list-inbound
 ```
 
 ## Common options
