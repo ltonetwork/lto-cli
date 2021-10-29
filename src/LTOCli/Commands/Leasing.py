@@ -4,10 +4,9 @@ from LTO.Transactions.CancelLease import CancelLease
 
 
 def func(nameSpace, parser):
-    chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
-    accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
-
     if vars(nameSpace)['subparser-name-lease'] == 'create':
+        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
+        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
         transaction = Lease(recipient=nameSpace.recipient[0], amount=nameSpace.amount[0])
         if vars(nameSpace)['unsigned'] is False:
             transaction.signWith(handle.getAccount(chainId, parser, accountName))
@@ -30,6 +29,8 @@ def func(nameSpace, parser):
         handle.prettyPrint(transaction)
 
     elif vars(nameSpace)['subparser-name-lease'] == 'list':  # The lease that I'm giving
+        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
+        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
         node = handle.getNode(chainId, parser)
         address = handle.getAccount(chainId, parser, accountName).address
         value = node.leaseList(address)
@@ -42,6 +43,8 @@ def func(nameSpace, parser):
             print("No outbound lease found")
 
     elif vars(nameSpace)['subparser-name-lease'] == 'list-inbound':  # The lease that I've received
+        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
+        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
         node = handle.getNode(chainId, parser)
         address = handle.getAccount(chainId, parser, accountName).address
         value = node.leaseList(address)
