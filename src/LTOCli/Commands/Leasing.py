@@ -18,6 +18,8 @@ def func(nameSpace, parser):
         handle.prettyPrint(transaction)
 
     elif vars(nameSpace)['subparser-name-lease'] == 'cancel':
+        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
+        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
         transaction = CancelLease(leaseId=nameSpace.leaseId[0])
         if vars(nameSpace)['unsigned'] is False:
             transaction.signWith(handle.getAccount(chainId, parser, accountName))
