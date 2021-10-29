@@ -71,7 +71,7 @@ def main():
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     # --------------------------------------------------------------
     parser_anchor = subparsers.add_parser(name='anchor', help="Create an Anchor Transaction, type 'lto anchor --help' for more information")
-    parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain")
+    parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain", required=True)
     parser_anchor.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_anchor.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_anchor.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
@@ -87,7 +87,7 @@ def main():
     parser_association.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_association.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     # --------------------------------------------------------------
-    parser_broadcast = subparsers.add_parser('broadcast', help="Create remove and manage accounts, type 'lto accounts --help' for more informations")
+    parser_broadcast = subparsers.add_parser('broadcast', help="Takes as input a transaction (signed or unsigned) and broadcast it to the network, type 'lto broadcast --help' for more informations")
     parser_broadcast.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the json transaction as input: echo '$TX_JSON' | lto broadcast")
     parser_broadcast.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored for signing the transaction. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_broadcast.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
