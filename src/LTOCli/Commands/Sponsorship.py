@@ -4,9 +4,11 @@ from LTO.Transactions.CancelSponsorship import CancelSponsorship
 
 
 def func(nameSpace,parser):
-    if vars(nameSpace)['subparser-name-sponsorship'] == 'create':
+    if vars(nameSpace)['subparser-name-sponsorship']:
         chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
         accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
+
+    if vars(nameSpace)['subparser-name-sponsorship'] == 'create':
         transaction = Sponsorship(nameSpace.recipient[0])
         if vars(nameSpace)['unsigned'] is False:
             transaction.signWith(handle.getAccount(chainId, parser, accountName))
@@ -18,8 +20,6 @@ def func(nameSpace,parser):
         handle.prettyPrint(transaction)
 
     elif vars(nameSpace)['subparser-name-sponsorship'] == 'cancel':
-        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
-        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
         transaction = CancelSponsorship(nameSpace.recipient[0])
         if vars(nameSpace)['unsigned'] is False:
             transaction.signWith(handle.getAccount(chainId, parser, accountName))
@@ -34,8 +34,6 @@ def func(nameSpace,parser):
         pass
 
     elif vars(nameSpace)['subparser-name-sponsorship'] == 'list-inbound':
-        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
-        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
         node = handle.getNode(chainId, parser)
         address = handle.getAccount(chainId, parser, accountName).address
         value = node.sponsorshipList(address)
