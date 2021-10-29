@@ -4,9 +4,9 @@ from LTO.Transactions.CancelSponsorship import CancelSponsorship
 
 
 def func(nameSpace,parser):
-
-    chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
-    accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
+    if vars(nameSpace)['subparser-name-sponsorship']:
+        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
+        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
 
     if vars(nameSpace)['subparser-name-sponsorship'] == 'create':
         transaction = Sponsorship(nameSpace.recipient[0])

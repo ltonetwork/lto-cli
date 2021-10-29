@@ -4,8 +4,9 @@ from LTO.Transactions.CancelLease import CancelLease
 
 
 def func(nameSpace, parser):
-    chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
-    accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
+    if vars(nameSpace)['subparser-name-lease']:
+        chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
+        accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
 
     if vars(nameSpace)['subparser-name-lease'] == 'create':
         transaction = Lease(recipient=nameSpace.recipient[0], amount=nameSpace.amount[0])
