@@ -15,7 +15,7 @@ class TestMassTransfer:
         assert MasT.processInput(self.transfers) == [{'recipient': '3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj', 'amount': 1000000000}, {'recipient': '3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz', 'amount': 800000000}]
 
 
-    @mock.patch.object(MassTransfer, 'broadcastTo')
+    @mock.patch.object(MassTransfer, 'broadcast_to')
     def testFunc(self, mocks):
         with pytest.raises(Exception):
             MasT.func(stdin=[])

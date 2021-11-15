@@ -10,7 +10,7 @@ from LTO.Transactions.CancelSponsorship import CancelSponsorship
 
 class TestAssociation:
 
-    @mock.patch.object(Sponsorship, 'broadcastTo')
+    @mock.patch.object(Sponsorship, 'broadcast_to')
     def testFunc(self, mocks):
         with pytest.raises(Exception):
             Spo.func(args=['0','1'], recipient=[])
@@ -19,7 +19,7 @@ class TestAssociation:
                 Spo.func(args=['test','create'],recipient = ['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'])
         mocks.assert_called()
 
-    @mock.patch.object(CancelSponsorship, 'broadcastTo')
+    @mock.patch.object(CancelSponsorship, 'broadcast_to')
     def testFunc2(self, mocks):
         with mock.patch.object(HandleDefault, 'getAccount', return_value ='Account'):
             with mock.patch.object(Transaction, 'signWith'):

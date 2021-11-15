@@ -2,45 +2,45 @@ from LTO.Accounts.AccountFactoryED25519 import AccountED25519 as AccountFactory
 from LTOCli import config
 import sys
 
-def func(nameSpace, parser):
-    if vars(nameSpace)['subparser-name-accounts'] == 'create':
-        chainId = nameSpace.network[0] if nameSpace.network else 'L'
-        if not (chainId.isalpha() and len(chainId) == 1):
+def func(name_space, parser):
+    if vars(name_space)['subparser-name-accounts'] == 'create':
+        chain_id = name_space.network[0] if name_space.network else 'L'
+        if not (chain_id.isalpha() and len(chain_id) == 1):
             parser.error('The --network parameter accepts only CHAR type')
-        chainId = chainId.upper() if not chainId.isupper() else chainId
-        secName = nameSpace.name[0] if nameSpace.name else ''
-        factory = AccountFactory(chainId)
+        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+        sec_name = name_space.name[0] if name_space.name else ''
+        factory = AccountFactory(chain_id)
         account = factory.create()
-        config.writeToFile(chainId, account, secName, parser)
+        config.write_to_file(chain_id, account, sec_name, parser)
 
-    elif vars(nameSpace)['subparser-name-accounts'] == 'list':
-        chainId = nameSpace.network[0] if nameSpace.network else 'L'
-        chainId = chainId.upper() if not chainId.isupper() else chainId
-        config.printListAccounts(chainId, parser)
+    elif vars(name_space)['subparser-name-accounts'] == 'list':
+        chain_id = name_space.network[0] if name_space.network else 'L'
+        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+        config.print_list_accounts(chain_id, parser)
 
 
 
-    elif vars(nameSpace)['subparser-name-accounts'] == 'set-default':
-        config.setDefaultAccount(nameSpace.address[0], parser)
+    elif vars(name_space)['subparser-name-accounts'] == 'set-default':
+        config.set_default_accounts(name_space.address[0], parser)
 
-    elif vars(nameSpace)['subparser-name-accounts'] == 'remove':
-        config.removeAccount(nameSpace.address[0], parser)
+    elif vars(name_space)['subparser-name-accounts'] == 'remove':
+        config.remove_account(name_space.address[0], parser)
 
-    elif vars(nameSpace)['subparser-name-accounts'] == 'show':
-        config.show(nameSpace.address[0], parser)
+    elif vars(name_space)['subparser-name-accounts'] == 'show':
+        config.show(name_space.address[0], parser)
 
-    elif vars(nameSpace)['subparser-name-accounts'] == 'seed':
-        chainId = nameSpace.network[0] if nameSpace.network else 'L'
-        if not (chainId.isalpha() and len(chainId) == 1):
+    elif vars(name_space)['subparser-name-accounts'] == 'seed':
+        chain_id = name_space.network[0] if name_space.network else 'L'
+        if not (chain_id.isalpha() and len(chain_id) == 1):
             parser.error('The --network parameter accepts only CHAR type')
-        chainId = chainId.upper() if not chainId.isupper() else chainId
-        secName = nameSpace.name[0] if nameSpace.name else ''
-        factory = AccountFactory(chainId)
-        seed = nameSpace.stdin.read().splitlines() if not sys.stdin.isatty() else []
+        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+        sec_name = name_space.name[0] if name_space.name else ''
+        factory = AccountFactory(chain_id)
+        seed = name_space.stdin.read().splitlines() if not sys.stdin.isatty() else []
         if not seed:
             parser.error("Seed missing, type 'lto accounts seed --help' for instructions")
         account = factory.createFromSeed(seed[0])
-        config.writeToFile(chainId, account, secName, parser)
+        config.write_to_file(chain_id, account, sec_name, parser)
 
     else:
         parser.error('Type lto accounts --help for instructions')

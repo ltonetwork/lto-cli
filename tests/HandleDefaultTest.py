@@ -16,8 +16,8 @@ class TestHandleDefault:
     assert handle.path == Path.joinpath(Path.home(), 'lto')
 
     @mock.patch.object(handle, 'prettyPrint')
-    def testPrettyPrint(self, mocks):
-        handle.prettyPrint('test')
+    def testpretty_print(self, mocks):
+        handle.pretty_print('test')
         mocks.assert_called()
 
     @mock.patch.object(AccountFactory, 'createFromSeed')
@@ -46,9 +46,9 @@ class TestHandleDefault:
                             with pytest.raises(Exception):
                                 handle.getDefaultAccount(self.parser)
 
-    def testGetNode(self):
+    def testget_node(self):
         with mock.patch.object(os, 'path', return_value = False):
-            node = handle.getNode()
+            node = handle.get_node()
             assert isinstance(node, PublicNode)
 
 

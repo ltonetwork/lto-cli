@@ -15,7 +15,7 @@ from LTOCli.Commands import broadcast
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
 
 def main():
-    config.checkDirectory()
+    config.check_directory()
 
     parser = argparse.ArgumentParser(prog='lto', description=''
 '          _____       _____                    _______ \n'
@@ -168,36 +168,36 @@ def main():
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
 
-    processArgs(parser.parse_args(), parser)
+    process_args(parser.parse_args(), parser)
 
-def processArgs(nameSpace, parser):
+def process_args(name_space, parser):
 
-    if vars(nameSpace)['subparser-name'] == 'accounts':
-        account.func(nameSpace, parser)
+    if vars(name_space)['subparser-name'] == 'accounts':
+        account.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'anchor':
-        anchor.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'anchor':
+        anchor.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'transfer':
-        transfer.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'transfer':
+        transfer.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'sponsorship':
-        sponsorship.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'sponsorship':
+        sponsorship.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'association':
-        association.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'association':
+        association.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'mass-transfer':
-        mass_transfer.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'mass-transfer':
+        mass_transfer.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'lease':
-        leasing.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'lease':
+        leasing.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'set-node':
-        config.setNode(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'set-node':
+        config.set_node(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'broadcast':
-        broadcast.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'broadcast':
+        broadcast.func(name_space, parser)
 
     else:
         parser.print_help()

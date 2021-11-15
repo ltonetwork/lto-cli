@@ -26,7 +26,7 @@ class TestTransfer:
                 with mock.patch.object(handle_default, 'getAccountFromName'):
                     Tran.func(nameSpace, self.parser)
 
-    @mock.patch.object(Transfer, 'broadcastTo')
+    @mock.patch.object(Transfer, 'broadcast_to')
     def testBroadcast(self, mocks):
         nameSpace = Namespace(recipient=['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'],
                               amount=[10000000000000], account=[],

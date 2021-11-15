@@ -2,20 +2,20 @@ from LTOCli import handle_default as handle
 from LTO.Transactions.Anchor import Anchor
 
 
-def func(nameSpace, parser):
-    transaction = Anchor(nameSpace.hash[0])
+def func(name_space, parser):
+    transaction = Anchor(name_space.hash[0])
 
-    chainId = handle.check(nameSpace.network[0], parser) if nameSpace.network else 'L'
-    accountName = vars(nameSpace)['account'][0] if vars(nameSpace)['account'] else ''
+    chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
+    account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
 
-    if vars(nameSpace)['unsigned'] is False:
-        transaction.signWith(handle.getAccount(chainId, parser, accountName))
-        if vars(nameSpace)['no_broadcast'] is False:
-            transaction = transaction.broadcastTo(handle.getNode(chainId, parser))
-    elif vars(nameSpace)['no_broadcast'] is False:
+    if vars(name_space)['unsigned'] is False:
+        transaction.sign_with(handle.get_account(chain_id, parser, account_name))
+        if vars(name_space)['no_broadcast'] is False:
+            transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
+    elif vars(name_space)['no_broadcast'] is False:
         parser.error(
             "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto anchor "
             "--help' for more informations ")
-    handle.prettyPrint(transaction)
+    handle.pretty_print(transaction)
 
 

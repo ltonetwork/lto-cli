@@ -8,7 +8,7 @@ from LTO.Transactions.Anchor import Anchor
 
 class TestAnchor:
 
-    @mock.patch.object(Anchor, 'broadcastTo')
+    @mock.patch.object(Anchor, 'broadcast_to')
     def testFunc(self, mocks):
         with pytest.raises(Exception):
             Anch.func(hash=[])
