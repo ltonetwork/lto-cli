@@ -1,7 +1,7 @@
 import pytest
-from LTOCli import HandleDefault as handle
+from LTOCli import handle_default as handle
 from unittest import mock
-from LTOCli import Config
+from LTOCli import config
 from pathlib import Path
 from LTO.AccountFactory import AccountFactory
 from configparser import ConfigParser
@@ -22,11 +22,11 @@ class TestHandleDefault:
 
     @mock.patch.object(AccountFactory, 'createFromSeed')
     def testGetAccountFromName(self, mocks):
-        with mock.patch.object(Config, 'findAccount'):
+        with mock.patch.object(config, 'findAccount'):
             handle.getAccountFromName('name', 'parser')
         mocks.assert_called()
 
-    @mock.patch.object(Config, 'findAccount', return_value = False)
+    @mock.patch.object(config, 'findAccount', return_value = False)
     def testGetAccountFromNameFail(self, mocks):
         with pytest.raises(Exception):
             handle.getAccountFromName('name', 'parser')
@@ -42,7 +42,7 @@ class TestHandleDefault:
             with mock.patch.object(ConfigParser, 'read'):
                 with mock.patch.object(ConfigParser, 'sections', return_value = ['Default']):
                     with mock.patch.object(ConfigParser, 'get', return_value = 1):
-                        with mock.patch.object(Config, 'findAccount', return_value = [True, 3]):
+                        with mock.patch.object(config, 'findAccount', return_value = [True, 3]):
                             with pytest.raises(Exception):
                                 handle.getDefaultAccount(self.parser)
 

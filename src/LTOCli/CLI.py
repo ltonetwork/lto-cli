@@ -1,21 +1,21 @@
 import argparse
 import sys
 
-from LTOCli import Config
-from LTOCli.Commands import Transfer
-from LTOCli.Commands import Anchor
-from LTOCli.Commands import Leasing
-from LTOCli.Commands import Sponsorship
-from LTOCli.Commands import Association
-from LTOCli.Commands import Account
-from LTOCli.Commands import MassTransfer
-from LTOCli.Commands import Broadcast
+from LTOCli import config
+from LTOCli.Commands import transfer
+from LTOCli.Commands import anchor
+from LTOCli.Commands import leasing
+from LTOCli.Commands import sponsorship
+from LTOCli.Commands import association
+from LTOCli.Commands import account
+from LTOCli.Commands import mass_transfer
+from LTOCli.Commands import broadcast
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
 
 def main():
-    Config.checkDirectory()
+    config.checkDirectory()
 
     parser = argparse.ArgumentParser(prog='lto', description=''
 '          _____       _____                    _______ \n'
@@ -173,31 +173,31 @@ def main():
 def processArgs(nameSpace, parser):
 
     if vars(nameSpace)['subparser-name'] == 'accounts':
-        Account.func(nameSpace, parser)
+        account.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'anchor':
-        Anchor.func(nameSpace, parser)
+        anchor.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'transfer':
-        Transfer.func(nameSpace, parser)
+        transfer.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'sponsorship':
-        Sponsorship.func(nameSpace, parser)
+        sponsorship.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'association':
-        Association.func(nameSpace, parser)
+        association.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'mass-transfer':
-        MassTransfer.func(nameSpace, parser)
+        mass_transfer.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'lease':
-        Leasing.func(nameSpace, parser)
+        leasing.func(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'set-node':
-        Config.setNode(nameSpace, parser)
+        config.setNode(nameSpace, parser)
 
     elif vars(nameSpace)['subparser-name'] == 'broadcast':
-        Broadcast.func(nameSpace, parser)
+        broadcast.func(nameSpace, parser)
 
     else:
         parser.print_help()

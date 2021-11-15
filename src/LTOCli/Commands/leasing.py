@@ -1,4 +1,4 @@
-from LTOCli import HandleDefault as handle
+from LTOCli import handle_default as handle
 from LTO.Transactions.Lease import Lease
 from LTO.Transactions.CancelLease import CancelLease
 

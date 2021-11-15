@@ -1,5 +1,5 @@
 from LTO.Accounts.AccountFactoryED25519 import AccountED25519 as AccountFactory
-from LTOCli import Config
+from LTOCli import config
 import sys
 
 def func(nameSpace, parser):
@@ -11,23 +11,23 @@ def func(nameSpace, parser):
         secName = nameSpace.name[0] if nameSpace.name else ''
         factory = AccountFactory(chainId)
         account = factory.create()
-        Config.writeToFile(chainId, account, secName, parser)
+        config.writeToFile(chainId, account, secName, parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'list':
         chainId = nameSpace.network[0] if nameSpace.network else 'L'
         chainId = chainId.upper() if not chainId.isupper() else chainId
-        Config.printListAccounts(chainId, parser)
+        config.printListAccounts(chainId, parser)
 
 
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'set-default':
-        Config.setDefaultAccount(nameSpace.address[0], parser)
+        config.setDefaultAccount(nameSpace.address[0], parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'remove':
-        Config.removeAccount(nameSpace.address[0], parser)
+        config.removeAccount(nameSpace.address[0], parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'show':
-        Config.show(nameSpace.address[0], parser)
+        config.show(nameSpace.address[0], parser)
 
     elif vars(nameSpace)['subparser-name-accounts'] == 'seed':
         chainId = nameSpace.network[0] if nameSpace.network else 'L'
@@ -40,7 +40,7 @@ def func(nameSpace, parser):
         if not seed:
             parser.error("Seed missing, type 'lto accounts seed --help' for instructions")
         account = factory.createFromSeed(seed[0])
-        Config.writeToFile(chainId, account, secName, parser)
+        config.writeToFile(chainId, account, secName, parser)
 
     else:
         parser.error('Type lto accounts --help for instructions')

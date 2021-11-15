@@ -1,6 +1,6 @@
 import json
 from LTO import PyCLTO
-from LTOCli import HandleDefault as handle
+from LTOCli import handle_default as handle
 import sys
 
 def func(nameSpace, parser):

@@ -1,7 +1,7 @@
 from unittest import mock
 import pytest
 import os
-from LTOCli import Config
+from LTOCli import config
 import configparser
 from LTO.AccountFactory import AccountFactory
 
@@ -10,7 +10,7 @@ class TestConfig:
     account = AccountFactory('T').create()
 
     def testListAccount(self):
-        l, t = Config.listAccounts()
+        l, t = config.listAccounts()
         assert l == []
         assert t == []
 
@@ -18,31 +18,31 @@ class TestConfig:
     def testWriteToFile(self):
 
         with pytest.raises(Exception):
-            Config.writeToFile('L/config.ini', self.account, secName='')
+            config.writeToFile('L/config.ini', self.account, secName='')
 
         with pytest.raises(Exception):
-            with mock.patch.object(Config, 'nameAlreadyPresent', return_value= True):
-                Config.writeToFile('L/config.ini', self.account, secName='')
+            with mock.patch.object(config, 'nameAlreadyPresent', return_value= True):
+                config.writeToFile('L/config.ini', self.account, secName='')
 
     @mock.patch.object(os.path, 'exists', return_value = True)
     def testWriteToFile2(self, mocks):
 
         with pytest.raises(Exception):
-            Config.writeToFile('L/config.ini', self.account, secName='')
+            config.writeToFile('L/config.ini', self.account, secName='')
 
         with pytest.raises(Exception):
-            with mock.patch.object(Config, 'nameAlreadyPresent', return_value= True):
-                Config.writeToFile('L/config.ini', self.account, secName='')
+            with mock.patch.object(config, 'nameAlreadyPresent', return_value= True):
+                config.writeToFile('L/config.ini', self.account, secName='')
 
     def testGetAddressFromName(self):
 
 
         with pytest.raises(Exception):
-            Config.getAddressFromName('name')
+            config.getAddressFromName('name')
 
         with mock.patch.object(configparser.ConfigParser, 'sections', return_value=['name']):
             with mock.patch.object(configparser.ConfigParser, 'get', return_value='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'):
-                a, b = Config.getAddressFromName('name')
+                a, b = config.getAddressFromName('name')
         assert b == 'L'
         assert a == '3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'
 
@@ -50,7 +50,7 @@ class TestConfig:
     def testRemoveDefault(self, mocks):
         address = '3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'
         with mock.patch.object(configparser.ConfigParser, 'get', return_value=address):
-            Config.removeDefault(address)
+            config.removeDefault(address)
 
     @mock.patch.object(configparser.ConfigParser, 'write')
     def testRemoveDefault2(self, mocks):
@@ -58,51 +58,51 @@ class TestConfig:
             with mock.patch.object(configparser.ConfigParser, 'get', return_value=['addr']):
                 with mock.patch.object(configparser.ConfigParser, 'remove_section', return_value=['addr']):
                     with pytest.raises(Exception):
-                        Config.removeDefault(['addr'])
+                        config.removeDefault(['addr'])
 
     def testSetDeafultAccount(self):
 
         with pytest.raises(Exception):
-            Config.setDefaultAccount('name')
+            config.setDefaultAccount('name')
         with pytest.raises(Exception):
-            Config.setDefaultAccount('name', address='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj')
+            config.setDefaultAccount('name', address='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj')
 
     @mock.patch.object(os.path, 'exists', return_value=True)
     def testSetDeafultAccount2(self, mocks):
         with pytest.raises(Exception):
-            Config.setDefaultAccount('name', address='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj')
+            config.setDefaultAccount('name', address='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj')
         with mock.patch.object(configparser.ConfigParser, 'sections', return_value=['node']):
             with mock.patch.object(configparser.ConfigParser, 'get', return_value = 'L'):
                 with pytest.raises(Exception):
-                    Config.setDefaultAccount('name', address='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj')
+                    config.setDefaultAccount('name', address='3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj')
 
 
     def testRemoveAccount(self):
         with pytest.raises(Exception):
-            Config.removeAccount('address')
+            config.removeAccount('address')
 
     @mock.patch.object(os.path, 'exists', return_value=True)
     def testGetNewDefault(self, mocks):
-        Config.getNewDefault()
+        config.getNewDefault()
         mocks.assert_called()
 
-    @mock.patch.object(Config, 'setDefaultAccount')
+    @mock.patch.object(config, 'setDefaultAccount')
     def testGetNewDefault2(self, mocks):
         with mock.patch.object(os.path, 'exists', return_value=True):
             with mock.patch.object(configparser.ConfigParser, 'sections'):
                 with mock.patch.object(configparser.ConfigParser, 'get', return_value = 'addess'):
-                    Config.getNewDefault()
+                    config.getNewDefault()
         mocks.assert_called()
 
     def testSetNode(self):
         with pytest.raises(Exception):
-            Config.setnode(args=['a'], network=[])
+            config.setnode(args=['a'], network=[])
 
         with pytest.raises(Exception):
-            Config.setnode(args=['a', 'b'], network=[])
+            config.setnode(args=['a', 'b'], network=[])
 
         with pytest.raises(Exception):
-            Config.setnode(args=['a', 'b'], network=['D'])
+            config.setnode(args=['a', 'b'], network=['D'])
 
 
     @mock.patch.object(configparser.ConfigParser, 'set')
@@ -110,7 +110,7 @@ class TestConfig:
         with mock.patch.object(os.path, 'exists', return_value=True):
             with mock.patch.object(configparser.ConfigParser, 'sections', return_value=['Node']):
                 with pytest.raises(Exception):
-                    Config.setnode(args=['a', 'b'], network=['T'])
+                    config.setnode(args=['a', 'b'], network=['T'])
         with mock.patch.object(os.path, 'exists', return_value=True):
             with pytest.raises(Exception):
-               Config.setnode(args=['a', 'b'], network=['T'])
+               config.setnode(args=['a', 'b'], network=['T'])

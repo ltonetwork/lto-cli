@@ -5,7 +5,7 @@ import pytest
 
 from LTOCli import CLI
 from LTOCli.CLI import main
-from LTOCli import Config
+from LTOCli import config
 from argparse import ArgumentParser
 import argparse
 
@@ -15,7 +15,7 @@ class TestCLI:
     @mock.patch.object(CLI.main(), 'processArgs')
     def test(self, mocks):
         with mock.patch.object(argparse, 'ArgumentParser'):
-            with mock.patch.object(Config, 'checkDirectory'):
+            with mock.patch.object(config, 'checkDirectory'):
                 #with mock.patch.object(CLI.main(), 'processArgs'):
                 with pytest.raises(Exception):
                     CLI.main()

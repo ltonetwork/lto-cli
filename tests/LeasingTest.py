@@ -3,7 +3,7 @@ from LTO.Transaction import Transaction
 import pytest
 import HandleDefault
 
-from LTOCli.Commands import Leasing as Leasing
+from LTOCli.Commands import leasing as Leasing
 from LTO.Transactions.Lease import Lease
 
 from LTO.Transactions.CancelLease import CancelLease

@@ -4,7 +4,7 @@ import json
 import os
 
 from LTO.Accounts.AccountFactoryED25519 import AccountED25519 as AccountFactory
-from LTOCli import Config
+from LTOCli import config
 from LTO.PublicNode import PublicNode
 
 
@@ -51,7 +51,7 @@ def getAccount(chainId, parser, name = ''):
             parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
         else:
             address = config.get('Default', 'address')
-            value = Config.findAccount(address=address, name='')
+            value = config.findAccount(address=address, name='')
             if not value:
                 parser.error(
                     "Error with default account type 'lto accounts set-default --help' for instructions")

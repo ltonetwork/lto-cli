@@ -3,7 +3,7 @@ from LTO.Transaction import Transaction
 import pytest
 import HandleDefault
 
-from LTOCli.Commands import Anchor as Anch
+from LTOCli.Commands import anchor as Anch
 from LTO.Transactions.Anchor import Anchor
 
 class TestAnchor:

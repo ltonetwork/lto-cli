@@ -1,5 +1,5 @@
 from LTO.Transactions.MassTransfer import MassTransfer
-from LTOCli import HandleDefault as handle
+from LTOCli import handle_default as handle
 import sys
 import re
 
