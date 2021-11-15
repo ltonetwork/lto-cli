@@ -1,4 +1,4 @@
-from LTO.Accounts.AccountFactoryED25519 import AccountED25519 as AccountFactory
+from LTO.Accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
 from LTOCli import config
 import sys
 
@@ -39,7 +39,7 @@ def func(name_space, parser):
         seed = name_space.stdin.read().splitlines() if not sys.stdin.isatty() else []
         if not seed:
             parser.error("Seed missing, type 'lto accounts seed --help' for instructions")
-        account = factory.createFromSeed(seed[0])
+        account = factory.create_from_seed(seed[0])
         config.write_to_file(chain_id, account, sec_name, parser)
 
     else:

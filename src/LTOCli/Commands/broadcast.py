@@ -10,7 +10,7 @@ def func(name_space, parser):
     if not json:
         parser.error("Expected transaction as input, type 'lto broadcast --help' for instructions")
 
-    transaction = PyCLTO().fromData(json.loads(txJson))
+    transaction = PyCLTO().from_data(json.loads(txJson))
 
     if vars(name_space)['unsigned'] is False:
         if not transaction.proofs:

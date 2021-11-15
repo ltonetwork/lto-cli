@@ -1,4 +1,4 @@
-from LTO.Transactions.MassTransfer import MassTransfer
+from LTO.Transactions.mass_transfer import MassTransfer
 from LTOCli import handle_default as handle
 import sys
 import re

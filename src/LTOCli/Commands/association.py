@@ -1,6 +1,6 @@
 from LTOCli import handle_default as handle
-from LTO.Transactions.Association import Association
-from LTO.Transactions.RevokeAssociation import RevokeAssociation
+from LTO.Transactions.association import Association
+from LTO.Transactions.revoke_association import RevokeAssociation
 
 
 def func(name_space, parser):
@@ -14,7 +14,7 @@ def func(name_space, parser):
     account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
 
     if name_space.option[0]== 'issue':
-        transaction = Association(recipient=recipient, associationType=associationType, anchor=hash)
+        transaction = Association(recipient=recipient, association_type=associationType, anchor=hash)
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
             if vars(name_space)['no_broadcast'] is False:
@@ -24,7 +24,7 @@ def func(name_space, parser):
                 "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more informations ")
     else:
         # revoke case
-        transaction = RevokeAssociation(recipient=recipient, associationType=associationType, anchor=hash)
+        transaction = RevokeAssociation(recipient=recipient, association_type=associationType, anchor=hash)
         if vars(name_space)['unsigned'] is False:
             if vars(name_space)['account']:
                 transaction.sign_with(handle.get_account(chain_id, parser, account_name))

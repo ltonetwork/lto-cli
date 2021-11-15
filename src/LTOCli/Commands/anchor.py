@@ -1,5 +1,5 @@
 from LTOCli import handle_default as handle
-from LTO.Transactions.Anchor import Anchor
+from LTO.Transactions.anchor import Anchor
 
 
 def func(name_space, parser):

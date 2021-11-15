@@ -51,7 +51,7 @@ def get_account(chain_id, parser, name=''):
             parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
         else:
             address = config.get('Default', 'address')
-            value = config.find_account(address=address, name='')
+            value = Config.find_account(address=address, name='')
             if not value:
                 parser.error(
                     "Error with default account type 'lto accounts set-default --help' for instructions")
