@@ -3,9 +3,9 @@ from pathlib import Path
 import json
 import os
 
-from LTO.Accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
-from LTOCli import config as Config
-from LTO.public_node import PublicNode
+from lto.accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
+from lto_cli import config as Config
+from lto.public_node import PublicNode
 
 
 CHAIN_ID = 'L'

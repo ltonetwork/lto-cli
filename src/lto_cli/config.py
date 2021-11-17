@@ -1,5 +1,5 @@
 from configparser import ConfigParser
-from LTO.Accounts.ED25519.account_ed25519 import AccountED25519 as Account
+from lto.accounts.ed25519.account_ed25519 import AccountED25519 as Account
 
 import base58
 from nacl.signing import SigningKey, VerifyKey
