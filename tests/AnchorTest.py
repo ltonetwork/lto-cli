@@ -3,12 +3,12 @@ from LTO.Transaction import Transaction
 import pytest
 import HandleDefault
 
-from LTOCli.Commands import Anchor as Anch
+from LTOCli.Commands import anchor as Anch
 from LTO.Transactions.Anchor import Anchor
 
 class TestAnchor:
 
-    @mock.patch.object(Anchor, 'broadcastTo')
+    @mock.patch.object(Anchor, 'broadcast_to')
     def testFunc(self, mocks):
         with pytest.raises(Exception):
             Anch.func(hash=[])

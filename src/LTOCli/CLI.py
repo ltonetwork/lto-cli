@@ -1,21 +1,21 @@
 import argparse
 import sys
 
-from LTOCli import Config
-from LTOCli.Commands import Transfer
-from LTOCli.Commands import Anchor
-from LTOCli.Commands import Leasing
-from LTOCli.Commands import Sponsorship
-from LTOCli.Commands import Association
-from LTOCli.Commands import Account
-from LTOCli.Commands import MassTransfer
-from LTOCli.Commands import Broadcast
+from LTOCli import config
+from LTOCli.Commands import transfer
+from LTOCli.Commands import anchor
+from LTOCli.Commands import leasing
+from LTOCli.Commands import sponsorship
+from LTOCli.Commands import association
+from LTOCli.Commands import account
+from LTOCli.Commands import mass_transfer
+from LTOCli.Commands import broadcast
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
 
 def main():
-    Config.checkDirectory()
+    config.check_directory()
 
     parser = argparse.ArgumentParser(prog='lto', description=''
 '          _____       _____                    _______ \n'
@@ -76,6 +76,7 @@ def main():
     parser_anchor.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_anchor.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_anchor.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_anchor.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
     # --------------------------------------------------------------
     parser_association = subparsers.add_parser('association', help="Create an Association Transaction, type 'lto association --help' for more information")
     parser_association.add_argument('option', type=str, choices=['issue', 'revoke'], nargs=1, help='issue / revoke')
@@ -86,6 +87,7 @@ def main():
     parser_association.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_association.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_association.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_association.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
     # --------------------------------------------------------------
     parser_broadcast = subparsers.add_parser('broadcast', help="Takes as input a transaction (signed or unsigned) and broadcast it to the network, type 'lto broadcast --help' for more informations")
     parser_broadcast.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the json transaction as input: echo '$TX_JSON' | lto broadcast")
@@ -114,6 +116,7 @@ def main():
     parser_lease_create.add_argument('--amount', type=int, nargs=1, required=True)
     parser_lease_create.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_lease_create.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_lease_create.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
     parser_lease_cancel = lease_subparser.add_parser('cancel', help="To cancel a lease --leaseId is required")
     parser_lease_cancel.add_argument('--leaseId', type=str, nargs=1, required=True)
@@ -121,6 +124,7 @@ def main():
     parser_lease_cancel.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_lease_cancel.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_lease_cancel.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_lease_cancel.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
     # --------------------------------------------------------------
     parser_massTransfer = subparsers.add_parser('mass-transfer', help="Create a Mass-Transfer Transaction, type 'lto mass-transfer --help' for more information")
     parser_massTransfer.add_argument('stdin', nargs='?', type=argparse.FileType('r'),
@@ -129,6 +133,7 @@ def main():
     parser_massTransfer.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_massTransfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_massTransfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_massTransfer.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
     # --------------------------------------------------------------
     parser_setNode = subparsers.add_parser('set-node', help="Allows to set the preferred node to connect to and an optional network parameter, type 'lto set-node --help' for more information")
     parser_setNode.add_argument('url', type=str, nargs=1, help="url of the node to connect to")
@@ -144,6 +149,8 @@ def main():
     parser_sponsorship_create.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_sponsorship_create.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_sponsorship_create.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_sponsorship_create.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
+
 
     parser_sponsorship_cancel = sponsorship_subparser.add_parser('cancel', help='To cancel a sponsorhip the --recipient is required')
     parser_sponsorship_cancel.add_argument('--recipient', type=str, nargs=1, required = True)
@@ -151,6 +158,7 @@ def main():
     parser_sponsorship_cancel.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_sponsorship_cancel.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_sponsorship_cancel.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_sponsorship_cancel.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
     # The end-point needs to be added
     #parser_sponsorship_list = sponsorship_subparser.add_parser('list', help="Returns the list of accounts that the user is sponsoring")
@@ -167,37 +175,38 @@ def main():
     parser_transfer.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_transfer.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
-    processArgs(parser.parse_args(), parser)
+    process_args(parser.parse_args(), parser)
 
-def processArgs(nameSpace, parser):
+def process_args(name_space, parser):
 
-    if vars(nameSpace)['subparser-name'] == 'accounts':
-        Account.func(nameSpace, parser)
+    if vars(name_space)['subparser-name'] == 'accounts':
+        account.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'anchor':
-        Anchor.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'anchor':
+        anchor.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'transfer':
-        Transfer.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'transfer':
+        transfer.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'sponsorship':
-        Sponsorship.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'sponsorship':
+        sponsorship.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'association':
-        Association.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'association':
+        association.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'mass-transfer':
-        MassTransfer.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'mass-transfer':
+        mass_transfer.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'lease':
-        Leasing.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'lease':
+        leasing.func(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'set-node':
-        Config.setNode(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'set-node':
+        config.set_node(name_space, parser)
 
-    elif vars(nameSpace)['subparser-name'] == 'broadcast':
-        Broadcast.func(nameSpace, parser)
+    elif vars(name_space)['subparser-name'] == 'broadcast':
+        broadcast.func(name_space, parser)
 
     else:
         parser.print_help()

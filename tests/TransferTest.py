@@ -1,10 +1,10 @@
 import configparser
 
-from LTOCli.Commands import Transfer as Tran
+from LTOCli.Commands import transfer as Tran
 from unittest import mock
 from LTO.Transaction import Transaction
 import pytest
-from LTOCli import HandleDefault
+from LTOCli import handle_default
 from LTO.Transactions.Transfer import Transfer
 from argparse import ArgumentParser
 
@@ -21,19 +21,19 @@ class TestTransfer:
                               unsigned=False, no_broadcast=True)
         with pytest.raises(Exception):
             Tran.func()
-        with mock.patch.object(HandleDefault, 'getDefaultAccount', return_value ='Account'):
+        with mock.patch.object(handle_default, 'getDefaultAccount', return_value ='Account'):
             with mock.patch.object(Transaction, 'signWith'):
-                with mock.patch.object(HandleDefault, 'getAccountFromName'):
+                with mock.patch.object(handle_default, 'getAccountFromName'):
                     Tran.func(nameSpace, self.parser)
 
-    @mock.patch.object(Transfer, 'broadcastTo')
+    @mock.patch.object(Transfer, 'broadcast_to')
     def testBroadcast(self, mocks):
         nameSpace = Namespace(recipient=['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'],
                               amount=[10000000000000], account=[],
                               unsigned=False, no_broadcast=False)
 
         with mock.patch.object(Transaction, 'signWith'):
-            with mock.patch.object(HandleDefault, 'prettyPrint'):
+            with mock.patch.object(handle_default, 'prettyPrint'):
                 Tran.func(nameSpace, self.parser)
         mocks.assert_called()
 

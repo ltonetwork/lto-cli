@@ -5,12 +5,12 @@ import HandleDefault
 
 from LTO.Transactions.Association import Association
 
-from LTOCli.Commands import Association  as Ass
+from LTOCli.Commands import association  as Ass
 from LTO.Transactions.RevokeAssociation import RevokeAssociation
 
 class TestAssociation:
 
-    @mock.patch.object(Association, 'broadcastTo')
+    @mock.patch.object(Association, 'broadcast_to')
     def testFunc(self, mocks):
         with pytest.raises(Exception):
             Ass.func(args = [], associationType=[], recipient=[], hash=[])
@@ -19,7 +19,7 @@ class TestAssociation:
                 Ass.func(args=['test','issue'], associationType=[1], recipient = ['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'], hash = ['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'])
         mocks.assert_called()
 
-    @mock.patch.object(RevokeAssociation, 'broadcastTo')
+    @mock.patch.object(RevokeAssociation, 'broadcast_to')
     def testFunc2(self, mocks):
         with pytest.raises(Exception):
             Ass.func(args = [], associationType=[], recipient=[], hash=[])

@@ -3,14 +3,14 @@ from LTO.Transaction import Transaction
 import pytest
 import HandleDefault
 
-from LTOCli.Commands import Leasing as Leasing
+from LTOCli.Commands import leasing as Leasing
 from LTO.Transactions.Lease import Lease
 
 from LTO.Transactions.CancelLease import CancelLease
 
 class TestLeasing:
 
-    @mock.patch.object(Lease, 'broadcastTo')
+    @mock.patch.object(Lease, 'broadcast_to')
     def testFunc(self, mocks):
         with pytest.raises(Exception):
             Leasing.func(args = ['0', '1'], recipient=[], amount=[], leaseId=[])
@@ -23,7 +23,7 @@ class TestLeasing:
                 Leasing.func(args=['0', 'create'], recipient = ['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'], amount = [1000], leaseId = ['3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj'])
         mocks.assert_called()
 
-    @mock.patch.object(CancelLease, 'broadcastTo')
+    @mock.patch.object(CancelLease, 'broadcast_to')
     def testFunc2(self, mocks):
         with pytest.raises(Exception):
             Leasing.func(args = ['0', 'cancel'], recipient=[], amount=[], leaseId=[])

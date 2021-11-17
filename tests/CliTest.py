@@ -5,18 +5,18 @@ import pytest
 
 from LTOCli import CLI
 from LTOCli.CLI import main
-from LTOCli import Config
+from LTOCli import config
 from argparse import ArgumentParser
 import argparse
 
 
 class TestCLI:
 
-    @mock.patch.object(CLI.main(), 'processArgs')
+    @mock.patch.object(CLI.main(), 'process_args')
     def test(self, mocks):
         with mock.patch.object(argparse, 'ArgumentParser'):
-            with mock.patch.object(Config, 'checkDirectory'):
-                #with mock.patch.object(CLI.main(), 'processArgs'):
+            with mock.patch.object(config, 'checkDirectory'):
+                #with mock.patch.object(CLI.main(), 'process_args'):
                 with pytest.raises(Exception):
                     CLI.main()
         #mocks.assert_called()
@@ -30,7 +30,7 @@ class TestCLI:
         with pytest.raises(Exception):
             CLI
 
-        with mock.patch.object(CLI, 'processArgs'):
+        with mock.patch.object(CLI, 'process_args'):
             CLI
         assert mocks.call_count == 0'''
 
