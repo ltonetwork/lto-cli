@@ -1,6 +1,6 @@
-from LTOCli import handle_default as handle
-from LTO.Transactions.lease import Lease
-from LTO.Transactions.cancel_lease import CancelLease
+from lto_cli import handle_default as handle
+from lto.transactions.lease import Lease
+from lto.transactions.cancel_lease import CancelLease
 
 
 def func(name_space, parser):

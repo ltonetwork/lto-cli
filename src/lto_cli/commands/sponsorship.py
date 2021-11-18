@@ -1,6 +1,6 @@
-from LTOCli import handle_default as handle
-from LTO.Transactions.sponsorship import Sponsorship
-from LTO.Transactions.cancel_sponsorship import CancelSponsorship
+from lto_cli import handle_default as handle
+from lto.transactions.sponsorship import Sponsorship
+from lto.transactions.cancel_sponsorship import CancelSponsorship
 
 
 def func(name_space,parser):

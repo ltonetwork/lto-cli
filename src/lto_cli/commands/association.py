@@ -1,6 +1,6 @@
-from LTOCli import handle_default as handle
-from LTO.Transactions.association import Association
-from LTO.Transactions.revoke_association import RevokeAssociation
+from lto_cli import handle_default as handle
+from lto.transactions.association import Association
+from lto.transactions.revoke_association import RevokeAssociation
 
 
 def func(name_space, parser):

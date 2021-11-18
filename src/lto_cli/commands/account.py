@@ -1,5 +1,5 @@
-from LTO.Accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
-from LTOCli import config
+from lto.accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
+from lto_cli import config
 import sys
 
 def func(name_space, parser):

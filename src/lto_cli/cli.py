@@ -1,15 +1,15 @@
 import argparse
 import sys
 
-from LTOCli import config
-from LTOCli.Commands import transfer
-from LTOCli.Commands import anchor
-from LTOCli.Commands import leasing
-from LTOCli.Commands import sponsorship
-from LTOCli.Commands import association
-from LTOCli.Commands import account
-from LTOCli.Commands import mass_transfer
-from LTOCli.Commands import broadcast
+from lto_cli import config
+from lto_cli.commands import transfer
+from lto_cli.commands import anchor
+from lto_cli.commands import leasing
+from lto_cli.commands import sponsorship
+from lto_cli.commands import association
+from lto_cli.commands import account
+from lto_cli.commands import mass_transfer
+from lto_cli.commands import broadcast
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
