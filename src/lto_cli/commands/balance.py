@@ -14,19 +14,19 @@ def func(name_space, parser):
             vars(name_space)['available'] is False and \
             vars(name_space)['generating'] is False and \
             vars(name_space)['effective'] is False:
-        print('Regular: ', balances['regular'],
-              '\nGenerating: ', balances['generating'],
-              '\nAvailable: ', balances['available'],
-              '\nEffective: ', balances['effective'],)
+        print('Regular: ', balances['regular'] / 100000000,
+              '\nGenerating: ', balances['generating'] / 100000000,
+              '\nAvailable: ', balances['available'] / 100000000,
+              '\nEffective: ', balances['effective']/ 100000000,)
     else:
         if vars(name_space)['regular'] is True:
-            print('Regular: ', balances['regular'])
+            print('Regular: ', balances['regular'] / 100000000)
         if vars(name_space)['generating'] is True:
-            print('Generating: ', balances['generating'])
+            print('Generating: ', balances['generating'] / 100000000)
         if vars(name_space)['available'] is True:
-            print('Available: ', balances['available'])
+            print('Available: ', balances['available'] / 100000000)
         if vars(name_space)['effective'] is True:
-            print('Effective: ', balances['effective'])
+            print('Effective: ', balances['effective'] / 100000000)
 
 
 

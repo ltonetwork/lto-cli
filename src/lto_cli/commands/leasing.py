@@ -10,7 +10,7 @@ def func(name_space, parser):
         sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
 
     if vars(name_space)['subparser-name-lease'] == 'create':
-        transaction = Lease(recipient=name_space.recipient[0], amount=name_space.amount[0])
+        transaction = Lease(recipient=name_space.recipient[0], amount=name_space.amount[0] * 100000000)
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
             if sponsor:
@@ -42,7 +42,7 @@ def func(name_space, parser):
         flag = 0
         for x in value:
             if x['sender'] == address:  # outbound
-                print(x['sender'], ':', x['amount'])
+                print(x['sender'], ':', x['amount'] /100000000)
                 flag +=1
         if flag == 0:
             print("No outbound lease found")
@@ -54,7 +54,7 @@ def func(name_space, parser):
         flag = 0
         for x in value:
             if x['recipient'] == address:  # inbound
-                print(x['sender'], ':', x['amount'])
+                print(x['sender'], ':', x['amount'] / 100000000)
                 flag +=1
         if flag == 0:
             print("No inbound lease found")
