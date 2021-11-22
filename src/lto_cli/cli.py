@@ -72,9 +72,7 @@ def main():
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     # --------------------------------------------------------------
     parser_balance = subparsers.add_parser('balance', help="Get the account balance")
-    #balance_subparser = parser_accounts.add_subparsers(dest='subparser-name-accounts')
-
-    #parser_options = balance_subparser.add_parser('create', help="Allow to create an account with two optional parameter, --name and --network")
+    parser_balance.add_argument('account', type=str, nargs='?', help="Address or name of the account")
     parser_balance.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_balance.add_argument('--regular', action='store_true', required=False, help="Use this option to show the regular balance")
     parser_balance.add_argument('--generating', action='store_true', required=False, help="Use this option to show the generating balance")
