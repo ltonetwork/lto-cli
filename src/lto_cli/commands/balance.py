@@ -27,14 +27,3 @@ def func(name_space, parser):
             print('Available: ', balances['available'] / 100000000)
         if vars(name_space)['effective'] is True:
             print('Effective: ', balances['effective'] / 100000000)
-
-
-
-
-
-
-#  * 3JwNzwwSa4x9KxYv8k8Sb8ZXKxDg5q7ZnJk
-
-# * 3MvtN3EpTzzzMwD6SQNrUjtJGpx4tnrZCmo  -  found
-#   3N34SdbTa5aRpVQmC9ZoQ3ruAp67ZvH2sU6  -  test
-#   3Mwy4ntCyVDbfPegA1gJmXKJSz79wkBuC6G

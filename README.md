@@ -46,11 +46,7 @@ or
 ```
 lto balance 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL --network T --available
 ```
-Options: 
-- regular
-- generating
-- available
-- effective
+
 
 ## Transactions
 
