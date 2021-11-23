@@ -42,10 +42,6 @@ Display the balances of the default address or if specified of a specific addres
 ```
 lto balance
 ```
-or
-```
-lto balance 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL --network T --available
-```
 
 
 ## Transactions
