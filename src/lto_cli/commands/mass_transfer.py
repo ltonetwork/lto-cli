@@ -29,5 +29,5 @@ def processInput(stdin):
     transfers = []
     for x in stdin:
         recipient, amount = re.split('[,;:=\s]+', x)
-        transfers.append({'recipient': recipient, 'amount': int(amount) * 100000000})
+        transfers.append({'recipient': recipient, 'amount': int(float(amount) * 100000000)})
     return transfers

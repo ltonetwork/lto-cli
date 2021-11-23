@@ -4,7 +4,7 @@ from lto.transactions.transfer import Transfer
 def func(name_space, parser):
 
     recipient = name_space.recipient[0]
-    amount = name_space.amount[0] * 100000000
+    amount = int(name_space.amount[0] * 100000000)
     transaction = Transfer(recipient, amount)
 
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'

@@ -10,7 +10,7 @@ def func(name_space, parser):
         sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
 
     if vars(name_space)['subparser-name-lease'] == 'create':
-        transaction = Lease(recipient=name_space.recipient[0], amount=name_space.amount[0] * 100000000)
+        transaction = Lease(recipient=name_space.recipient[0], amount=int(name_space.amount[0] * 100000000))
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
             if sponsor:
