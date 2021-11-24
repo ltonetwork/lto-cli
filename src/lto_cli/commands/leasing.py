@@ -23,7 +23,7 @@ def func(name_space, parser):
         handle.pretty_print(transaction)
 
     elif vars(name_space)['subparser-name-lease'] == 'cancel':
-        transaction = CancelLease(leaseId=name_space.leaseId[0])
+        transaction = CancelLease(lease_id=name_space.leaseId[0])
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
             if sponsor:
