@@ -11,6 +11,7 @@ from lto_cli.commands import account
 from lto_cli.commands import mass_transfer
 from lto_cli.commands import broadcast
 from lto_cli.commands import balance
+from importlib_metadata import version
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
@@ -42,6 +43,8 @@ def main():
 '         \/____/ \n\n'
                                                              'LTO Network CLI client, visit the github page for more information https://github.com/ltonetwork/lto-cli',
                                      usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parser.add_argument('--version', action='store_true', required=False, help="Display the version of the package")
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
     # --------------------------------------------------------------
@@ -191,7 +194,10 @@ def main():
 
 def process_args(name_space, parser):
 
-    if vars(name_space)['subparser-name'] == 'accounts':
+    if vars(name_space)['version']:
+        print('Version:', version('lto_cli'))
+
+    elif vars(name_space)['subparser-name'] == 'accounts':
         account.func(name_space, parser)
 
     elif vars(name_space)['subparser-name'] == 'anchor':
