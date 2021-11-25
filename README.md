@@ -55,14 +55,14 @@ lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 
 ### Transfer
 
 ```
-lto transfer --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 1000000000
+lto transfer --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 742.6
 ```
 
 ### Mass-transfer
 
 ```
-echo "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj:1000000000
-3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz:800000000" | lto mass-transfer
+echo "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj:742.6
+3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz:2184.2" | lto mass-transfer
 ```
 
 _Recipient/amount pairs are read from stdin._
@@ -70,7 +70,7 @@ _Recipient/amount pairs are read from stdin._
 ### Leasing
 
 ```
-lto lease create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 1000000000
+lto lease create --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --amount 742.6
 lto lease cancel --leaseid 6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
 lto lease list
 lto lease list-inbound
