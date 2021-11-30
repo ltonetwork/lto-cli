@@ -1,6 +1,11 @@
 language: python
 python:
 - '3.8'
+install:
+  - "lto>=0.0.17"
+  - "argparse"
+  - "configparser"
+  - "pathlib"
 deploy:
   provider: pypi
   username: "__token__"
