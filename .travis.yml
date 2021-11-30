@@ -1,11 +1,14 @@
 language: python
 python:
 - '3.8'
-script: pip install lto>=0.0.17
-install:
-  - "argparse"
-  - "configparser"
-  - "pathlib"
+dist: "trusty"
+addons:
+  apt:
+    packages:
+      - "python3"
+      - "python3-pip"
+before_install:
+  - "pip3 install -r requirements.txt"
 deploy:
   provider: pypi
   username: "__token__"
