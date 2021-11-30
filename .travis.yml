@@ -1,8 +1,8 @@
 language: python
 python:
 - '3.8'
+script: pip install lto>=0.0.17
 install:
-  - "lto>=0.0.17"
   - "argparse"
   - "configparser"
   - "pathlib"
