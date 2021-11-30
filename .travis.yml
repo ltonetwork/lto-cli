@@ -2,15 +2,16 @@ language: python
 python:
 - '3.8'
 before_install:
-  - "pip3 install -r requirements.txt"
+- pip3 install -r requirements.txt
 script:
 - echo "skipping tests"
-deploy:
-  provider: pypi
-  username: "__token__"
-  password:
-    secure: n1FY7PYWy7vtNqHkWlH509F5Jw/3I7RW1eAWhcYjPcCehdP2tC40Shtc1qwRu6HwybTfnd2ytaFh3jhV2CMdeiR2et7a3NmEhZICB0esEsheO11VEH19REkbVJy21SEEcFvt5AQcj6KQMSzaOaZ/GNrsTKNY3dA3g8woi7KZMUPQAjSR7TgZ0qtUkSHHlj6L+6EUscN/rHNzn3cXTO/MtQcXUbdxuspeJZ2uJctj5GdlOc6CxJglerW62tQiuE4q0RGLeeF5QkAeG80n5CpQh/5ZEiEPRMuBqMGbKi214315mTv1//XVNoBhRXMrkIO3EdMObr0FZmt3WXEKJgc6E5UiJfnrqI9GuFT67oQLX8cU68qxg/CP/OHXXaU6vR75p8vlu632eHtKbkPlg7IIahbHbtcUVpuOYkgNbmLsT/N/KAKC8GI+S6uFsR6rgATmiIQi59E639iMHhE6Bncgwz2kHpUMiEYU/0sRrNtLyMXe3DEgaez5hfCclfs9y12tFNZzX6w7UfjaVwKfubY0XCOxzOSqyy0aq3vWEIL/k17JIaGcezXbI8PFH2ZuRswethc/F9eTo91BGIgnwqkraGZ+0GqTQ4KiV84oqetQybPsCtExCr+dLes6we91gHS+GQskePnuEydjLhcYVkHnbNJKlGzU+InLJTw5PI0VK24=
-  on:
-    tags: true
-  distributions: "sdist bdist_wheel"
-  cleanup: true
+if: type = push
+  deploy:
+    provider: pypi
+    username: __token__
+    password:
+      secure: Ga+rje+j3zf9Rvm3qglgpJycew9rU38ROytMjciqVTD+n2oqpaQRWTCtAmvooE5+hFHXJDV1MW9rTijaBXucCvj12YLz4YqU5arU/NLvKPhJTZx8eaIUjWf8VMcZrYmENVyea9LE0zW9gKGmKLX720bAhMM4WOnel6a69Lo4WiNDbZyKd9J99rZbMc2Nyi1Bxx2XN1YX3Qsme4OR5C3a1rDZNOs8jSCFc7Nuwfes1hk0MSP3VMVHbCUwJLdoMI0Bp8YoRmyhAXGaH5Qz1YxTdZa3/zXRVSL9wruxGH3/o+bmeVR+cPLIxtQhIKgbMDMCf2g782jjKF7EWZ7727R/HOWxpHks0DaXTBgvGL515MsK3CcAbBUFLF/RjoYJ/8lVodE2jRzJ5gGivghn8rGuwcOB6PoNV1edDmlrP3aOWIwur5uK1atAH41qGBLJKZr7EhLXX39MuK52kjwWFl14onisRFbM7R3DEtPRYvskH5vpWJIrQ1wAGkGQeh+eophplTfCGa3fiZfpod05XD4rUgtimXVSlwRLw5dWoJCpo0XcI6lcaf61glofbV291y0Uhbtt1LN6f9dB5VCoSHv+qTKZ8306YMtkUdm8rZ06ldB2PaG5Lum44Y9qAjXL3d3Z0pPRrw8Kye+llXnjfOM90B5heNZz3HPbJHxlixeqzBw=
+    on:
+      tags: true
+    distributions: sdist bdist_wheel
+    cleanup: true
