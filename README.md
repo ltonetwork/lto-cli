@@ -36,6 +36,13 @@ Takes as input a transaction (signed or unsigned) and broadcast it to the networ
 ```
 echo $TX_JSON | lto broadcast
 ```
+### Balance
+
+Display the balances of the default address or if specified of a specific address
+```
+lto balance
+```
+
 
 ## Transactions
 

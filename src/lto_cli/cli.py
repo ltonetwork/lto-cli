@@ -10,6 +10,8 @@ from lto_cli.commands import association
 from lto_cli.commands import account
 from lto_cli.commands import mass_transfer
 from lto_cli.commands import broadcast
+from lto_cli.commands import balance
+from importlib_metadata import version
 
 # IF ERROR MODULE NOT FOUND:
 # export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
@@ -41,6 +43,8 @@ def main():
 '         \/____/ \n\n'
                                                              'LTO Network CLI client, visit the github page for more information https://github.com/ltonetwork/lto-cli',
                                      usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parser.add_argument('--version', action='store_true', required=False, help="Display the version of the package")
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
     # --------------------------------------------------------------
@@ -69,6 +73,15 @@ def main():
     parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto accounts seed")
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+    # --------------------------------------------------------------
+    parser_balance = subparsers.add_parser('balance', help="Get the account balance")
+    parser_balance.add_argument('account', type=str, nargs='?', help="Address or name of the account")
+    parser_balance.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+    parser_balance.add_argument('--regular', action='store_true', required=False, help="Use this option to show the regular balance")
+    parser_balance.add_argument('--generating', action='store_true', required=False, help="Use this option to show the generating balance")
+    parser_balance.add_argument('--available', action='store_true', required=False, help="Use this option to show the available balance")
+    parser_balance.add_argument('--effective', action='store_true', required=False, help="Use this option to to show the effective balance")
+
     # --------------------------------------------------------------
     parser_anchor = subparsers.add_parser(name='anchor', help="Create an Anchor Transaction, type 'lto anchor --help' for more information")
     parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain", required=True)
@@ -181,7 +194,10 @@ def main():
 
 def process_args(name_space, parser):
 
-    if vars(name_space)['subparser-name'] == 'accounts':
+    if vars(name_space)['version']:
+        print('Version:', version('lto_cli'))
+
+    elif vars(name_space)['subparser-name'] == 'accounts':
         account.func(name_space, parser)
 
     elif vars(name_space)['subparser-name'] == 'anchor':
@@ -207,6 +223,9 @@ def process_args(name_space, parser):
 
     elif vars(name_space)['subparser-name'] == 'broadcast':
         broadcast.func(name_space, parser)
+
+    elif vars(name_space)['subparser-name'] == 'balance':
+        balance.func(name_space, parser)
 
     else:
         parser.print_help()

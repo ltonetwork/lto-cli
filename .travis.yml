@@ -1,0 +1,15 @@
+language: python
+python:
+- '3.8'
+before_install:
+  - "pip3 install -r requirements.txt"
+script:
+- echo "skipping tests"
+deploy:
+  provider: pypi
+  username: "__token__"
+  password:
+    secure: n1FY7PYWy7vtNqHkWlH509F5Jw/3I7RW1eAWhcYjPcCehdP2tC40Shtc1qwRu6HwybTfnd2ytaFh3jhV2CMdeiR2et7a3NmEhZICB0esEsheO11VEH19REkbVJy21SEEcFvt5AQcj6KQMSzaOaZ/GNrsTKNY3dA3g8woi7KZMUPQAjSR7TgZ0qtUkSHHlj6L+6EUscN/rHNzn3cXTO/MtQcXUbdxuspeJZ2uJctj5GdlOc6CxJglerW62tQiuE4q0RGLeeF5QkAeG80n5CpQh/5ZEiEPRMuBqMGbKi214315mTv1//XVNoBhRXMrkIO3EdMObr0FZmt3WXEKJgc6E5UiJfnrqI9GuFT67oQLX8cU68qxg/CP/OHXXaU6vR75p8vlu632eHtKbkPlg7IIahbHbtcUVpuOYkgNbmLsT/N/KAKC8GI+S6uFsR6rgATmiIQi59E639iMHhE6Bncgwz2kHpUMiEYU/0sRrNtLyMXe3DEgaez5hfCclfs9y12tFNZzX6w7UfjaVwKfubY0XCOxzOSqyy0aq3vWEIL/k17JIaGcezXbI8PFH2ZuRswethc/F9eTo91BGIgnwqkraGZ+0GqTQ4KiV84oqetQybPsCtExCr+dLes6we91gHS+GQskePnuEydjLhcYVkHnbNJKlGzU+InLJTw5PI0VK24=
+  on:
+    tags: true
+  distributions: "sdist bdist_wheel"
