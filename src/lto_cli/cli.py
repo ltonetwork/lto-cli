@@ -11,6 +11,7 @@ from lto_cli.commands import account
 from lto_cli.commands import mass_transfer
 from lto_cli.commands import broadcast
 from lto_cli.commands import balance
+from lto_cli.commands import node
 from importlib_metadata import version
 
 # IF ERROR MODULE NOT FOUND:
@@ -169,9 +170,23 @@ def main():
     parser_massTransfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     parser_massTransfer.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
     # --------------------------------------------------------------
-    parser_setNode = subparsers.add_parser('set-node', help="Allows to set the preferred node to connect to and an optional network parameter, type 'lto set-node --help' for more information")
-    parser_setNode.add_argument('url', type=str, nargs=1, help="url of the node to connect to")
-    parser_setNode.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+    parser_node = subparsers.add_parser('node', help="Allows to performs operation regarding the node, type 'lto node --help' for more information")
+    node_subparser = parser_node.add_subparsers(dest='subparser-name-node')
+
+    parser_node_set = node_subparser.add_parser('set', help="Allows to set the preferred node to connect to and an optional network parameter, type 'lto node set --help' for more information")
+    parser_node_set.add_argument('url', type=str, nargs=1, help="url of the node to connect to")
+    parser_node_set.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
+    parser_node_show = node_subparser.add_parser('show', help="Displays the node url, type 'lto node show --help' for more information")
+    parser_node_show.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
+    parser_node_status = node_subparser.add_parser('status', help="Allows to show the status of the node, type 'lto node status --help' for more information")
+    parser_node_status.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
+
+
+
+
     # --------------------------------------------------------------
     parser_sponsorship = subparsers.add_parser('sponsorship', help="Create a Sponsorship Transaction, type 'lto sponsorship --help' for more information")
     sponsorship_subparser = parser_sponsorship.add_subparsers(dest='subparser-name-sponsorship')
@@ -239,8 +254,8 @@ def process_args(name_space, parser):
     elif vars(name_space)['subparser-name'] == 'lease':
         leasing.func(name_space, parser)
 
-    elif vars(name_space)['subparser-name'] == 'set-node':
-        config.set_node(name_space, parser)
+    elif vars(name_space)['subparser-name'] == 'node':
+        node.func(name_space, parser)
 
     elif vars(name_space)['subparser-name'] == 'broadcast':
         broadcast.func(name_space, parser)
