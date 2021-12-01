@@ -2,14 +2,28 @@ language: python
 python:
 - '3.8'
 - '3.9'
+env:
+- RECIPIENT=3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
+- HASH=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- LEASE_ID=6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
 
-before_install:
-- pip3 install -r requirements.txt
+install:
+  - pip3 install .
 script:
 - lto
 - ACCOUNT=$(lto accounts create)
 - lto accounts list && lto accounts list | grep -q $ACCOUNT
--
+- lto node status
+- lto balance 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
+- lto anchor --hash $HASH --no-broadcast
+- lto association issue --recipient $RECIPIENT --type 1 --hash $HASH --no-broadcast
+- lto association revoke --recipient $RECIPIENT --type 1 --hash $HASH --no-broadcast
+- lto transfer --recipient $RECIPIENT --amount 742.6 --no-broadcast
+- echo -e "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj 742.6\n3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz 2184.2" | lto mass-transfer --no-broadcast
+- lto lease create --recipient $RECIPIENT --amount 742.6 --no-broadcast
+- lto lease cancel --leaseid $LEASE_ID --no-broadcast
+- lto sponsorship create --recipient $RECIPIENT --no-broadcast
+- lto sponsorship cancel --recipient $RECIPIENT --no-broadcast
 
 deploy:
   provider: pypi
