@@ -133,14 +133,14 @@ def main():
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')
 
-    parser_lease_list = lease_subparser.add_parser('list', help="Returns the list of leasing that the user has conceded")
-    parser_lease_list.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
-    parser_lease_list.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+    parser_lease_incoming = lease_subparser.add_parser('incoming', help="Returns the list of leasing that the user has conceded")
+    parser_lease_incoming.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_lease_incoming.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
 
-    parser_lease_list_inbound = lease_subparser.add_parser('list-inbound', help="Returns the list of leasing in favor of the user")
-    parser_lease_list_inbound.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
-    parser_lease_list_inbound.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+    parser_lease_list_outgoing = lease_subparser.add_parser('outgoing', help="Returns the list of leasing in favor of the user")
+    parser_lease_list_outgoing.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_lease_list_outgoing.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
 
     parser_lease_create = lease_subparser.add_parser('create', help='To create a lease, --recipient and --amount are required')
@@ -198,9 +198,9 @@ def main():
     #parser_sponsorship_list = sponsorship_subparser.add_parser('list', help="Returns the list of accounts that the user is sponsoring")
     #parser_sponsorship_list.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
 
-    parser_sponsorship_list_inbound = sponsorship_subparser.add_parser('list-inbound', help="Returns the list of accounts that are sponsoring the user")
-    parser_sponsorship_list_inbound.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
-    parser_sponsorship_list_inbound.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+    parser_sponsorship_outgoing = sponsorship_subparser.add_parser('outgoing', help="Returns the list of accounts that are sponsoring the user")
+    parser_sponsorship_outgoing.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_sponsorship_outgoing.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     # --------------------------------------------------------------
     parser_transfer = subparsers.add_parser('transfer', help="Create a Transfer Transaction, type 'lto transfer --help' for more information")
     parser_transfer.add_argument('--recipient', type=str, nargs=1, required=True)

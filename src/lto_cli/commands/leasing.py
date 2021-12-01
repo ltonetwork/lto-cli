@@ -36,7 +36,7 @@ def func(name_space, parser):
                     "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto lease cancel --help' for more informations ")
             handle.pretty_print(transaction)
 
-        elif vars(name_space)['subparser-name-lease'] == 'list':  # The lease that I'm giving
+        elif vars(name_space)['subparser-name-lease'] == 'incoming':  # The lease that I'm giving
             node = handle.get_node(chain_id, parser)
             address = handle.get_account(chain_id, parser, account_name).address
             value = node.lease_list(address)
@@ -46,9 +46,9 @@ def func(name_space, parser):
                     print(x['sender'], ':', x['amount'] /100000000)
                     flag +=1
             if flag == 0:
-                print("No outbound lease found")
+                print("No incoming lease found")
 
-        else:  # The lease that I've received
+        else:  # outgoing : The lease that I've received
             node = handle.get_node(chain_id, parser)
             address = handle.get_account(chain_id, parser, account_name).address
             value = node.lease_list(address)
@@ -58,7 +58,7 @@ def func(name_space, parser):
                     print(x['sender'], ':', x['amount'] / 100000000)
                     flag +=1
             if flag == 0:
-                print("No inbound lease found")
+                print("No outgoing lease found")
 
     else:
         parser.error('Type lto lease --help for instructions')
