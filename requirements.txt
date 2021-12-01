@@ -1,5 +1,5 @@
 argparse~=1.4.0
-lto~=0.0.17
+lto~=0.0.18
 base58~=0.2.5
 configparser~=5.0.2
 pathlib~=1.0.1

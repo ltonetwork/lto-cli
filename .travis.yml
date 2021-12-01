@@ -1,11 +1,16 @@
 language: python
 python:
 - '3.8'
+- '3.9'
+
 before_install:
 - pip3 install -r requirements.txt
 script:
-- echo "skipping tests"
-#if: type = push
+- lto
+- ACCOUNT=$(lto accounts create)
+- lto accounts list && lto accounts list | grep -q $ACCOUNT
+-
+
 deploy:
   provider: pypi
   username: __token__
