@@ -48,29 +48,29 @@ def main():
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
     # --------------------------------------------------------------
-    parser_accounts = subparsers.add_parser('accounts', help="Create remove and manage accounts, type 'lto accounts --help' for more informations")
-    accounts_subparser = parser_accounts.add_subparsers(dest='subparser-name-accounts')
+    parser_account = subparsers.add_parser('account', help="Create remove and manage accounts, type 'lto account --help' for more informations")
+    account_subparser = parser_account.add_subparsers(dest='subparser-name-account')
 
-    parser_create = accounts_subparser.add_parser('create', help="Allow to create an account with two optional parameter, --name and --network")
+    parser_create = account_subparser.add_parser('create', help="Allow to create an account with two optional parameter, --name and --network")
     parser_create.add_argument('--name', required=False, type=str, nargs=1)
     parser_create.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
-    parser_list = accounts_subparser.add_parser('list', help="Returns the list of accounts stored locally")
+    parser_list = account_subparser.add_parser('list', help="Returns the list of accounts stored locally")
     parser_list.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
 
-    parser_setDefault = accounts_subparser.add_parser('set-default', help="Sets the specified account as default account")
+    parser_setDefault = account_subparser.add_parser('set-default', help="Sets the specified account as default account")
     parser_setDefault.add_argument('address', type=str, nargs=1)
 
 
-    parser_remove = accounts_subparser.add_parser('remove', help="Remove the specified account, the account can be identified by address or name")
+    parser_remove = account_subparser.add_parser('remove', help="Remove the specified account, the account can be identified by address or name")
     parser_remove.add_argument('address', type=str, nargs=1)
 
-    parser_show = accounts_subparser.add_parser('show', help="Show the information about the account")
+    parser_show = account_subparser.add_parser('show', help="Show the information about the account")
     parser_show.add_argument('address', type=str, nargs=1, help="The address field can be filled with either address or name")
 
-    parser_seed = accounts_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto accounts seed --help")
-    parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto accounts seed")
+    parser_seed = account_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto account seed --help")
+    parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto account seed")
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     # --------------------------------------------------------------
@@ -218,7 +218,7 @@ def process_args(name_space, parser):
     if vars(name_space)['version']:
         print('Version:', version('lto_cli'))
 
-    elif vars(name_space)['subparser-name'] == 'accounts':
+    elif vars(name_space)['subparser-name'] == 'account':
         account.func(name_space, parser)
 
     elif vars(name_space)['subparser-name'] == 'anchor':

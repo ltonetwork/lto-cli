@@ -207,7 +207,7 @@ def show(id, parser):
             print('Name    : ', id)
         print('Address : ', value[0][3])
         print('Sign    :')
-        print('   SecretKey  : ',value[0][1] )
-        print('   public_key  : ',value[0][2] )
+        print('   SecretKey   : ',value[0][1] )
+        print('   Public_key  : ',value[0][2] )
         print('Seed    : ', value[0][0])
 
