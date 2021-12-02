@@ -1,15 +1,7 @@
 from lto_cli import handle_default as handle
 
 
-def func(name_space, parser):
-    chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
-    account_name = vars(name_space)['account'] if vars(name_space)['account'] else ''
-
-    node = handle.get_node(chain_id, parser)
-    account = handle.get_account(chain_id, parser, account_name)
-
-    balances = node.balance_details(account.address)
-
+def print_balance(name_space, balances):
     if vars(name_space)['regular'] is False and \
             vars(name_space)['available'] is False and \
             vars(name_space)['generating'] is False and \
@@ -27,3 +19,21 @@ def func(name_space, parser):
             print('Available: ', balances['available'] / 100000000)
         if vars(name_space)['effective'] is True:
             print('Effective: ', balances['effective'] / 100000000)
+
+
+def func(name_space, parser):
+    chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
+    account_name = vars(name_space)['account'] if vars(name_space)['account'] else ''
+
+    node = handle.get_node(chain_id, parser)
+    try:
+        account = handle.get_account_for_balance(chain_id, parser, account_name)
+        balances = node.balance_details(account.address)
+        print_balance(name_space, balances)
+    except:
+        try:
+            balances = node.balance_details(account_name)
+            print_balance(name_space, balances)
+        except:
+            parser.error("Address not valid, type 'lto account --help' for instructions")
+

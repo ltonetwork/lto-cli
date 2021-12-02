@@ -19,7 +19,7 @@ def pretty_print(transaction):
 def get_node(chain_id, parser):
     local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chain_id))
+        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
     config = ConfigParser()
     config.read(local_path)
     if not 'Node' in config.sections():
@@ -32,7 +32,7 @@ def get_account(chain_id, parser, name=''):
     local_path = Path.joinpath(path, "{}/accounts.ini".format(chain_id))
 
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chain_id))
+        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
 
     config = ConfigParser()
     config.read(local_path)
@@ -40,21 +40,21 @@ def get_account(chain_id, parser, name=''):
         if name in config.sections():
             return AccountFactory(chain_id).create_from_seed(config.get(name, 'seed'))
         else:
-            parser.error("No account found for {} network with name {}, type 'lto accounts --help' for instructions".format(chain_id, name))
+            parser.error("No account found for {} network with name {}, type 'lto account --help' for instructions".format(chain_id, name))
     else:
         local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
         if not os.path.exists(local_path):
-            parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chain_id))
+            parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
         config.clear()
         config.read(local_path)
         if not 'Default' in config.sections():
-            parser.error("No Default account set, type 'lto accounts set-default --help' for instructions")
+            parser.error("No Default account set, type 'lto account set-default --help' for instructions")
         else:
             address = config.get('Default', 'address')
             value = Config.find_account(address=address, name='')
             if not value:
                 parser.error(
-                    "Error with default account type 'lto accounts set-default --help' for instructions")
+                    "Error with default account type 'lto account set-default --help' for instructions")
             else:
                 return AccountFactory(value[1]).create_from_seed(value[0][0])
 
@@ -65,3 +65,31 @@ def check(chain_id, parser):
     return chain_id.upper() if not chain_id.isupper() else chain_id
 
 
+def get_account_for_balance(chain_id, parser, name=''):
+    local_path = Path.joinpath(path, "{}/accounts.ini".format(chain_id))
+
+    if not os.path.exists(local_path):
+        raise Exception
+
+    config = ConfigParser()
+    config.read(local_path)
+    if name:
+        if name in config.sections():
+            return AccountFactory(chain_id).create_from_seed(config.get(name, 'seed'))
+        else:
+            raise Exception
+    else:
+        local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
+        if not os.path.exists(local_path):
+            raise Exception
+        config.clear()
+        config.read(local_path)
+        if not 'Default' in config.sections():
+            raise Exception
+        else:
+            address = config.get('Default', 'address')
+            value = Config.find_account(address=address, name='')
+            if not value:
+                raise Exception
+            else:
+                return AccountFactory(value[1]).create_from_seed(value[0][0])

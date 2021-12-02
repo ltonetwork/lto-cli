@@ -158,7 +158,6 @@ def main():
     parser_lease_list_outgoing = lease_subparser.add_parser('outgoing', help="Returns the list of leasing in favor of the user")
     parser_lease_list_outgoing.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_lease_list_outgoing.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
-
     # --------------------------------------------------------------
     parser_massTransfer = subparsers.add_parser('mass-transfer', help="Create a Mass-Transfer Transaction, type 'lto mass-transfer --help' for more information")
     parser_massTransfer.add_argument('stdin', nargs='?', type=argparse.FileType('r'),
