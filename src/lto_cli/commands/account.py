@@ -36,7 +36,7 @@ def func(name_space, parser):
         chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
         sec_name = name_space.name[0] if name_space.name else ''
         factory = AccountFactory(chain_id)
-        seed = name_space.stdin.read().splitlines() if not sys.stdin.isatty() else []
+        seed = name_space.stdin.read().splitlines()
         if not seed:
             parser.error("Seed missing, type 'lto account seed --help' for instructions")
         account = factory.create_from_seed(seed[0])
