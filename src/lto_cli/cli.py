@@ -134,21 +134,11 @@ def main():
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')
 
-    parser_lease_incoming = lease_subparser.add_parser('incoming', help="Returns the list of leasing that the user has conceded")
-    parser_lease_incoming.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
-    parser_lease_incoming.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
-
-
-    parser_lease_list_outgoing = lease_subparser.add_parser('outgoing', help="Returns the list of leasing in favor of the user")
-    parser_lease_list_outgoing.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
-    parser_lease_list_outgoing.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
-
-
     parser_lease_create = lease_subparser.add_parser('create', help='To create a lease, --recipient and --amount are required')
     parser_lease_create.add_argument('--recipient', type=str, nargs=1, required=True)
     parser_lease_create.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_lease_create.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
-    parser_lease_create.add_argument('--amount', type=int, nargs=1, required=True)
+    parser_lease_create.add_argument('--amount', type=float, nargs=1, required=True)
     parser_lease_create.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_lease_create.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     parser_lease_create.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
@@ -160,6 +150,15 @@ def main():
     parser_lease_cancel.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_lease_cancel.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     parser_lease_cancel.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
+
+    parser_lease_incoming = lease_subparser.add_parser('incoming', help="Returns the list of leasing that the user has conceded")
+    parser_lease_incoming.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_lease_incoming.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
+    parser_lease_list_outgoing = lease_subparser.add_parser('outgoing', help="Returns the list of leasing in favor of the user")
+    parser_lease_list_outgoing.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_lease_list_outgoing.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
     # --------------------------------------------------------------
     parser_massTransfer = subparsers.add_parser('mass-transfer', help="Create a Mass-Transfer Transaction, type 'lto mass-transfer --help' for more information")
     parser_massTransfer.add_argument('stdin', nargs='?', type=argparse.FileType('r'),
@@ -219,7 +218,7 @@ def main():
     # --------------------------------------------------------------
     parser_transfer = subparsers.add_parser('transfer', help="Create a Transfer Transaction, type 'lto transfer --help' for more information")
     parser_transfer.add_argument('--recipient', type=str, nargs=1, required=True)
-    parser_transfer.add_argument('--amount', type=int, nargs=1, required=True)
+    parser_transfer.add_argument('--amount', type=float, nargs=1, required=True)
     parser_transfer.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_transfer.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
