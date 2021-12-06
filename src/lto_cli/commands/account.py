@@ -24,11 +24,11 @@ def func(name_space, parser):
         config.set_default_accounts(chain_id, name_space.address[0], parser)
 
     elif vars(name_space)['subparser-name-account'] == 'remove':
-        name = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
-        config.remove_account(chain_id, name, parser)
+        id = name_space.account[0] if name_space.account else handle.get_account(chain_id, parser).address
+        config.remove_account(chain_id, id, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'show':
-        id = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
+        id = name_space.account[0] if name_space.account else handle.get_account(chain_id, parser).address
         config.show(chain_id, id, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'seed':
