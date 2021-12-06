@@ -7,7 +7,7 @@ def func(name_space, parser):
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
     account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
     node = handle.get_node(chain_id, parser)
-    tx_json = name_space.stdin.read() if not sys.stdin.isatty() else ""
+    tx_json = name_space.stdin.read()
     if not tx_json:
         parser.error("Expected transaction as input, type 'lto broadcast --help' for instructions")
 
