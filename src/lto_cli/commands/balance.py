@@ -27,14 +27,16 @@ def validate_address(address, node):
 
 def func(name_space, parser):
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
-    id = name_space.account[0] if name_space.account else handle.get_account(chain_id, parser).address
+    address = name_space.address if name_space.address else None
+    if not address:
+        address = name_space.account[0] if name_space.account else handle.get_account(chain_id, parser).address
     node = handle.get_node(chain_id, parser)
 
-    if validate_address(id, node):
-        balances = node.balance_details(id)
+    if validate_address(address, node):
+        balances = node.balance_details(address)
         print_balance(name_space, balances)
     else:
-        account = handle.get_account(chain_id, parser, id)
+        account = handle.get_account(chain_id, parser, address)
         balances = node.balance_details(account.address)
         print_balance(name_space, balances)
 
