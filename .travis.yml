@@ -9,6 +9,7 @@ env:
 
 install:
   - pip3 install .
+  - pip3 install --upgrade build
 script:
 - lto
 - ACCOUNT=$(lto accounts create)
@@ -24,13 +25,13 @@ script:
 - lto lease cancel --leaseid $LEASE_ID --no-broadcast
 - lto sponsorship create --recipient $RECIPIENT --no-broadcast
 - lto sponsorship cancel --recipient $RECIPIENT --no-broadcast
+- python3 -m build
 
 deploy:
   provider: pypi
   username: __token__
   password:
-    secure: Ga+rje+j3zf9Rvm3qglgpJycew9rU38ROytMjciqVTD+n2oqpaQRWTCtAmvooE5+hFHXJDV1MW9rTijaBXucCvj12YLz4YqU5arU/NLvKPhJTZx8eaIUjWf8VMcZrYmENVyea9LE0zW9gKGmKLX720bAhMM4WOnel6a69Lo4WiNDbZyKd9J99rZbMc2Nyi1Bxx2XN1YX3Qsme4OR5C3a1rDZNOs8jSCFc7Nuwfes1hk0MSP3VMVHbCUwJLdoMI0Bp8YoRmyhAXGaH5Qz1YxTdZa3/zXRVSL9wruxGH3/o+bmeVR+cPLIxtQhIKgbMDMCf2g782jjKF7EWZ7727R/HOWxpHks0DaXTBgvGL515MsK3CcAbBUFLF/RjoYJ/8lVodE2jRzJ5gGivghn8rGuwcOB6PoNV1edDmlrP3aOWIwur5uK1atAH41qGBLJKZr7EhLXX39MuK52kjwWFl14onisRFbM7R3DEtPRYvskH5vpWJIrQ1wAGkGQeh+eophplTfCGa3fiZfpod05XD4rUgtimXVSlwRLw5dWoJCpo0XcI6lcaf61glofbV291y0Uhbtt1LN6f9dB5VCoSHv+qTKZ8306YMtkUdm8rZ06ldB2PaG5Lum44Y9qAjXL3d3Z0pPRrw8Kye+llXnjfOM90B5heNZz3HPbJHxlixeqzBw=
+    secure: JYdEANwgSg3fCbAoQiQp23WC36oqsmZii0OmUQgFn9RwzjCcjV+zOqKaA6Xsq6V4qcVLHEyqjz+vMjQzLiSqxYcgvjXqETFEJ7Y5YrLYMDibZGoST59V3I9rdSQI8BwWggIVERflvVWGPA6nRP+nI2NZy4rvbw73MjcUdeBzBJ7yIhaQfQ46XXaQIBp907D4eH6Uyy3wRzSsNxfJKDJVcYMkHn1BPKpTdPtKNx6P7/OpJ6FOVl3EA2OyBExIXjvqTFjdpJgvGL2OfWbedUBLoPnC2Vq4eV0inptSEZ9jk0pPsM2t36Eo7Fpbhehryr/TI79B6jAFeIujE6Z1c3cBGGPNk4oV7T7YQ7SG2JekaJU2Aak+ZyKTvsRI7ZbmfijuKUzmK9POowY+PqiIX2q5RjKtQmRPbicF3WJJxufssj3v0uxUzgYGmrNvqWiDW8AW7sTPy89gyhVWIrQzlA92AV7ql/861PYXsfyKfXBvfeutgKeLzkYQ3M+yb6Jov0JD/XdZK+Zzu1bESeKKL4FPYTK44mCEp77zJAprYH+Xr2xy9J7v8ScwImA3oeQYWkN5se594kkiDJsg7POQYJoOIXFNC9OWlXRLVWut1a3qYTC7CydO5OZtpbLddzyQyWLso2U+G6lpKfRoH1sSN/61qoQ+GcXQY1NnvJywTDye0Oo=
   on:
     tags: true
-  distributions: sdist bdist_wheel
-  cleanup: true
+  skip_cleanup: true
