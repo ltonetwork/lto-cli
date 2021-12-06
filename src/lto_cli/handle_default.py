@@ -65,34 +65,3 @@ def check(chain_id, parser):
         parser.error('The --network parameter accepts only CHAR type')
     return chain_id.upper() if not chain_id.isupper() else chain_id
 
-
-def get_account_for_balance(chain_id, parser, name=''):
-    local_path = Path.joinpath(path, "{}/accounts.ini".format(chain_id))
-
-    if not os.path.exists(local_path):
-        raise Exception
-
-    config = ConfigParser()
-    config.read(local_path)
-    if name:
-        if name in config.sections():
-            return AccountFactory(chain_id).create_from_seed(config.get(name, 'seed'))
-        else:
-            raise Exception
-    else:
-        local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
-        if not os.path.exists(local_path):
-            raise Exception
-        config.clear()
-        config.read(local_path)
-        if not 'Default' in config.sections():
-            raise Exception
-        else:
-            address = config.get('Default', 'address')
-            config.clear()
-            config = Config.get_config_from_chain_id(chain_id)
-            value = Config.find_account_in_config(config, address=address, name='')
-            if not value:
-                raise Exception
-            else:
-                return AccountFactory(chain_id).create_from_seed(value[0])
