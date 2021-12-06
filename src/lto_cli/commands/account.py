@@ -12,6 +12,7 @@ def func(name_space, parser):
         factory = AccountFactory(chain_id)
         account = factory.create()
         config.write_to_file(chain_id, account, sec_name, parser)
+        print(account.address)
 
     elif vars(name_space)['subparser-name-account'] == 'list':
         chain_id = name_space.network[0] if name_space.network else 'L'

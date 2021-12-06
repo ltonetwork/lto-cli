@@ -8,6 +8,11 @@ env:
     - HASH=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     - LEASE_ID=6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
 
+branches:
+  only:
+    - main
+    - /^v\d+\.\d+\.\d+$/
+
 install:
   - pip3 install .
   - pip3 install --upgrade build

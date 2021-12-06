@@ -6,12 +6,12 @@ from nacl.signing import SigningKey, VerifyKey
 import os
 from pathlib import Path
 
-CHAIN_ID = 'L'
 DEFAULT_URL_MAINNET = 'https://nodes.lto.network'
 DEFAULT_URL_TESTNET = 'https://testnet.lto.network'
-path = Path.joinpath(Path.home(), 'lto')
+path = Path.joinpath(Path.home(), '.lto')
 
 def write_to_file(chain_id, account, sec_name, parser):
+    assert chain_id != ''
     relative_path = Path.joinpath(path, chain_id)
 
     if not os.path.exists(relative_path):
@@ -23,28 +23,16 @@ def write_to_file(chain_id, account, sec_name, parser):
     config = ConfigParser()
     config.read(Path.joinpath(relative_path, 'Accounts.ini'))
 
-    if not config.sections() and not find_account(address=account.address, name=sec_name):
-        config.add_section(sec_name)
-        config.set(sec_name, 'Address', account.address)
-        config.set(sec_name, 'Public_key', base58.b58encode(account.public_key.__bytes__()))
-        config.set(sec_name, 'Private_key', base58.b58encode(account.private_key.__bytes__()))
-        config.set(sec_name, 'Seed', account.seed)
-        config.write(open(Path.joinpath(relative_path, 'Accounts.ini'), 'w'))
-        print(account.address)
-        write_default_account(account, chain_id)
+    if find_account(address=account.address, name=sec_name):
+        parser.error("An account with the same id is already present, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
 
-    else:
-        if not find_account(address=account.address, name=sec_name):
-            config.add_section(sec_name)
-            config.set(sec_name, 'Address', account.address)
-            config.set(sec_name, 'public_key', base58.b58encode(account.public_key.__bytes__()))
-            config.set(sec_name, 'private_key', base58.b58encode(account.private_key.__bytes__()))
-            config.set(sec_name, 'Seed', account.seed)
-            config.write(open(Path.joinpath(relative_path, 'Accounts.ini'), 'w'))
-            print(account.address)
-            write_default_account(account, chain_id)
-        else:
-            parser.error("An account with the same id is already present, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
+    config.add_section(sec_name)
+    config.set(sec_name, 'Address', account.address)
+    config.set(sec_name, 'Public_key', base58.b58encode(account.public_key.__bytes__()))
+    config.set(sec_name, 'Private_key', base58.b58encode(account.private_key.__bytes__()))
+    config.set(sec_name, 'Seed', account.seed)
+    config.write(open(Path.joinpath(relative_path, 'Accounts.ini'), 'w'))
+    write_default_account(account, chain_id)
 
 # returns false if the account is not found, else returns the seed and the chain_id
 def find_account(address = '', name = ''):

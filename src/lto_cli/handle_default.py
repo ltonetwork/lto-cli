@@ -11,7 +11,7 @@ from lto.public_node import PublicNode
 CHAIN_ID = 'L'
 URL = 'https://nodes.lto.network'
 
-path = Path.joinpath(Path.home(), 'lto')
+path = Path.joinpath(Path.home(), '.lto')
 
 def pretty_print(transaction):
     print(json.dumps(transaction.to_json(), indent=2))
