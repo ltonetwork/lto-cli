@@ -12,9 +12,6 @@ path = Path.joinpath(Path.home(), '.lto')
 
 def write_to_file(chain_id, account, sec_name, parser):
     relative_path = Path.joinpath(path, chain_id)
-    print(path)
-    print(chain_id)
-    print(relative_path)
 
     if not os.path.exists(relative_path):
         os.mkdir(relative_path)
@@ -23,7 +20,7 @@ def write_to_file(chain_id, account, sec_name, parser):
         sec_name = account.address
 
     config = ConfigParser()
-    config.read(Path.joinpath(relative_path, 'Accounts.ini'))
+    config.read(Path.joinpath(relative_path, 'accounts.ini'))
 
     if find_account(address=account.address, name=sec_name):
         parser.error("An account with the same id is already present, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
@@ -33,17 +30,16 @@ def write_to_file(chain_id, account, sec_name, parser):
     config.set(sec_name, 'Public_key', base58.b58encode(account.public_key.__bytes__()))
     config.set(sec_name, 'Private_key', base58.b58encode(account.private_key.__bytes__()))
     config.set(sec_name, 'Seed', account.seed)
-    config.write(open(Path.joinpath(relative_path, 'Accounts.ini'), 'w'))
+    config.write(open(Path.joinpath(relative_path, 'accounts.ini'), 'w'))
     write_default_account(account, chain_id)
-    print("Written to ", Path.joinpath(relative_path, 'Accounts.ini'))
 
 # returns false if the account is not found, else returns the seed and the chain_id
 def find_account(address = '', name = ''):
     directories = next(os.walk(path), (None, None, []))[1]
     for chain_id in directories:
-        if 'Accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
+        if 'accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
             config = ConfigParser()
-            config.read(Path.joinpath(path, '{}/Accounts.ini'.format(chain_id)))
+            config.read(Path.joinpath(path, '{}/accounts.ini'.format(chain_id)))
             value = find_account_in_config(config, address, name)
             if value != False:
                 return value, chain_id
@@ -126,9 +122,9 @@ def list_accounts_complete():
     list = []
     directories = next(os.walk(path), (None, None, []))[1]
     for chain_id in directories:
-        if 'Accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
+        if 'accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
             config = ConfigParser()
-            config.read(Path.joinpath(path, '{}/Accounts.ini'.format(chain_id)))
+            config.read(Path.joinpath(path, '{}/accounts.ini'.format(chain_id)))
             list.append([chain_id, config.sections()])
     return list
 
@@ -152,12 +148,12 @@ def remove_account(name, parser):
             "No account found with this id, type 'lto accounts remove --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
     else:
         config = ConfigParser()
-        config.read(Path.joinpath(path, '{}/Accounts.ini'.format(value[1])))  # value[1] = chain_id
+        config.read(Path.joinpath(path, '{}/accounts.ini'.format(value[1])))  # value[1] = chain_id
         address = config.get(name, 'address')
         config.remove_section(name)
-        config.write(open(Path.joinpath(path, '{}/Accounts.ini'.format(value[1])), 'w'))
+        config.write(open(Path.joinpath(path, '{}/accounts.ini'.format(value[1])), 'w'))
         remove_default_account(address, value[1])
-        delete_if_empty(Path.joinpath(path, '{}/Accounts.ini'.format(value[1])))
+        delete_if_empty(Path.joinpath(path, '{}/accounts.ini'.format(value[1])))
 
 def delete_if_empty(path_delete):
     config = ConfigParser()
