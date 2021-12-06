@@ -51,12 +51,13 @@ def get_account(chain_id, parser, name=''):
             parser.error("No Default account set, type 'lto account set-default --help' for instructions")
         else:
             address = config.get('Default', 'address')
-            value = Config.find_account(address=address, name='')
+            config.clear()
+            config = Config.get_config_from_chain_id(chain_id)
+            value = Config.find_account_in_config(config, address=address, name='')
             if not value:
-                parser.error(
-                    "Error with default account type 'lto account set-default --help' for instructions")
+                parser.error("Error with default account type 'lto account set-default --help' for instructions")
             else:
-                return AccountFactory(value[1]).create_from_seed(value[0][0])
+                return AccountFactory(chain_id).create_from_seed(value[0])
 
 
 def check(chain_id, parser):
