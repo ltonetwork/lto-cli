@@ -36,7 +36,7 @@ def write_to_file(chain_id, account, sec_name, parser):
 
 def find_account_in_config(config, address='', name=''):
     for sec in config.sections():
-        if address == config.get(sec, 'address') or name == sec:
+        if address == config.get(sec, 'address') or name == sec or name == config.get(sec, 'address'):
             seed = config.get(sec, 'seed')
             private_key = config.get(sec, 'private_key')
             public_key = config.get(sec, 'public_key')
@@ -125,7 +125,7 @@ def remove_account(chain_id, name, parser):
     if not value:
         parser.error("No account found with this id, type 'lto accounts remove --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
 
-    config.remove_section(name)
+    config.remove_section(get_section_name_from_address(config, value[3]))
     config.write(open(Path.joinpath(path, chain_id, 'accounts.ini'), 'w'))
     remove_default_account(value[3], chain_id)
     delete_if_empty(Path.joinpath(path, chain_id, 'accounts.ini'))
@@ -183,3 +183,10 @@ def get_config_from_chain_id(chain_id):
     config = ConfigParser()
     config.read(config_file)
     return config
+
+def get_section_name_from_address(config, address):
+    sections = config.sections()
+    for sec in sections:
+        if config.get(sec, 'address') == address:
+            return sec
+    return None
