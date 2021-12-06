@@ -11,6 +11,8 @@ install:
   - pip3 install .
   - pip3 install --upgrade build
 script:
+- python3 -m build
+- pip install dist/lto_cli*
 - lto
 - ACCOUNT=$(lto accounts create)
 - lto accounts list && lto accounts list | grep -q $ACCOUNT
@@ -25,7 +27,6 @@ script:
 - lto lease cancel --leaseid $LEASE_ID --no-broadcast
 - lto sponsorship create --recipient $RECIPIENT --no-broadcast
 - lto sponsorship cancel --recipient $RECIPIENT --no-broadcast
-- python3 -m build
 
 deploy:
   provider: pypi
