@@ -2,13 +2,13 @@ from configparser import ConfigParser
 from lto.accounts.ed25519.account_ed25519 import AccountED25519 as Account
 
 import base58
-from nacl.signing import SigningKey, VerifyKey
 import os
 from pathlib import Path
 
 DEFAULT_URL_MAINNET = 'https://nodes.lto.network'
 DEFAULT_URL_TESTNET = 'https://testnet.lto.network'
 path = Path.joinpath(Path.home(), '.lto')
+
 
 def write_to_file(chain_id, account, sec_name, parser):
     relative_path = Path.joinpath(path, chain_id)
@@ -22,7 +22,7 @@ def write_to_file(chain_id, account, sec_name, parser):
     config = ConfigParser()
     config.read(Path.joinpath(relative_path, 'accounts.ini'))
 
-    if find_account(address=account.address, name=sec_name):
+    if find_account_in_config(config=config, address=account.address, name=sec_name):
         parser.error("An account with the same id is already present, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
 
     config.add_section(sec_name)
@@ -33,13 +33,14 @@ def write_to_file(chain_id, account, sec_name, parser):
     config.write(open(Path.joinpath(relative_path, 'accounts.ini'), 'w'))
     write_default_account(account, chain_id)
 
+
 # returns false if the account is not found, else returns the seed and the chain_id
-def find_account(address = '', name = ''):
+def find_account(address='', name=''):
     directories = next(os.walk(path), (None, None, []))[1]
     for chain_id in directories:
         if 'accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
             config = ConfigParser()
-            config.read(Path.joinpath(path, '{}/accounts.ini'.format(chain_id)))
+            config.read(Path.joinpath(path, chain_id, 'accounts.ini'))
             value = find_account_in_config(config, address, name)
             if value != False:
                 return value, chain_id
@@ -59,45 +60,42 @@ def find_account_in_config(config, address='', name=''):
 
 #  Change is set to false, so it won't change the predetermined default account
 def write_default_account(account, chain_id, change=False):
-
-    local_path = Path.joinpath(path, '{}/config.ini'.format(chain_id))
+    local_path = Path.joinpath(path, chain_id, 'config.ini')
     config = ConfigParser()
     config.read(local_path)
     if not config.sections():
-        config.add_section('Default')
-        config.set('Default', 'Address', account.address)
         if chain_id == 'L':
             config.add_section('Node')
             config.set('Node', 'url', DEFAULT_URL_MAINNET)
         elif chain_id == 'T':
             config.add_section('Node')
             config.set('Node', 'url', DEFAULT_URL_TESTNET)
-        config.write(open(local_path, 'w'))
-    else:
-        if not 'Default' in config.sections():
-            config.add_section('Default')
-            config.set('Default', 'Address', account.address)
-            config.write(open(local_path, 'w'))
-        elif change:
-            config.remove_section('Default')
-            config.add_section('Default')
-            config.set('Default', 'Address', account.address)
-            config.write(open(local_path, 'w'))
+
+    if 'Default' in config.sections():
+        if not change:
+            return
+        config.remove_section('Default')
+
+    config.add_section('Default')
+    config.set('Default', 'Address', account.address)
+    config.write(open(local_path, 'w'))
+
 
 def list_accounts(chain_id, parser):
     list = []
-    local_path = Path.joinpath(path, "{}/accounts.ini".format(chain_id))
+    local_path = Path.joinpath(path, chain_id, "accounts.ini")
     if not os.path.exists(local_path):
         parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chain_id))
     else:
         config = ConfigParser()
         config.read(local_path)
         for section in config.sections():
-            list.append([section , config.get(section, 'address')])
+            list.append([section, config.get(section, 'address')])
     return list
 
+
 def det_default_addr_from_chain_id(chain_id):
-    local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
+    local_path = Path.joinpath(path, chain_id, "config.ini")
     config = ConfigParser()
     config.read(local_path)
     if not 'Default' in config.sections():
@@ -105,10 +103,10 @@ def det_default_addr_from_chain_id(chain_id):
     else:
         return config.get('Default', 'address')
 
+
 def print_list_accounts(chain_id, parser):
     list_acc = list_accounts(chain_id, parser)
     address = det_default_addr_from_chain_id(chain_id)
-
 
     for account in list_acc:
         temp = ' * {}'.format(account[1]) if account[1] == address else '   {}'.format(account[1])
@@ -124,36 +122,39 @@ def list_accounts_complete():
     for chain_id in directories:
         if 'accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
             config = ConfigParser()
-            config.read(Path.joinpath(path, '{}/accounts.ini'.format(chain_id)))
+            config.read(Path.joinpath(path, chain_id, 'accounts.ini'))
             list.append([chain_id, config.sections()])
     return list
+
 
 def check_directory(dir=''):
     if not os.path.exists(Path.joinpath(path, dir)):
         os.mkdir(Path.joinpath(path, dir))
 
+
 def set_default_accounts(name, parser):
     value = find_account(name=name)
+
     if not value:
         parser.error(
             "No account found with this id, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
-    else:
-        account = Account(seed=value[0][0], private_key=value[0][1], public_key=value[0][2], address=value[0][3])
-        write_default_account(account, value[1], change=True)
 
-def remove_account(name, parser):
-    value = find_account(name=name)
+    account = Account(seed=value[0][0], private_key=value[0][1], public_key=value[0][2], address=value[0][3])
+    write_default_account(account, value[1], change=True)
+
+
+def remove_account(chain_id, name, parser):
+    config = get_config_from_chain_id(chain_id)
+    value = find_account_in_config(config, name=name)
+
     if not value:
-        parser.error(
-            "No account found with this id, type 'lto accounts remove --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
-    else:
-        config = ConfigParser()
-        config.read(Path.joinpath(path, '{}/accounts.ini'.format(value[1])))  # value[1] = chain_id
-        address = config.get(name, 'address')
-        config.remove_section(name)
-        config.write(open(Path.joinpath(path, '{}/accounts.ini'.format(value[1])), 'w'))
-        remove_default_account(address, value[1])
-        delete_if_empty(Path.joinpath(path, '{}/accounts.ini'.format(value[1])))
+        parser.error("No account found with this id, type 'lto accounts remove --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
+
+    config.remove_section(name)
+    config.write(open(Path.joinpath(path, chain_id, 'accounts.ini'), 'w'))
+    remove_default_account(value[3], chain_id)
+    delete_if_empty(Path.joinpath(path, chain_id, 'accounts.ini'))
+
 
 def delete_if_empty(path_delete):
     config = ConfigParser()
@@ -163,13 +164,15 @@ def delete_if_empty(path_delete):
 
 
 def remove_default_account(address, chain_id):
+    config_file = Path.joinpath(path, chain_id, 'config.ini')
     config = ConfigParser()
-    config.read(Path.joinpath(path, '{}/config.ini'.format(chain_id)))
+    config.read(config_file)
     if 'Default' in config.sections():
         if address == config.get('Default', 'address'):
             config.remove_section('Default')
-            config.write(open(Path.joinpath(path, '{}/config.ini'.format(chain_id)), 'w'))
-            delete_if_empty(Path.joinpath(path, '{}/config.ini'.format(chain_id)))
+            config.write(open(config_file, 'w'))
+            delete_if_empty(config_file)
+
 
 def set_node(name_space, parser):
     chain_id = name_space.network[0] if name_space.network else 'L'
@@ -179,22 +182,28 @@ def set_node(name_space, parser):
     node = name_space.url[0]
     check_directory(chain_id)
     config = ConfigParser()
-    config.read(Path.joinpath(path, '{}/config.ini'.format(chain_id)))
+    config.read(Path.joinpath(path, chain_id, 'config.ini'))
     if not 'Node' in config.sections():
         config.add_section('Node')
     config.set('Node', 'url', node)
-    config.write(open(Path.joinpath(path, '{}/config.ini'.format(chain_id)), 'w'))
+    config.write(open(Path.joinpath(path, chain_id, 'config.ini'), 'w'))
+
 
 def show(id, parser):
     value = find_account(address=id, name=id)
     if not value:
         parser.error("No matching account fo {}, type 'lto accounts --help' for instructions")
-    else:
-        if id != value[0][3]:
-            print('Name    : ', id)
-        print('Address : ', value[0][3])
-        print('Sign    :')
-        print('   SecretKey   : ',value[0][1] )
-        print('   Public_key  : ',value[0][2] )
-        print('Seed    : ', value[0][0])
 
+    print('Name    : ', id) if id != value[0][3] else None
+    print('Address : ', value[0][3])
+    print('Sign    :')
+    print('   SecretKey   : ', value[0][1])
+    print('   Public_key  : ', value[0][2])
+    print('Seed    : ', value[0][0])
+
+
+def get_config_from_chain_id(chain_id):
+    config_file = Path.joinpath(path, chain_id, 'accounts.ini')
+    config = ConfigParser()
+    config.read(config_file)
+    return config

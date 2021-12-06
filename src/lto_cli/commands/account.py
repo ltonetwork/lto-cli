@@ -1,5 +1,6 @@
 from lto.accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
 from lto_cli import config
+from lto_cli import handle_default as handle
 import sys
 
 def func(name_space, parser):
@@ -25,7 +26,11 @@ def func(name_space, parser):
         config.set_default_accounts(name_space.address[0], parser)
 
     elif vars(name_space)['subparser-name-account'] == 'remove':
-        config.remove_account(name_space.address[0], parser)
+        chain_id = name_space.network[0] if name_space.network else 'L'
+        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+
+        name = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
+        config.remove_account(chain_id, name, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'show':
         config.show(name_space.address[0], parser)

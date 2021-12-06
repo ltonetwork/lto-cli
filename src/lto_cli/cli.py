@@ -64,8 +64,10 @@ def main():
     parser_setDefault.add_argument('address', type=str, nargs=1)
 
 
-    parser_remove = account_subparser.add_parser('remove', help="Remove the specified account, the account can be identified by address or name")
-    parser_remove.add_argument('address', type=str, nargs=1)
+    parser_remove = account_subparser.add_parser('remove', help="Remove an account, if not specified, the default account is selected")
+    parser_remove.add_argument('--id', type=str, nargs=1, required=False, help="Remove the specified account, the account can be identified by address or name")
+    parser_remove.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
+
 
     parser_show = account_subparser.add_parser('show', help="Show the information about the account")
     parser_show.add_argument('address', type=str, nargs=1, help="The address field can be filled with either address or name")
