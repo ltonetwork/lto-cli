@@ -1,11 +1,13 @@
 from lto.accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
 from lto_cli import config
 from lto_cli import handle_default as handle
-import sys
+
 
 def func(name_space, parser):
+    chain_id = name_space.network[0] if name_space.network else 'L'
+    chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+
     if vars(name_space)['subparser-name-account'] == 'create':
-        chain_id = name_space.network[0] if name_space.network else 'L'
         if not (chain_id.isalpha() and len(chain_id) == 1):
             parser.error('The --network parameter accepts only CHAR type')
         chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
@@ -16,36 +18,22 @@ def func(name_space, parser):
         print(account.address)
 
     elif vars(name_space)['subparser-name-account'] == 'list':
-        chain_id = name_space.network[0] if name_space.network else 'L'
-        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
         config.print_list_accounts(chain_id, parser)
 
-
-
     elif vars(name_space)['subparser-name-account'] == 'set-default':
-        chain_id = name_space.network[0] if name_space.network else 'L'
-        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
         config.set_default_accounts(chain_id, name_space.address[0], parser)
 
     elif vars(name_space)['subparser-name-account'] == 'remove':
-        chain_id = name_space.network[0] if name_space.network else 'L'
-        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
-
         name = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
         config.remove_account(chain_id, name, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'show':
-        chain_id = name_space.network[0] if name_space.network else 'L'
-        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
-
         id = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
         config.show(chain_id, id, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'seed':
-        chain_id = name_space.network[0] if name_space.network else 'L'
         if not (chain_id.isalpha() and len(chain_id) == 1):
             parser.error('The --network parameter accepts only CHAR type')
-        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
         sec_name = name_space.name[0] if name_space.name else ''
         factory = AccountFactory(chain_id)
         seed = name_space.stdin.read().splitlines()
