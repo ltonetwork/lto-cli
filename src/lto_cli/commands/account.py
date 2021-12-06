@@ -23,7 +23,9 @@ def func(name_space, parser):
 
 
     elif vars(name_space)['subparser-name-account'] == 'set-default':
-        config.set_default_accounts(name_space.address[0], parser)
+        chain_id = name_space.network[0] if name_space.network else 'L'
+        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+        config.set_default_accounts(chain_id, name_space.address[0], parser)
 
     elif vars(name_space)['subparser-name-account'] == 'remove':
         chain_id = name_space.network[0] if name_space.network else 'L'

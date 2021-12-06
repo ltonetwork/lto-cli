@@ -62,6 +62,7 @@ def main():
 
     parser_setDefault = account_subparser.add_parser('set-default', help="Sets the specified account as default account")
     parser_setDefault.add_argument('address', type=str, nargs=1)
+    parser_setDefault.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
 
     parser_remove = account_subparser.add_parser('remove', help="Remove an account, if not specified, the default account is selected")

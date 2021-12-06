@@ -116,31 +116,19 @@ def print_list_accounts(chain_id, parser):
             print(temp)
 
 
-def list_accounts_complete():
-    list = []
-    directories = next(os.walk(path), (None, None, []))[1]
-    for chain_id in directories:
-        if 'accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
-            config = ConfigParser()
-            config.read(Path.joinpath(path, chain_id, 'accounts.ini'))
-            list.append([chain_id, config.sections()])
-    return list
-
-
 def check_directory(dir=''):
     if not os.path.exists(Path.joinpath(path, dir)):
         os.mkdir(Path.joinpath(path, dir))
 
 
-def set_default_accounts(name, parser):
-    value = find_account(name=name)
-
+def set_default_accounts(chain_id, name, parser):
+    config = get_config_from_chain_id(chain_id)
+    value = find_account_in_config(config, name=name)
     if not value:
-        parser.error(
-            "No account found with this id, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
+        parser.error("No account found with this id, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
 
-    account = Account(seed=value[0][0], private_key=value[0][1], public_key=value[0][2], address=value[0][3])
-    write_default_account(account, value[1], change=True)
+    account = Account(seed=value[0], private_key=value[1], public_key=value[2], address=value[3])
+    write_default_account(account, chain_id, change=True)
 
 
 def remove_account(chain_id, name, parser):
