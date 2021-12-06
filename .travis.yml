@@ -14,8 +14,8 @@ script:
 - python3 -m build
 - pip install dist/lto_cli*
 - lto
-- ACCOUNT=$(lto accounts create)
-- lto accounts list && lto accounts list | grep -q $ACCOUNT
+- ACCOUNT=$(lto account create)
+- lto account list && lto account list | grep -q $ACCOUNT
 - lto node status
 - lto balance 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
 - lto anchor --hash $HASH --no-broadcast
@@ -24,7 +24,7 @@ script:
 - lto transfer --recipient $RECIPIENT --amount 742.6 --no-broadcast
 - echo -e "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj 742.6\n3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz 2184.2" | lto mass-transfer --no-broadcast
 - lto lease create --recipient $RECIPIENT --amount 742.6 --no-broadcast
-- lto lease cancel --leaseid $LEASE_ID --no-broadcast
+- lto lease cancel --leaseId $LEASE_ID --no-broadcast
 - lto sponsorship create --recipient $RECIPIENT --no-broadcast
 - lto sponsorship cancel --recipient $RECIPIENT --no-broadcast
 
