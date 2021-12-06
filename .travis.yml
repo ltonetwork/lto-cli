@@ -24,7 +24,7 @@ script:
   - ACCOUNT=$(lto account create)
   - echo $ACCOUNT
   - ls ~
-  - ls ~/lto/*
+  - ls ~/.lto/*
   - lto account list && lto account list | grep -q $ACCOUNT
   - lto node status
   - lto balance 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
