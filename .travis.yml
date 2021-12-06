@@ -13,6 +13,7 @@ install:
 script:
 - python3 -m build
 - pip install dist/lto_cli*
+- HASH=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 - lto
 - ACCOUNT=$(lto account create)
 - lto account list && lto account list | grep -q $ACCOUNT
