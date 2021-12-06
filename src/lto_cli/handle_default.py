@@ -89,8 +89,10 @@ def get_account_for_balance(chain_id, parser, name=''):
             raise Exception
         else:
             address = config.get('Default', 'address')
-            value = Config.find_account(address=address, name='')
+            config.clear()
+            config = Config.get_config_from_chain_id(chain_id)
+            value = Config.find_account_in_config(config, address=address, name='')
             if not value:
                 raise Exception
             else:
-                return AccountFactory(value[1]).create_from_seed(value[0][0])
+                return AccountFactory(chain_id).create_from_seed(value[0])

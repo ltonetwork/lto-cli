@@ -34,19 +34,6 @@ def write_to_file(chain_id, account, sec_name, parser):
     write_default_account(account, chain_id)
 
 
-# returns false if the account is not found, else returns the seed and the chain_id
-def find_account(address='', name=''):
-    directories = next(os.walk(path), (None, None, []))[1]
-    for chain_id in directories:
-        if 'accounts.ini' in next(os.walk(Path.joinpath(path, chain_id)), (None, None, []))[2]:
-            config = ConfigParser()
-            config.read(Path.joinpath(path, chain_id, 'accounts.ini'))
-            value = find_account_in_config(config, address, name)
-            if value != False:
-                return value, chain_id
-    return False
-
-
 def find_account_in_config(config, address='', name=''):
     for sec in config.sections():
         if address == config.get(sec, 'address') or name == sec:

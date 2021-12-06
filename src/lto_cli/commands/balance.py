@@ -23,16 +23,18 @@ def print_balance(name_space, balances):
 
 def func(name_space, parser):
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
-    account_name = vars(name_space)['account'] if vars(name_space)['account'] else ''
+    id = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
+
+    #account_name = vars(name_space)['account'] if vars(name_space)['account'] else ''
 
     node = handle.get_node(chain_id, parser)
     try:
-        account = handle.get_account_for_balance(chain_id, parser, account_name)
+        account = handle.get_account_for_balance(chain_id, parser, id)
         balances = node.balance_details(account.address)
         print_balance(name_space, balances)
     except:
         try:
-            balances = node.balance_details(account_name)
+            balances = node.balance_details(id)
             print_balance(name_space, balances)
         except:
             parser.error("Address not valid, type 'lto account --help' for instructions")
