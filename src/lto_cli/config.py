@@ -35,6 +35,7 @@ def write_to_file(chain_id, account, sec_name, parser):
     config.set(sec_name, 'Seed', account.seed)
     config.write(open(Path.joinpath(relative_path, 'Accounts.ini'), 'w'))
     write_default_account(account, chain_id)
+    print("Written to ", Path.joinpath(relative_path, 'Accounts.ini'))
 
 # returns false if the account is not found, else returns the seed and the chain_id
 def find_account(address = '', name = ''):
