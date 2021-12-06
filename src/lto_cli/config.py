@@ -94,7 +94,7 @@ def list_accounts(chain_id, parser):
     return list
 
 
-def det_default_addr_from_chain_id(chain_id):
+def get_default_addr_from_chain_id(chain_id):
     local_path = Path.joinpath(path, chain_id, "config.ini")
     config = ConfigParser()
     config.read(local_path)
@@ -106,7 +106,7 @@ def det_default_addr_from_chain_id(chain_id):
 
 def print_list_accounts(chain_id, parser):
     list_acc = list_accounts(chain_id, parser)
-    address = det_default_addr_from_chain_id(chain_id)
+    address = get_default_addr_from_chain_id(chain_id)
 
     for account in list_acc:
         temp = ' * {}'.format(account[1]) if account[1] == address else '   {}'.format(account[1])
@@ -177,17 +177,18 @@ def set_node(name_space, parser):
     config.write(open(Path.joinpath(path, chain_id, 'config.ini'), 'w'))
 
 
-def show(id, parser):
-    value = find_account(address=id, name=id)
+def show(chain_id, id, parser):
+    config = get_config_from_chain_id(chain_id)
+    value = find_account_in_config(config, address=id, name=id)
     if not value:
         parser.error("No matching account fo {}, type 'lto accounts --help' for instructions")
 
-    print('Name    : ', id) if id != value[0][3] else None
-    print('Address : ', value[0][3])
+    print('Name    : ', id) if id != value[3] else None
+    print('Address : ', value[3])
     print('Sign    :')
-    print('   SecretKey   : ', value[0][1])
-    print('   Public_key  : ', value[0][2])
-    print('Seed    : ', value[0][0])
+    print('   SecretKey   : ', value[1])
+    print('   Public_key  : ', value[2])
+    print('Seed    : ', value[0])
 
 
 def get_config_from_chain_id(chain_id):

@@ -35,7 +35,11 @@ def func(name_space, parser):
         config.remove_account(chain_id, name, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'show':
-        config.show(name_space.address[0], parser)
+        chain_id = name_space.network[0] if name_space.network else 'L'
+        chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
+
+        id = name_space.id[0] if name_space.id else handle.get_account(chain_id, parser).address
+        config.show(chain_id, id, parser)
 
     elif vars(name_space)['subparser-name-account'] == 'seed':
         chain_id = name_space.network[0] if name_space.network else 'L'

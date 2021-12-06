@@ -70,8 +70,10 @@ def main():
     parser_remove.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
 
 
-    parser_show = account_subparser.add_parser('show', help="Show the information about the account")
-    parser_show.add_argument('address', type=str, nargs=1, help="The address field can be filled with either address or name")
+    parser_show = account_subparser.add_parser('show', help="Show the information about the account, if not specified, the default account is selected")
+    parser_show.add_argument('--id', type=str, nargs=1, required=False, help="The account can be identified by address or name")
+    parser_show.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
+
 
     parser_seed = account_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto account seed --help")
     parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto account seed")
