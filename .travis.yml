@@ -21,6 +21,7 @@ before_script:
   - pip install dist/lto_cli*
 script:
   - lto
+  - lto account create
   - ACCOUNT=$(lto account create)
   - echo $ACCOUNT
   - ls ~
