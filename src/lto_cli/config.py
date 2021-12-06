@@ -11,8 +11,10 @@ DEFAULT_URL_TESTNET = 'https://testnet.lto.network'
 path = Path.joinpath(Path.home(), '.lto')
 
 def write_to_file(chain_id, account, sec_name, parser):
-    assert chain_id != ''
     relative_path = Path.joinpath(path, chain_id)
+    print(path)
+    print(chain_id)
+    print(relative_path)
 
     if not os.path.exists(relative_path):
         os.mkdir(relative_path)
