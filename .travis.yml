@@ -27,7 +27,7 @@ script:
   - cat ~/.lto/L/accounts.ini
   - lto account list && lto account list | grep -q $ACCOUNT
   - lto node status
-  - lto balance 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
+  - lto balance --id 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
   - lto anchor --hash $HASH --no-broadcast
   - lto association issue --recipient $RECIPIENT --type 1 --hash $HASH --no-broadcast
   - lto association revoke --recipient $RECIPIENT --type 1 --hash $HASH --no-broadcast
