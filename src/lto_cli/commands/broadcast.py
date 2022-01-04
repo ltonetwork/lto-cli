@@ -1,5 +1,5 @@
 import json
-from lto import PyCLTO
+from lto import LTO
 from lto_cli import handle_default as handle
 import sys
 
@@ -11,7 +11,7 @@ def func(name_space, parser):
     if not tx_json:
         parser.error("Expected transaction as input, type 'lto broadcast --help' for instructions")
 
-    transaction = PyCLTO().from_data(json.loads(tx_json))
+    transaction = LTO().from_data(json.loads(tx_json))
 
     if vars(name_space)['unsigned'] is False:
         if not transaction.proofs:
