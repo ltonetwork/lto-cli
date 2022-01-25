@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 import os
 
-from lto.accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
+from lto.accounts.ed25519.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
 from lto_cli import config as Config
 from lto.public_node import PublicNode
 
