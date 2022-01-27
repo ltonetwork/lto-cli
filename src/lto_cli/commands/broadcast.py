@@ -1,7 +1,7 @@
 import json
-from lto import LTO
+from lto.transactions import from_data
 from lto_cli import handle_default as handle
-import sys
+
 
 def func(name_space, parser):
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
@@ -11,7 +11,7 @@ def func(name_space, parser):
     if not tx_json:
         parser.error("Expected transaction as input, type 'lto broadcast --help' for instructions")
 
-    transaction = LTO().from_data(json.loads(tx_json))
+    transaction = from_data(json.loads(tx_json))
 
     if vars(name_space)['unsigned'] is False:
         if not transaction.proofs:
