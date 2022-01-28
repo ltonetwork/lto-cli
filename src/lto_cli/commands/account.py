@@ -1,4 +1,4 @@
-from lto.accounts.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
+from lto.accounts.ed25519.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
 from lto_cli import config
 from lto_cli import handle_default as handle
 
