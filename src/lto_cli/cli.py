@@ -99,6 +99,7 @@ def main():
     parser_anchor.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_anchor.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     parser_anchor.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
+    parser_anchor.add_argument('--encoding', type=str , nargs=1, required=False, help="Use this option to provide the hash in a different encoding then hexadecimal (base58 or base64)")
     # --------------------------------------------------------------
     parser_association = subparsers.add_parser('association', help="Create an Association Transaction, type 'lto association --help' for more information")
     association_subparser = parser_association.add_subparsers(dest='subparser-name-association')

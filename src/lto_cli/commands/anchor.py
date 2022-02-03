@@ -1,9 +1,16 @@
 from lto_cli import handle_default as handle
 from lto.transactions.anchor import Anchor
-
+from lto import crypto
 
 def func(name_space, parser):
-    transaction = Anchor(name_space.hash[0])
+    encoding = vars(name_space)['encoding'][0] if vars(name_space)['encoding'] else ''
+    if encoding:
+        if encoding not in ['base58', 'base64']:
+            parser.error("Unrecognized encoding format, please use base58 or base64 encoding")
+        encoded_hash = crypto.recode(name_space.hash[0], encoding, 'hex')
+        transaction = Anchor(encoded_hash)
+    else:
+        transaction = Anchor(name_space.hash[0])
 
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
     account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
