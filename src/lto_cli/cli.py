@@ -12,6 +12,7 @@ from lto_cli.commands import mass_transfer
 from lto_cli.commands import broadcast
 from lto_cli.commands import balance
 from lto_cli.commands import node
+from lto_cli.commands import data
 from importlib_metadata import version
 
 # IF ERROR MODULE NOT FOUND:
@@ -47,6 +48,24 @@ def main():
 
     parser.add_argument('--version', action='store_true', required=False, help="Display the version of the package")
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
+
+    # --------------------------------------------------------------
+    parser_data = subparsers.add_parser('data', help="Create a data transaction or get the data associated with one account, type 'lto data --help' for more informations")
+    data_subparser = parser_data.add_subparsers(dest='subparser-name-data')
+
+    parser_set = data_subparser.add_parser('set', help="Create a data transaction, for more information on how to pipe the data type 'lto data set --help")
+    parser_set.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin,  help="Takes the data as input: echo 'my data' | lto data set")
+    parser_set.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_set.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
+    parser_set.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
+    parser_set.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_set.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+
+    parser_get = data_subparser.add_parser('get', help="Retrive the data associated with one account, if not specified the default account is selected, for more infotmations type 'lto data get --help")
+    parser_get.add_argument('address', nargs='?', type=str, help='Insert the desired account address')
+    parser_get.add_argument('--key', type=str, nargs=1, required=False, help="Use this option to retrieve the value of a specific entry")
+    parser_get.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_get.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
 
     # --------------------------------------------------------------
     parser_account = subparsers.add_parser('account', help="Create remove and manage accounts, type 'lto account --help' for more informations")
@@ -269,6 +288,9 @@ def process_args(name_space, parser):
 
     elif vars(name_space)['subparser-name'] == 'balance':
         balance.func(name_space, parser)
+
+    elif vars(name_space)['subparser-name'] == 'data':
+        data.func(name_space, parser)
 
     else:
         parser.print_help()
