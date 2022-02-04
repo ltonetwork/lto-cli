@@ -11,11 +11,11 @@ def func(name_space, parser):
         chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
         account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
         sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
-        data = name_space.stdin.read().splitlines()
+        data = name_space.stdin.read()
         if not data:
             parser.error("Data missing, type 'lto data set --help' for instructions")
 
-        transaction = Data(json.loads(data[0]))
+        transaction = Data(json.loads(data))
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
             if sponsor:
