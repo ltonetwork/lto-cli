@@ -1,22 +1,17 @@
 from lto_cli import handle_default as handle
 from lto.transactions.anchor import Anchor
-from lto import crypto
 import select
 import hashlib
 from lto import crypto
-import sys
-import os
 
 
 def func(name_space, parser):
-    # Need to make a flowChart for this
     hash = vars(name_space)['hash'][0] if vars(name_space)['hash'] else None
     algo = vars(name_space)['algo'][0] if vars(name_space)['algo'] else None
     encoding = vars(name_space)['encoding'][0] if vars(name_space)['encoding'] else ''
     data = None
     if select.select([name_space.stdin, ], [], [], 0.0)[0]:
         data = name_space.stdin.read()
-
 
     if data and hash:
         parser.error("Hash can be uploaded from standard input or by using the --hash option, not both")
@@ -25,7 +20,7 @@ def func(name_space, parser):
     if hash and algo:
         parser.error("Algorithm is an option accessible only if there is a file input")
 
-    algorithsm = {
+    algorithms = {
         'sha256': hashlib.sha256,
         'sha1': hashlib.sha1,
         'sha224': hashlib.sha224,
@@ -38,14 +33,14 @@ def func(name_space, parser):
         'sha3_384': hashlib.sha3_384,
         'sha3_512': hashlib.sha3_512,
     }
-    if algo and algo not in algorithsm:
+    if algo and algo not in algorithms:
         parser.error("Unsupported hashing algorithm")
 
     if data:
         if not algo:
-            hash = algorithsm['sha256'](crypto.str2bytes(data)).hexdigest()
+            hash = algorithms['sha256'](crypto.str2bytes(data)).hexdigest()
         else:
-            hash = algorithsm[algo](crypto.str2bytes(data)).hexdigest()
+            hash = algorithms[algo](crypto.str2bytes(data)).hexdigest()
 
     if encoding:
         if encoding not in ['base58', 'base64']:
