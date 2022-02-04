@@ -112,7 +112,9 @@ def main():
 
     # --------------------------------------------------------------
     parser_anchor = subparsers.add_parser(name='anchor', help="Create an Anchor Transaction, type 'lto anchor --help' for more information")
-    parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain", required=True)
+    parser_anchor.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin,  help="Takes the hash as input: echo 'my hahs' | lto anchor")
+    parser_anchor.add_argument('--hash', type=str, nargs=1, help="The hash that will be anchored to the chain")
+    parser_anchor.add_argument('--algo', type=str , nargs=1, required=False, help="Use this option to specify an algorithm to hash the input file")
     parser_anchor.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_anchor.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_anchor.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
