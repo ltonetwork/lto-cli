@@ -101,6 +101,15 @@ lto sponsorship cancel --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 lto sponsorship incoming
 ```
 
+### Data
+
+```
+lto data set <<< '{"foo": "bar"}'
+lto data get
+lto data get 3Jvtrp1GZ7r5J8SXXFqeKyH9GE5Q78meHzN
+lto data get --key foo
+```
+
 ## Common options
 
 ```
