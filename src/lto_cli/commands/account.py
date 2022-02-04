@@ -45,6 +45,7 @@ def func(name_space, parser):
             parser.error("Seed missing, type 'lto account seed --help' for instructions")
         account = factory.create_from_seed(seed[0])
         config.write_to_file(chain_id, account, sec_name, parser)
+        print(account.address)
 
     else:
         parser.error('Type lto account --help for instructions')
