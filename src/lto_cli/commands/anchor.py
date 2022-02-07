@@ -37,10 +37,8 @@ def func(name_space, parser):
         parser.error("Unsupported hashing algorithm")
 
     if data:
-        if not algo:
-            hash = algorithms['sha256'](crypto.str2bytes(data)).hexdigest()
-        else:
-            hash = algorithms[algo](crypto.str2bytes(data)).hexdigest()
+        method = algorithms[algo] if algo else hashlib.sha256
+        hash = method(crypto.str2bytes(data)).hexdigest()
 
     if encoding:
         if encoding not in ['base58', 'base64']:
