@@ -3,6 +3,7 @@ import sys
 
 from lto_cli import config
 from lto_cli.commands import transfer
+from lto_cli.commands import burn
 from lto_cli.commands import anchor
 from lto_cli.commands import leasing
 from lto_cli.commands import sponsorship
@@ -253,6 +254,14 @@ def main():
     parser_transfer.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_transfer.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     parser_transfer.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
+    # --------------------------------------------------------------
+    parser_burn = subparsers.add_parser('burn', help="Create a Burn Transaction, type 'lto burn --help' for more informations")
+    parser_burn.add_argument('--amount', type=float, nargs=1, required=True, help="Specify the amounts of token to burn, 1 equals 1 LTO")
+    parser_burn.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_burn.add_argument('--network', type=str, nargs=1, required=False,  help='Optional network parameter, if not specified default is L')
+    parser_burn.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_burn.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
+    parser_burn.add_argument('--sponsor', type=str, nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
     process_args(parser.parse_args(), parser)
 
@@ -269,6 +278,9 @@ def process_args(name_space, parser):
 
     elif vars(name_space)['subparser-name'] == 'transfer':
         transfer.func(name_space, parser)
+
+    elif vars(name_space)['subparser-name'] == 'burn':
+        burn.func(name_space, parser)
 
     elif vars(name_space)['subparser-name'] == 'sponsorship':
         sponsorship.func(name_space, parser)
