@@ -57,7 +57,7 @@ lto balance 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 ### Anchor
 
 ```
-lto anchor --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto anchor --hash d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
 cat somefile.txt | lto anchor --algo sha256
 ```
 

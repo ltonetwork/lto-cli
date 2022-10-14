@@ -22,7 +22,7 @@ def print_balance(name_space, balances):
 
 
 def validate_address(address, node):
-    return node.wrapper(api='/addresses/validate/{}'.format(address))['valid']
+    return node.validate_address(address)
 
 
 def func(name_space, parser):

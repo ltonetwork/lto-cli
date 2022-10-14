@@ -2,6 +2,7 @@ from lto_cli import handle_default as handle
 from lto.transactions.association import Association
 from lto.transactions.revoke_association import RevokeAssociation
 import json
+from lto.crypto import decode
 
 
 def func(name_space, parser):
@@ -16,7 +17,7 @@ def func(name_space, parser):
             if name_space.hash:
                 hash = name_space.hash[0]
             if vars(name_space)['subparser-name-association'] == 'issue':
-                transaction = Association(recipient=recipient, association_type=association_type, anchor=hash)
+                transaction = Association(recipient=recipient, association_type=association_type, subject=decode(hash, "hex"))
                 if vars(name_space)['unsigned'] is False:
                     transaction.sign_with(handle.get_account(chain_id, parser, account_name))
                     if sponsor:
@@ -27,7 +28,7 @@ def func(name_space, parser):
                     parser.error(
                         "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more informations ")
             else:  # revoke case
-                transaction = RevokeAssociation(recipient=recipient, association_type=association_type, anchor=hash)
+                transaction = RevokeAssociation(recipient=recipient, association_type=association_type, subject=decode(hash, "hex"))
                 if vars(name_space)['unsigned'] is False:
                     if vars(name_space)['account']:
                         transaction.sign_with(handle.get_account(chain_id, parser, account_name))
