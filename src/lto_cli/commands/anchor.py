@@ -55,7 +55,8 @@ def func(name_space, parser):
         decoded_hash = crypto.decode(hash, encoding)
         transaction = Anchor(decoded_hash)
     else:
-        transaction = Anchor(hash)
+        decoded_hash = crypto.decode(hash, 'hex')
+        transaction = Anchor(decoded_hash)
 
     if not unsigned:
         transaction.sign_with(handle.get_account(chain_id, parser, account_name))
