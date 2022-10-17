@@ -5,7 +5,8 @@ python:
 env:
   global:
     - RECIPIENT=3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
-    - HASH=d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+    - HASH1=d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+    - HASH2=26db936641a9e6f5a01d3c56f69212de2549fbb926f428332ca715eb1b90a153
     - HASH_BASE58=FJKTv1un7qsnyKdwKez7B67JJp3oCU5ntCVXcRsWEjtg
     - LEASE_ID=6XmeG7SRWiw8pD6Uad6D9AAaY354v5TV6AJMhPpHMkqy
 
@@ -30,9 +31,10 @@ script:
   - lto node status
   - lto balance 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
   - lto anchor --hash $HASH_BASE58 --encoding base58 --no-broadcast
-  - lto anchor --hash $HASH --no-broadcast
-  - lto association issue --recipient $RECIPIENT --type 1 --subject $HASH --no-broadcast
-  - lto association revoke --recipient $RECIPIENT --type 1 --subject $HASH --no-broadcast
+  - lto anchor --hash $HASH1 --hash $HASH2 --no-broadcast
+  - lto anchor --hash $HASH2:$HASH1 --no-broadcast
+  - lto association issue --recipient $RECIPIENT --type 1 --subject $HASH1 --no-broadcast
+  - lto association revoke --recipient $RECIPIENT --type 1 --subject $HASH1 --no-broadcast
   - lto transfer --recipient $RECIPIENT --amount 742.6 --no-broadcast
   - echo -e "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj 742.6\n3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz 2184.2" | lto mass-transfer --no-broadcast
   - lto lease create --recipient $RECIPIENT --amount 742.6 --no-broadcast
