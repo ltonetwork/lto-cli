@@ -111,6 +111,12 @@ lto data get 3Jvtrp1GZ7r5J8SXXFqeKyH9GE5Q78meHzN
 lto data get --key foo
 ```
 
+### Mapped Anchor
+
+```
+lto anchor --hash a10933ea8afa05af54bc2ed0c9780bbc7e2e69964b76dcc69992a3fce94f11c5:48dbb907e9777a49af2f824b41278f27ef1cc0de2a926b3da19cfca897c08416
+```
+
 ## Common options
 
 ```
