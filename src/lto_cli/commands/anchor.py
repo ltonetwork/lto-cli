@@ -19,8 +19,9 @@ algorithms = {
     'sha3_512': hashlib.sha3_512,
 }
 
+
 def func(name_space, parser):
-    hash = vars(name_space)['hash'][0] if vars(name_space)['hash'] else None
+    hash = vars(name_space)['hash'] if vars(name_space)['hash'] else None
     algo = vars(name_space)['algo'][0] if vars(name_space)['algo'] else None
     encoding = vars(name_space)['encoding'][0] if vars(name_space)['encoding'] else ''
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
@@ -50,21 +51,20 @@ def func(name_space, parser):
 
     if data:
         method = algorithms[algo] if algo else hashlib.sha256
-        hash = method(crypto.str2bytes(data)).hexdigest()
+        hash = [[method(crypto.str2bytes(data)).hexdigest()]]
 
-    if ":" in hash:
-        hash1, hash2 = hash.split(':', 2)
-        if encoding:
-            anchors = {crypto.decode(hash1, encoding): crypto.decode(hash2, encoding)}
-        else:
-            anchors = {crypto.decode(hash1, "hex"): crypto.decode(hash2, "hex")}
+    if not encoding:
+        encoding = "hex"
+    if ":" in hash[0][0]:
+        hash1, hash2 = hash[0][0].split(':', 2)
+        anchors = {crypto.decode(hash1, encoding): crypto.decode(hash2, encoding)}
         transaction = MappedAnchor(anchors)
     else:
-        if encoding:
-            decoded_hash = crypto.decode(hash, encoding)
-        else:
-            decoded_hash = crypto.decode(hash, 'hex')
-        transaction = Anchor(decoded_hash)
+        anchors = []
+        for x in hash:
+            anchors.append(crypto.decode(x[0], encoding))
+        transaction = Anchor(*anchors)
+
 
     if not unsigned:
         transaction.sign_with(handle.get_account(chain_id, parser, account_name))
@@ -74,5 +74,3 @@ def func(name_space, parser):
             transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
 
     handle.pretty_print(transaction)
-
-
