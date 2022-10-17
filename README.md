@@ -58,14 +58,15 @@ lto balance 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
 
 ```
 lto anchor --hash d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+lto anchor --hash d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35 --hash 48dbb907e9777a49af2f824b41278f27ef1cc0de2a926b3da19cfca897c08416
 cat somefile.txt | lto anchor --algo sha256
 ```
 
 ### Associations
 
 ```
-lto association issue --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto association issue --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --subject e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --subject e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 lto association incoming
 lto association outgoing
 ```
@@ -109,6 +110,12 @@ lto data set <<< '{"foo": "bar"}'
 lto data get
 lto data get 3Jvtrp1GZ7r5J8SXXFqeKyH9GE5Q78meHzN
 lto data get --key foo
+```
+
+### Mapped Anchor
+
+```
+lto anchor --hash a10933ea8afa05af54bc2ed0c9780bbc7e2e69964b76dcc69992a3fce94f11c5:48dbb907e9777a49af2f824b41278f27ef1cc0de2a926b3da19cfca897c08416
 ```
 
 ## Common options

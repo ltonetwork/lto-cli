@@ -13,11 +13,11 @@ def func(name_space, parser):
             sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
             association_type = name_space.type[0]
             recipient = name_space.recipient[0]
-            hash = ''
-            if name_space.hash:
-                hash = name_space.hash[0]
+            subject = ''
+            if name_space.subject:
+                subject = name_space.subject[0]
             if vars(name_space)['subparser-name-association'] == 'issue':
-                transaction = Association(recipient=recipient, association_type=association_type, subject=decode(hash, "hex"))
+                transaction = Association(recipient=recipient, association_type=association_type, subject=decode(subject, "hex"))
                 if vars(name_space)['unsigned'] is False:
                     transaction.sign_with(handle.get_account(chain_id, parser, account_name))
                     if sponsor:
@@ -28,7 +28,7 @@ def func(name_space, parser):
                     parser.error(
                         "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more informations ")
             else:  # revoke case
-                transaction = RevokeAssociation(recipient=recipient, association_type=association_type, subject=decode(hash, "hex"))
+                transaction = RevokeAssociation(recipient=recipient, association_type=association_type, subject=decode(subject, "hex"))
                 if vars(name_space)['unsigned'] is False:
                     if vars(name_space)['account']:
                         transaction.sign_with(handle.get_account(chain_id, parser, account_name))
