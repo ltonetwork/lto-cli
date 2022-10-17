@@ -135,7 +135,7 @@ def main():
     parser_association_outgoing.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
 
     parser_association_issue = association_subparser.add_parser('issue', help="Create an association transaction")
-    parser_association_issue.add_argument('--hash', type=str, nargs=1, help = "Optional hash argument")
+    parser_association_issue.add_argument('--subject', type=str, nargs=1, help = "Optional hash argument")
     parser_association_issue.add_argument('--recipient', type=str, nargs=1, required=True, help= 'The recipient')
     parser_association_issue.add_argument('--type', type=int, nargs=1, required=True, help='The association type')
     parser_association_issue.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
@@ -146,7 +146,7 @@ def main():
 
 
     parser_association_revoke = association_subparser.add_parser('revoke', help="Create a revoke association transaction")
-    parser_association_revoke.add_argument('--hash', type=str, nargs=1, help = "Optional hash argument")
+    parser_association_revoke.add_argument('--subject', type=str, nargs=1, help = "Optional hash argument")
     parser_association_revoke.add_argument('--recipient', type=str, nargs=1, required=True, help= 'The recipient')
     parser_association_revoke.add_argument('--type', type=int, nargs=1, required=True, help='The association type')
     parser_association_revoke.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")

@@ -65,8 +65,8 @@ cat somefile.txt | lto anchor --algo sha256
 ### Associations
 
 ```
-lto association issue --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --hash e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto association issue --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --subject e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+lto association revoke --recipient 3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK --type 1 --subject e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 lto association incoming
 lto association outgoing
 ```
