@@ -31,8 +31,8 @@ script:
   - lto balance 3JugjxT51cTjWAsgnQK4SpmMqK6qua1VpXH
   - lto anchor --hash $HASH_BASE58 --encoding base58 --no-broadcast
   - lto anchor --hash $HASH --no-broadcast
-  - lto association issue --recipient $RECIPIENT --type 1 --hash $HASH --no-broadcast
-  - lto association revoke --recipient $RECIPIENT --type 1 --hash $HASH --no-broadcast
+  - lto association issue --recipient $RECIPIENT --type 1 --subject $HASH --no-broadcast
+  - lto association revoke --recipient $RECIPIENT --type 1 --subject $HASH --no-broadcast
   - lto transfer --recipient $RECIPIENT --amount 742.6 --no-broadcast
   - echo -e "3N6MFpSbbzTozDcfkTUT5zZ2sNbJKFyRtRj 742.6\n3NBC7ETcdPbf4QAXSop5UCJ53yX34aGPXoz 2184.2" | lto mass-transfer --no-broadcast
   - lto lease create --recipient $RECIPIENT --amount 742.6 --no-broadcast
