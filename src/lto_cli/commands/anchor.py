@@ -3,6 +3,7 @@ from lto.transactions.anchor import Anchor
 import select
 import hashlib
 from lto import crypto
+from lto.transactions import MappedAnchor
 
 algorithms = {
     'sha256': hashlib.sha256,
@@ -51,11 +52,18 @@ def func(name_space, parser):
         method = algorithms[algo] if algo else hashlib.sha256
         hash = method(crypto.str2bytes(data)).hexdigest()
 
-    if encoding:
-        decoded_hash = crypto.decode(hash, encoding)
-        transaction = Anchor(decoded_hash)
+    if ":" in hash:
+        hash1, hash2 = hash.split(':', 2)
+        if encoding:
+            anchors = {crypto.decode(hash1, encoding): crypto.decode(hash2, encoding)}
+        else:
+            anchors = {crypto.decode(hash1, "hex"): crypto.decode(hash2, "hex")}
+        transaction = MappedAnchor(anchors)
     else:
-        decoded_hash = crypto.decode(hash, 'hex')
+        if encoding:
+            decoded_hash = crypto.decode(hash, encoding)
+        else:
+            decoded_hash = crypto.decode(hash, 'hex')
         transaction = Anchor(decoded_hash)
 
     if not unsigned:
