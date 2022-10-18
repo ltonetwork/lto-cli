@@ -11,6 +11,7 @@ from lto_cli.commands import association
 from lto_cli.commands import account
 from lto_cli.commands import mass_transfer
 from lto_cli.commands import broadcast
+from lto_cli.commands import script
 from lto_cli.commands import balance
 from lto_cli.commands import node
 from lto_cli.commands import data
@@ -162,6 +163,14 @@ def main():
     parser_broadcast.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
     parser_broadcast.add_argument('--unsigned', action='store_true', required=False, help="Use this option to ensure the transaction is already signed, and will not be signed by the CLI wallett")
     # --------------------------------------------------------------
+    # --------------------------------------------------------------
+    parser_script = subparsers.add_parser('script', help="Set a script for the account, type 'lto script --help' for more informations")
+    parser_script.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the ride script as input: echo '$SCRIPT' | lto script")
+    parser_script.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored for signing the transaction. The account can be referenced by name or address, if this option is omitted, the default account is used")
+    parser_script.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
+    parser_script.add_argument('--no-broadcast', action='store_true', required=False, help="Use this option to not broadcast the transaction to the node")
+    parser_script.add_argument('--unsigned', action='store_true', required=False, help="Use this option to ensure the transaction is already signed, and will not be signed by the CLI wallett")
+    # --------------------------------------------------------------
     parser_lease = subparsers.add_parser('lease', help="Create a Lease Transaction, type 'lto lease --help' for more information")
     lease_subparser = parser_lease.add_subparsers(dest='subparser-name-lease')
 
@@ -299,6 +308,9 @@ def process_args(name_space, parser):
 
     elif vars(name_space)['subparser-name'] == 'broadcast':
         broadcast.func(name_space, parser)
+
+    elif vars(name_space)['subparser-name'] == 'script':
+        script.func(name_space, parser)
 
     elif vars(name_space)['subparser-name'] == 'balance':
         balance.func(name_space, parser)
