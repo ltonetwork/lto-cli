@@ -125,6 +125,13 @@ lto data get 3Jvtrp1GZ7r5J8SXXFqeKyH9GE5Q78meHzN
 lto data get --key foo
 ```
 
+
+### Script
+
+```
+echo $SCRIPT | lto script 
+```
+
 ## Common options
 
 ```
