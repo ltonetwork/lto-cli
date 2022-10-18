@@ -38,11 +38,14 @@ lto node status
 
 ### Broadcast
 
-Takes as input a transaction (signed or unsigned) and broadcast it to the network
+Takes as input a transaction, signs it and broadcast it to the network
 
 ```
 echo $TX_JSON | lto broadcast
 ```
+
+If the input transaction is already signed, a second signature is added, which can be used for a multisig smart account.
+To broadcast a signed transaction without adding a second signature use `--unsigned`.
 
 ### Balance
 
