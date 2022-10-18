@@ -17,10 +17,11 @@ def func(name_space, parser):
         if vars(name_space)['no_broadcast'] is False:
             transaction = transaction.broadcast_to(node)
     else:
-        if not transaction.proofs:
-            parser.error("Transaction needs to be signed before broadcasting, type 'lto broadcast --help' for instruction")
-        else:
-            if vars(name_space)['no_broadcast'] is False:
+        if vars(name_space)['no_broadcast'] is False:
+            if not transaction.proofs:
+                parser.error(
+                    "Transaction needs to be signed before broadcasting, type 'lto broadcast --help' for instruction")
+            else:
                 transaction = transaction.broadcast_to(node)
 
     handle.pretty_print(transaction)
