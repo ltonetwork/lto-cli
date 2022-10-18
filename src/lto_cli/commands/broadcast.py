@@ -12,10 +12,8 @@ def func(name_space, parser):
         parser.error("Expected transaction as input, type 'lto broadcast --help' for instructions")
 
     transaction = from_data(json.loads(tx_json))
-
     if vars(name_space)['unsigned'] is False:
-        if not transaction.proofs:
-            transaction.sign_with(handle.get_account(chain_id, parser, account_name))
+        transaction.sign_with(handle.get_account(chain_id, parser, account_name))
         if vars(name_space)['no_broadcast'] is False:
             transaction = transaction.broadcast_to(node)
     else:
