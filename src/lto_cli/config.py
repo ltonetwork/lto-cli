@@ -23,7 +23,7 @@ def write_to_file(chain_id, account, sec_name, parser):
     config.read(Path.joinpath(relative_path, 'accounts.ini'))
 
     if find_account_in_config(config=config, address=account.address, name=sec_name):
-        parser.error("An account with the same id is already present, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
+        parser.error("An account with the same id is already present, type 'lto account create --help' for instructions or 'lto account list' to visualize the previously stored accounts")
 
     config.add_section(sec_name)
     config.set(sec_name, 'Address', account.address)
@@ -72,7 +72,7 @@ def list_accounts(chain_id, parser):
     list = []
     local_path = Path.joinpath(path, chain_id, "accounts.ini")
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto accounts --help' for instructions".format(chain_id))
+        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
     else:
         config = ConfigParser()
         config.read(local_path)
@@ -112,7 +112,7 @@ def set_default_accounts(chain_id, name, parser):
     config = get_config_from_chain_id(chain_id)
     value = find_account_in_config(config, name=name)
     if not value:
-        parser.error("No account found with this id, type 'lto accounts create --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
+        parser.error("No account found with this id, type 'lto account create --help' for instructions or 'lto account list' to visualize the previously stored accounts")
 
     account = Account(seed=value[0], private_key=value[1], public_key=value[2], address=value[3])
     write_default_account(account, chain_id, change=True)
@@ -123,7 +123,7 @@ def remove_account(chain_id, name, parser):
     value = find_account_in_config(config, name=name)
 
     if not value:
-        parser.error("No account found with this id, type 'lto accounts remove --help' for instructions or 'lto accounts list' to visualize the previously stored accounts")
+        parser.error("No account found with this id, type 'lto account remove --help' for instructions or 'lto account list' to visualize the previously stored accounts")
 
     config.remove_section(get_section_name_from_address(config, value[3]))
     config.write(open(Path.joinpath(path, chain_id, 'accounts.ini'), 'w'))
@@ -168,7 +168,7 @@ def show(chain_id, id, parser):
     config = get_config_from_chain_id(chain_id)
     value = find_account_in_config(config, address=id, name=id)
     if not value:
-        parser.error("No matching account fo {}, type 'lto accounts --help' for instructions")
+        parser.error("No matching account fo {}, type 'lto account --help' for instructions")
 
     print('Name    : ', id) if id != value[3] else None
     print('Address : ', value[3])
