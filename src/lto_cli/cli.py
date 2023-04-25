@@ -293,7 +293,11 @@ def main():
     parser_burn.add_argument('--sponsor', type=str, nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
     # --------------------------------------------------------------
-    process_args(parser.parse_args(), parser, subparsers)
+    try:    
+      process_args(parser.parse_args(), parser, subparsers)
+    except Exception as e:
+      parser.error(e)
+
 
 def process_args(name_space, parser, subparsers):
     subcommand = vars(name_space)['subparser-name']

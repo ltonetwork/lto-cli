@@ -17,6 +17,8 @@ def func(name_space, parser):
             transaction.sponsor_with(handle.get_account(chain_id, parser, sponsor))
         if vars(name_space)['no_broadcast'] is False:
             transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
+    
     elif vars(name_space)['no_broadcast'] is False:
         parser.error("Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto transaction --help' for more informations ")
+    
     handle.pretty_print(transaction)
