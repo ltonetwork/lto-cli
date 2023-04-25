@@ -2,23 +2,20 @@ from lto_cli import handle_default as handle
 
 
 def print_balance(name_space, balances):
-    if vars(name_space)['regular'] is False and \
-            vars(name_space)['available'] is False and \
-            vars(name_space)['generating'] is False and \
-            vars(name_space)['effective'] is False:
-        print('Regular: ', balances['regular'] / 100000000,
-              '\nGenerating: ', balances['generating'] / 100000000,
-              '\nAvailable: ', balances['available'] / 100000000,
-              '\nEffective: ', balances['effective']/ 100000000,)
-    else:
-        if vars(name_space)['regular'] is True:
-            print('Regular: ', balances['regular'] / 100000000)
-        if vars(name_space)['generating'] is True:
-            print('Generating: ', balances['generating'] / 100000000)
-        if vars(name_space)['available'] is True:
-            print('Available: ', balances['available'] / 100000000)
-        if vars(name_space)['effective'] is True:
-            print('Effective: ', balances['effective'] / 100000000)
+    types = vars(name_space)['types']
+
+    if types is None or 'regular' in types:
+        print('Regular:   ', balances['regular'] / 100000000)
+    if types is None or 'available' in types:
+        print('Available: ', balances['available'] / 100000000)
+    if types is None or 'leasing' in types:
+        print('Leasing:   ', balances['leasing'] / 100000000)
+    if types is None or 'unbonding' in types:
+        print('Unbonding: ', balances['unbonding'] / 100000000)
+    if types is None or 'effective' in types:
+        print('Effective: ', balances['effective'] / 100000000)
+    if types is None or 'generating' in types:
+        print('Generating:', balances['generating'] / 100000000)
 
 
 def validate_address(address, node):

@@ -113,10 +113,12 @@ def main():
     parser_balance.add_argument('--account', type=str, nargs=1, required=False, help="The account can be identified by address or name. In addition, an address of an account not stored locally can also be used")
     parser_balance.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_balance.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
-    parser_balance.add_argument('--regular', action='store_true', required=False, help="Use this option to show the regular balance")
-    parser_balance.add_argument('--generating', action='store_true', required=False, help="Use this option to show the generating balance")
-    parser_balance.add_argument('--available', action='store_true', required=False, help="Use this option to show the available balance")
-    parser_balance.add_argument('--effective', action='store_true', required=False, help="Use this option to to show the effective balance")
+    parser_balance.add_argument('--regular', action='append_const', dest='types', const='regular', required=False, help="Use this option to show the regular balance")
+    parser_balance.add_argument('--available', action='append_const', dest='types', const='available', required=False, help="Use this option to show the available balance")
+    parser_balance.add_argument('--leasing', action='append_const', dest='types', const='leasing', required=False, help="Use this option to show the available balance")
+    parser_balance.add_argument('--unbonding', action='append_const', dest='types', const='unbonding', required=False, help="Use this option to show the available balance")
+    parser_balance.add_argument('--generating', action='append_const', dest='types', const='generating', required=False, help="Use this option to show the generating balance")
+    parser_balance.add_argument('--effective', action='append_const', dest='types', const='effective', required=False, help="Use this option to to show the effective balance")
 
     # --------------------------------------------------------------
     parser_anchor = subparsers.add_parser(name='anchor', help="Create an Anchor Transaction, type 'lto anchor --help' for more information")
