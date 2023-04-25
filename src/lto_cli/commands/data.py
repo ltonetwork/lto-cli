@@ -52,7 +52,7 @@ def data_get(name_space, parser):
                 print(x)
 
 
-def func(name_space, parser):
+def func(name_space, parser, subparser):
     if vars(name_space)['subparser-name-data'] == 'set':
         data_set(name_space, parser)
 
@@ -60,4 +60,5 @@ def func(name_space, parser):
         data_get(name_space, parser)
 
     else:
-        parser.error('Type lto data --help for instructions')
+        subparser.print_help()
+

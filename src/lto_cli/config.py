@@ -37,8 +37,8 @@ def write_to_file(chain_id, account, sec_name, parser):
 def find_account_in_config(config, address='', name=''):
     for sec in config.sections():
         if address == config.get(sec, 'address') or name == sec or name == config.get(sec, 'address'):
-            seed = config.get(sec, 'seed')
-            private_key = config.get(sec, 'private_key')
+            seed = config.get(sec, 'seed', fallback = '')
+            private_key = config.get(sec, 'private_key', fallback = '')
             public_key = config.get(sec, 'public_key')
             address = config.get(sec, 'address')
             return [seed, private_key, public_key, address]
@@ -170,12 +170,11 @@ def show(chain_id, id, parser):
     if not value:
         parser.error("No matching account fo {}, type 'lto account --help' for instructions")
 
-    print('Name    : ', id) if id != value[3] else None
-    print('Address : ', value[3])
-    print('Sign    :')
-    print('   SecretKey   : ', value[1])
-    print('   Public_key  : ', value[2])
-    print('Seed    : ', value[0])
+    print('Name        :', id) if id != value[3] else None
+    print('Address     :', value[3])
+    print('Public key  :', value[2])
+    print('Private key :', value[1] or '[unknown]')
+    print('Seed        :', value[0] or '[unknown]')
 
 
 def get_config_from_chain_id(chain_id):

@@ -37,14 +37,20 @@ def get_account(chain_id, parser, name=''):
     config = ConfigParser()
     config.read(local_path)
     if name:
-        if name in config.sections():
+        if not name in config.sections():
+            parser.error("No account found for {} network with name {}, use 'lto account list' to see all accounts".format(chain_id, name))
+        elif 'seed' in config[name]:
             return AccountFactory(chain_id).create_from_seed(config.get(name, 'seed'))
+        elif 'private_key' in config[name]:
+            return AccountFactory(chain_id).create_from_private_key(config.get(name, 'private_key'))
+        elif 'public_key' in config[name]:
+            return AccountFactory(chain_id).create_from_public_key(config.get(name, 'public_key'))
         else:
-            parser.error("No account found for {} network with name {}, type 'lto account --help' for instructions".format(chain_id, name))
+            parser.error("Invalid settings of account {}".format(name))
     else:
         local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
         if not os.path.exists(local_path):
-            parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
+            parser.error("No Default account set, type 'lto account set-default --help' for instructions".format(chain_id))
         config.clear()
         config.read(local_path)
         if not 'Default' in config.sections():

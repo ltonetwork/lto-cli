@@ -26,4 +26,3 @@ def func(name_space, parser):
 
     handle.pretty_print(transaction)
 
-

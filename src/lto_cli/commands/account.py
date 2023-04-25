@@ -3,9 +3,10 @@ from lto_cli import config
 from lto_cli import handle_default as handle
 
 
-def func(name_space, parser):
+def func(name_space, parser, subparser):
     if not vars(name_space)['subparser-name-account']:
-        parser.error('No option selected, type lto account --help for instructions')
+        subparser.print_help()
+        return
 
     chain_id = name_space.network[0] if name_space.network else 'L'
     chain_id = chain_id.upper() if not chain_id.isupper() else chain_id
