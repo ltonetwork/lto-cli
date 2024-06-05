@@ -21,7 +21,7 @@ lto [command] --help
 
 ```
 lto account create
-echo "my seed" | lto account seed
+read -s -p "Enter seed: " seed && echo $seed | lto account seed
 lto account list
 lto account set-default foobar
 lto account remove 3JuijVBB7NCwCz2Ae5HhCDsqCXzeBLRTyeL

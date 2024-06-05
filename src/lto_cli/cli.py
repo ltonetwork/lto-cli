@@ -101,8 +101,8 @@ def main():
     parser_show.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
     parser_show.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
 
-    parser_seed = account_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto account seed --help")
-    parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: echo 'my seed' | lto account seed")
+    parser_seed = account_subparser.add_parser('seed', help="Create an account from seed, for more information on how to pipe the seed type 'lto account seed --help'")
+    parser_seed.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the seeds as input: read -s -p 'Enter seed: ' seed && echo $seed | lto account seed")
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_seed.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
