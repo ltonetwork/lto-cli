@@ -3,6 +3,8 @@ python:
   - '3.8'
   - '3.9'
   - '3.10'
+dist: jammy
+
 env:
   global:
     - RECIPIENT=3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
