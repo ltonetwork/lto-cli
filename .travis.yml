@@ -2,6 +2,7 @@ language: python
 python:
   - '3.8'
   - '3.9'
+  - '3.10'
 env:
   global:
     - RECIPIENT=3MyGpJh6Bb8auF3HtSr2dSJjqQVxgqLynpK
@@ -20,7 +21,7 @@ install:
   - pip3 install --upgrade build
 before_script:
   - python3 -m build
-  - pip install dist/lto_cli*
+  - pip install dist/lto_cli*.whl
 script:
   - lto
   - lto account create
