@@ -18,10 +18,6 @@ def print_balance(name_space, balances):
         print('Generating:', balances['generating'] / 100000000)
 
 
-def validate_address(address, node):
-    return node.validate_address(address)
-
-
 def func(name_space, parser):
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
     address = name_space.address if name_space.address else None
@@ -29,7 +25,7 @@ def func(name_space, parser):
         address = name_space.account[0] if name_space.account else handle.get_account(chain_id, parser).address
     node = handle.get_node(chain_id, parser)
 
-    if validate_address(address, node):
+    if node.validate_address(address):
         balances = node.balance_details(address)
         print_balance(name_space, balances)
     else:

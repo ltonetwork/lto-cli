@@ -75,7 +75,7 @@ def list_accounts(chain_id, parser):
     list = []
     local_path = Path.joinpath(path, chain_id, "accounts.ini")
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
+        parser.error(f"No account found for {chain_id} network, type 'lto account --help' for instructions")
     else:
         config = ConfigParser()
         config.read(local_path)
@@ -99,7 +99,7 @@ def print_list_accounts(chain_id, parser):
     address = get_default_addr_from_chain_id(chain_id)
 
     for account in list_acc:
-        temp = ' * {}'.format(account[1]) if account[1] == address else '   {}'.format(account[1])
+        temp = (' * %s' if account[1] == address else '   %s') % account[1]
         if not account[0] == account[1]:
             print(temp, " - ", account[0])
         else:

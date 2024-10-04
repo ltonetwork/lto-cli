@@ -36,17 +36,17 @@ def data_get(name_space, parser):
         address = handle.get_account(chain_id, parser).address
     node = handle.get_node(chain_id, parser)
     if not node.validate_address(address):
-        parser.error('{} address is not valid'.format(address))
+        parser.error(f'{address} address is not valid')
     if key:
         value = node.get_data_by_key(address, key)
         if not value:
-            print('No data found for {}'.format(address))
+            print(f'No data found for {address}')
         else:
             print(value)
     else:
         value = node.get_data(address)
         if not value:
-            print('No data found for {}'.format(address))
+            print(f'No data found for {address}')
         else:
             for x in value:
                 print(x)

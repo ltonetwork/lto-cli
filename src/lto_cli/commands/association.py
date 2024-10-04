@@ -12,10 +12,13 @@ def func(name_space, parser, subparser):
         
     chain_id = handle.check(name_space.network[0], parser) if name_space.network else 'L'
     account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
+    node = handle.get_node(chain_id, parser)
+
     if vars(name_space)['subparser-name-association'] in ['issue','revoke']:
         sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
         association_type = name_space.type[0]
-        recipient = name_space.recipient[0]
+        recipient = name_space.recipient[0] if node.validate_address(name_space.recipient[0]) else handle.get_account(chain_id, parser, name_space.recipient[0]).address
+
         subject = ''
         if name_space.subject:
             subject = name_space.subject[0]
