@@ -21,7 +21,7 @@ def func(name_space, parser):
             transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
     elif vars(name_space)['no_broadcast'] is False:
         parser.error(
-            "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto mass-transfer --help' for more informations ")
+            "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto mass-transfer --help' for more information")
 
     handle.pretty_print(transaction)
 

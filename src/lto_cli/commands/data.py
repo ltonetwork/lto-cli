@@ -24,7 +24,7 @@ def data_set(name_space, parser):
     elif vars(name_space)['no_broadcast'] is False:
         parser.error(
             "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto anchor "
-            "--help' for more informations ")
+            "--help' for more information")
     handle.pretty_print(transaction)
 
 

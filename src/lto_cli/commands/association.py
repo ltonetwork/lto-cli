@@ -32,7 +32,7 @@ def func(name_space, parser, subparser):
                     transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
             elif vars(name_space)['no_broadcast'] is False:
                 parser.error(
-                    "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more informations ")
+                    "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association issue --help' for more information")
         else:  # revoke case
             transaction = RevokeAssociation(recipient=recipient, association_type=association_type, subject=decode(subject, "hex"))
             if vars(name_space)['unsigned'] is False:
@@ -44,7 +44,7 @@ def func(name_space, parser, subparser):
                     transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
             elif vars(name_space)['no_broadcast'] is False:
                 parser.error(
-                    "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association revoke --help' for more informations ")
+                    "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto association revoke --help' for more information")
         handle.pretty_print(transaction)
     else:
         node = handle.get_node(chain_id, parser)
