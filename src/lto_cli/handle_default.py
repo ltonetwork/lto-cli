@@ -4,6 +4,8 @@ import json
 import os
 
 from lto.accounts.ed25519.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
+from lto.crypto import validate_address as lto_validate_address
+
 from lto_cli import config as Config
 from lto.public_node import PublicNode
 
@@ -17,9 +19,9 @@ def pretty_print(transaction):
     print(json.dumps(transaction.to_json(), indent=2))
 
 def get_node(chain_id, parser):
-    local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
+    local_path = Path.joinpath(path, f"{chain_id}/config.ini")
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
+        parser.error(f"No account found for {chain_id} network, type 'lto account --help' for instructions")
     config = ConfigParser()
     config.read(local_path)
     if not 'Node' in config.sections():
@@ -29,16 +31,19 @@ def get_node(chain_id, parser):
 
 
 def get_account(chain_id, parser, name=''):
-    local_path = Path.joinpath(path, "{}/accounts.ini".format(chain_id))
+    local_path = Path.joinpath(path, f"{chain_id}/accounts.ini")
 
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
+        network = 'mainnet' if chain_id == 'L' else 'testnet' if chain_id == 'T' else f"network {chain_id}"
+        parser.error(f"No accounts for {network}")
 
     config = ConfigParser()
     config.read(local_path)
     if name:
         if not name in config.sections():
-            parser.error("No account found for {} network with name {}, use 'lto account list' to see all accounts".format(chain_id, name))
+            network = 'mainnet' if chain_id == 'L' else 'testnet' if chain_id == 'T' else f"network {chain_id}"
+            network_opt = '' if chain_id == 'L' else ' -T' if chain_id == 'T' else f" --network={chain_id}"
+            parser.error(f"No account '{name}' on {network}. Type 'lto account list{network_opt}' to list all accounts on {network}")
         elif 'seed' in config[name]:
             return AccountFactory(chain_id).create_from_seed(config.get(name, 'seed'))
         elif 'private_key' in config[name]:
@@ -46,11 +51,11 @@ def get_account(chain_id, parser, name=''):
         elif 'public_key' in config[name]:
             return AccountFactory(chain_id).create_from_public_key(config.get(name, 'public_key'))
         else:
-            parser.error("Invalid settings of account {}".format(name))
+            parser.error(f"Invalid settings of account {name}")
     else:
-        local_path = Path.joinpath(path, "{}/config.ini".format(chain_id))
+        local_path = Path.joinpath(path, f"{chain_id}/config.ini")
         if not os.path.exists(local_path):
-            parser.error("No Default account set, type 'lto account set-default --help' for instructions".format(chain_id))
+            parser.error("No Default account set, type 'lto account set-default --help' for instructions")
         config.clear()
         config.read(local_path)
         if not 'Default' in config.sections():
@@ -64,6 +69,18 @@ def get_account(chain_id, parser, name=''):
                 parser.error("Error with default account type 'lto account set-default --help' for instructions")
             else:
                 return AccountFactory(chain_id).create_from_seed(value[0])
+
+
+def get_address(chain_id, parser, account):
+    return account if validate_address(account) or not account else get_account(chain_id, parser, account).address
+
+
+def validate_address(address):
+    try:
+        lto_validate_address(address)
+        return True
+    except:
+        return False
 
 
 def check(chain_id, parser):

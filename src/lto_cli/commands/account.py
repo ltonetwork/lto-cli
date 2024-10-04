@@ -43,11 +43,12 @@ def func(name_space, parser, subparser):
         if not (chain_id.isalpha() and len(chain_id) == 1):
             parser.error('The --network parameter accepts only CHAR type')
         sec_name = name_space.name[0] if name_space.name else ''
+        nonce = name_space.nonce[0] if name_space.nonce else 0
         factory = AccountFactory(chain_id)
         seed = name_space.stdin.read().splitlines()
         if not seed:
             parser.error("Seed missing, type 'lto account seed --help' for instructions")
-        account = factory.create_from_seed(seed[0])
+        account = factory.create_from_seed(seed[0], nonce)
         config.write_to_file(chain_id, account, sec_name, parser)
         print(account.address)
 

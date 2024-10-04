@@ -30,6 +30,8 @@ def write_to_file(chain_id, account, sec_name, parser):
     config.set(sec_name, 'Public_key', base58.b58encode(account.public_key.__bytes__()))
     config.set(sec_name, 'Private_key', base58.b58encode(account.private_key.__bytes__()))
     config.set(sec_name, 'Seed', account.seed)
+    if account.nonce != 0:
+        config.set(sec_name, 'Nonce', str(account.nonce))
     config.write(open(Path.joinpath(relative_path, 'accounts.ini'), 'w'))
     write_default_account(account, chain_id)
 
@@ -38,10 +40,11 @@ def find_account_in_config(config, address='', name=''):
     for sec in config.sections():
         if address == config.get(sec, 'address') or name == sec or name == config.get(sec, 'address'):
             seed = config.get(sec, 'seed', fallback = '')
+            nonce = config.get(sec, 'nonce', fallback = '0')
             private_key = config.get(sec, 'private_key', fallback = '')
             public_key = config.get(sec, 'public_key')
             address = config.get(sec, 'address')
-            return [seed, private_key, public_key, address]
+            return [seed, private_key, public_key, address, int(nonce)]
     return False
 
 
@@ -72,7 +75,7 @@ def list_accounts(chain_id, parser):
     list = []
     local_path = Path.joinpath(path, chain_id, "accounts.ini")
     if not os.path.exists(local_path):
-        parser.error("No account found for {} network, type 'lto account --help' for instructions".format(chain_id))
+        parser.error(f"No account found for {chain_id} network, type 'lto account --help' for instructions")
     else:
         config = ConfigParser()
         config.read(local_path)
@@ -96,7 +99,7 @@ def print_list_accounts(chain_id, parser):
     address = get_default_addr_from_chain_id(chain_id)
 
     for account in list_acc:
-        temp = ' * {}'.format(account[1]) if account[1] == address else '   {}'.format(account[1])
+        temp = (' * %s' if account[1] == address else '   %s') % account[1]
         if not account[0] == account[1]:
             print(temp, " - ", account[0])
         else:
@@ -167,15 +170,19 @@ def set_node(name_space, parser):
 def show(chain_id, id, parser):
     config = get_config_from_chain_id(chain_id)
     value = find_account_in_config(config, address=id, name=id)
+
     if not value:
-        parser.error("No matching account fo {}, type 'lto account --help' for instructions")
+        network = 'mainnet' if chain_id == 'L' else 'testnet' if chain_id == 'T' else f"network {chain_id}"
+        network_opt = '' if chain_id == 'L' else ' -T' if chain_id == 'T' else f" --network={chain_id}"
+        parser.error(f"No account '{id}' on {network}. Type 'lto account list{network_opt}' to list all accounts on {network}")
 
     print('Name        :', id) if id != value[3] else None
     print('Address     :', value[3])
     print('Public key  :', value[2])
     print('Private key :', value[1] or '[unknown]')
     print('Seed        :', value[0] or '[unknown]')
-
+    if value[4]:
+        print('Nonce       :', str(value[4]))
 
 def get_config_from_chain_id(chain_id):
     config_file = Path.joinpath(path, chain_id, 'accounts.ini')

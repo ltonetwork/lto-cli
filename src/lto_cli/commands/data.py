@@ -1,9 +1,9 @@
 import json
 
-from lto.accounts.ed25519.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
-from lto_cli import config
 from lto_cli import handle_default as handle
 from lto.transactions.data import Data
+
+from lto_cli.handle_default import validate_address
 
 
 def data_set(name_space, parser):
@@ -24,7 +24,7 @@ def data_set(name_space, parser):
     elif vars(name_space)['no_broadcast'] is False:
         parser.error(
             "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto anchor "
-            "--help' for more informations ")
+            "--help' for more information")
     handle.pretty_print(transaction)
 
 
@@ -35,18 +35,18 @@ def data_get(name_space, parser):
     if not address:
         address = handle.get_account(chain_id, parser).address
     node = handle.get_node(chain_id, parser)
-    if not node.validate_address(address):
-        parser.error('{} address is not valid'.format(address))
+    if not validate_address(address):
+        parser.error(f'{address} address is not valid')
     if key:
         value = node.get_data_by_key(address, key)
         if not value:
-            print('No data found for {}'.format(address))
+            print(f'No data found for {address}')
         else:
             print(value)
     else:
         value = node.get_data(address)
         if not value:
-            print('No data found for {}'.format(address))
+            print(f'No data found for {address}')
         else:
             for x in value:
                 print(x)

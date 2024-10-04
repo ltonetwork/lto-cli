@@ -1,5 +1,6 @@
 import argparse
 import sys
+import os
 
 from lto_cli import config
 from lto_cli.commands import transfer
@@ -18,41 +19,23 @@ from lto_cli.commands import data
 from importlib_metadata import version
 
 # IF ERROR MODULE NOT FOUND:
-# export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
+# export PYTHONPATH=$PYTHONPATH:'pwd.../lto-cli/src'
 
 def main():
     config.check_directory()
+    dir = os.path.dirname(os.path.abspath(__file__))
 
-    parser = argparse.ArgumentParser(prog='lto', description=''
-'          _____       _____                    _______ \n'
-'         /\    \     /\    \                  /::\    \ \n'
-'        /::\____\   /::\    \                /::::\    \ \n'
-'       /:::/    /   \:::\    \              /::::::\    \ \n'
-'      /:::/    /     \:::\    \            /::::::::\    \ \n'
-'     /:::/    /       \:::\    \          /:::/~~\:::\    \ \n'
-'    /:::/    /         \:::\    \        /:::/    \:::\    \ \n'
-'   /:::/    /          /::::\    \      /:::/    / \:::\    \ \n'
-'  /:::/    /          /::::::\    \    /:::/____/   \:::\____\ \n'
-' /:::/    /          /:::/\:::\    \  |:::|    |     |:::|    | \n'
-'/:::/____/          /:::/  \:::\____\ |:::|____|     |:::|____| \n'
-'\:::\    \         /:::/    \::/    /  \:::\    \   /:::/    / \n'
-' \:::\    \       /:::/    / \/____/    \:::\    \ /:::/    / \n'
-'  \:::\    \     /:::/    /              \:::\    /:::/    / \n'
-'   \:::\    \   /:::/    /                \:::\__/:::/    / \n'
-'    \:::\    \  \::/    /                  \::::::::/    / \n'
-'     \:::\    \  \/____/                    \::::::/    / \n'
-'      \:::\    \                             \::::/    / \n'
-'       \:::\____\                             \::/____/ \n'
-'        \::/    /                               \n'
-'         \/____/ \n\n'
-                                                             'LTO Network CLI client, visit the github page for more information https://github.com/ltonetwork/lto-cli',
-                                     usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
+    # Read file header.txt
+    with open(os.path.join(dir, 'header.txt'), 'r') as file:
+        header = file.read()
+
+    parser = argparse.ArgumentParser(prog='lto', description=header, usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
 
     parser.add_argument('--version', action='store_true', required=False, help="Display the version of the package")
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
 
     # --------------------------------------------------------------
-    parser_data = subparsers.add_parser('data', help="Create a data transaction or get the data associated with one account, type 'lto data --help' for more informations")
+    parser_data = subparsers.add_parser('data', help="Create a data transaction or get the data associated with one account, type 'lto data --help' for more information")
     data_subparser = parser_data.add_subparsers(dest='subparser-name-data')
 
     parser_set = data_subparser.add_parser('set', help="Create a data transaction, for more information on how to pipe the data type 'lto data set --help")
@@ -72,10 +55,10 @@ def main():
     parser_get.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
 
     # --------------------------------------------------------------
-    parser_account = subparsers.add_parser('account', help="Create remove and manage accounts, type 'lto account --help' for more informations")
+    parser_account = subparsers.add_parser('account', help="Create remove and manage accounts, type 'lto account --help' for more information")
     account_subparser = parser_account.add_subparsers(dest='subparser-name-account')
 
-    parser_create = account_subparser.add_parser('create', help="Allow to create an account with two optional parameter, --name and --network")
+    parser_create = account_subparser.add_parser('create', help="Create an account")
     parser_create.add_argument('--name', required=False, type=str, nargs=1)
     parser_create.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
     parser_create.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
@@ -106,10 +89,11 @@ def main():
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_seed.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
+    parser_seed.add_argument('--nonce', type=int, nargs=1, required=False, help ='You can create multiple accounts from a single seed phrase, by passing a nonce. Only a numeric nonce is supported.')
 
     # --------------------------------------------------------------
     parser_balance = subparsers.add_parser('balance', help="Get the account balance, if not specified the default account is selected")
-    parser_balance.add_argument('address', nargs='?', type=str, help='Insert the desired account address')
+    parser_balance.add_argument('address', nargs='?', type=str, help='Insert the desired account address or name')
     parser_balance.add_argument('--account', type=str, nargs=1, required=False, help="The account can be identified by address or name. In addition, an address of an account not stored locally can also be used")
     parser_balance.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_balance.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
@@ -169,7 +153,7 @@ def main():
     parser_association_revoke.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
     # --------------------------------------------------------------
-    parser_broadcast = subparsers.add_parser('broadcast', help="Takes as input a transaction (signed or unsigned) and broadcast it to the network, type 'lto broadcast --help' for more informations")
+    parser_broadcast = subparsers.add_parser('broadcast', help="Takes as input a transaction (signed or unsigned) and broadcast it to the network, type 'lto broadcast --help' for more information")
     parser_broadcast.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the json transaction as input: echo '$TX_JSON' | lto broadcast")
     parser_broadcast.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored for signing the transaction. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_broadcast.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
@@ -178,7 +162,7 @@ def main():
     parser_broadcast.add_argument('--unsigned', action='store_true', required=False, help="Use this option to ensure the transaction is already signed, and will not be signed by the CLI wallett")
 
     # --------------------------------------------------------------
-    parser_script = subparsers.add_parser('script', help="Set a script for the account, type 'lto script --help' for more informations")
+    parser_script = subparsers.add_parser('script', help="Set a script for the account, type 'lto script --help' for more information")
     parser_script.add_argument('stdin', nargs='?', type=argparse.FileType('r'), default=sys.stdin, help="Takes the ride script as input: echo '$SCRIPT' | lto script")
     parser_script.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored for signing the transaction. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_script.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
@@ -285,7 +269,7 @@ def main():
     parser_transfer.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
     # --------------------------------------------------------------
-    parser_burn = subparsers.add_parser('burn', help="Create a Burn Transaction, type 'lto burn --help' for more informations")
+    parser_burn = subparsers.add_parser('burn', help="Create a Burn Transaction, type 'lto burn --help' for more information")
     parser_burn.add_argument('--amount', type=float, nargs=1, required=True, help="Specify the amounts of token to burn, 1 equals 1 LTO")
     parser_burn.add_argument('--account', type=str, nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_burn.add_argument('--network', type=str, nargs=1, required=False,  help='Optional network parameter, if not specified default is L')
