@@ -132,7 +132,7 @@ lto data get --key foo
 ### Script
 
 ```
-echo $SCRIPT | lto script 
+cat my_script | lto script 
 ```
 
 ## Common options
@@ -147,18 +147,16 @@ echo $SCRIPT | lto script
 
 #### `--network`
 
-Use `--network T` to use testnet instead of mainnet. You need to setup accounts specifically for testnet.
+Use `--network T` or `-T` to use testnet instead of mainnet. You need to set up accounts specifically for testnet.
 
 #### `--account`
 
 Select one of the accounts configured during setup. The account can be referenced by name or address. The name is only known locally.
-If this option is omited, the default account is used.
+If this option is omitted, the default account is used.
 
 #### `--sponsor`
 
 Choose an account to sponsor the transaction. The sponsor will co-sign the transaction and pay the transaction fee.
-
-_This feature is not yet available as it requires the Cobalt update to be activated._
 
 #### `--no-broadcast`
 
