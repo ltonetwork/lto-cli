@@ -44,25 +44,24 @@ def func(name_space, parser, subparser):
         node = handle.get_node(chain_id, parser)
         address = handle.get_account(chain_id, parser, account_name).address
         value = node.lease_list(address)
-        flag = 0
-        for x in value:
-            if x['sender'] == address:  # outbound
-                print(x['recipient'], ':', x['amount'] /100000000)
-                flag +=1
-        if flag == 0:
-            print("No outbound leases")
+        items = [(x['recipient'], x['amount'] / 100000000, x['id']) for x in value if x['sender'] == address]
+        _print_list(items)
+
 
     elif vars(name_space)['subparser-name-lease'] == 'in':
         node = handle.get_node(chain_id, parser)
         address = handle.get_account(chain_id, parser, account_name).address
         value = node.lease_list(address)
-        flag = 0
-        for x in value:
-            if x['recipient'] == address:  # inbound
-                print(x['sender'], ':', x['amount'] / 100000000)
-                flag +=1
-        if flag == 0:
-            print("No inbound leases")
+        items = [(x['sender'], x['amount'] / 100000000, x['id']) for x in value if x['recipient'] == address]
+        _print_list(items)
 
     else:
         parser.error("Unknown command. Type 'lto lease --help' for more information.")
+
+def _print_list(items):
+    if len(items) > 0:
+        width = len('%d' % max(x[1] for x in items)) + 3
+        for x in items:
+            print(x[0], (f"%{width}.2f") % x[1], f"( {x[2]} )")
+    else:
+        print("No outbound leases")
