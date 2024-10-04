@@ -47,12 +47,12 @@ def func(name_space, parser, subparser):
         flag = 0
         for x in value:
             if x['sender'] == address:  # outbound
-                print(x['sender'], ':', x['amount'] /100000000)
+                print(x['recipient'], ':', x['amount'] /100000000)
                 flag +=1
         if flag == 0:
             print("No outbound leases")
 
-    else:  # out
+    elif vars(name_space)['subparser-name-lease'] == 'in':
         node = handle.get_node(chain_id, parser)
         address = handle.get_account(chain_id, parser, account_name).address
         value = node.lease_list(address)
@@ -64,3 +64,5 @@ def func(name_space, parser, subparser):
         if flag == 0:
             print("No inbound leases")
 
+    else:
+        parser.error("Unknown command. Type 'lto lease --help' for more information.")
