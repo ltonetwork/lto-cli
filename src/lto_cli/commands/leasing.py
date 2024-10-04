@@ -12,8 +12,9 @@ def func(name_space, parser, subparser):
     account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
 
     if vars(name_space)['subparser-name-lease'] == 'create':
+        recipient = handle.get_address(chain_id, parser, name_space.recipient[0])
         sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
-        transaction = Lease(recipient=name_space.recipient[0], amount=int(name_space.amount[0] * 100000000))
+        transaction = Lease(recipient=recipient, amount=int(name_space.amount[0] * 100000000))
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
             if sponsor:

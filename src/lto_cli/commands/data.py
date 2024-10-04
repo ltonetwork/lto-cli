@@ -1,9 +1,9 @@
 import json
 
-from lto.accounts.ed25519.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
-from lto_cli import config
 from lto_cli import handle_default as handle
 from lto.transactions.data import Data
+
+from lto_cli.handle_default import validate_address
 
 
 def data_set(name_space, parser):
@@ -35,7 +35,7 @@ def data_get(name_space, parser):
     if not address:
         address = handle.get_account(chain_id, parser).address
     node = handle.get_node(chain_id, parser)
-    if not node.validate_address(address):
+    if not validate_address(address):
         parser.error(f'{address} address is not valid')
     if key:
         value = node.get_data_by_key(address, key)

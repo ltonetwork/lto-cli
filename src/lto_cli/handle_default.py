@@ -4,6 +4,8 @@ import json
 import os
 
 from lto.accounts.ed25519.account_factory_ed25519 import AccountFactoryED25519 as AccountFactory
+from lto.crypto import validate_address as lto_validate_address
+
 from lto_cli import config as Config
 from lto.public_node import PublicNode
 
@@ -67,6 +69,18 @@ def get_account(chain_id, parser, name=''):
                 parser.error("Error with default account type 'lto account set-default --help' for instructions")
             else:
                 return AccountFactory(chain_id).create_from_seed(value[0])
+
+
+def get_address(chain_id, parser, account):
+    return account if validate_address(account) or not account else get_account(chain_id, parser, account).address
+
+
+def validate_address(address):
+    try:
+        lto_validate_address(address)
+        return True
+    except:
+        return False
 
 
 def check(chain_id, parser):

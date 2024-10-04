@@ -12,10 +12,11 @@ def func(name_space, parser, subparser):
     account_name = vars(name_space)['account'][0] if vars(name_space)['account'] else ''
 
     if vars(name_space)['subparser-name-sponsorship'] == 'create':
-        sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
-        transaction = Sponsorship(name_space.recipient[0])
+        recipient = handle.get_address(chain_id, parser, name_space.recipient[0])
+        transaction = Sponsorship(recipient)
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
+            sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
             if sponsor:
                 transaction.sponsor_with(handle.get_account(chain_id, parser, sponsor))
             if vars(name_space)['no_broadcast'] is False:
@@ -26,10 +27,11 @@ def func(name_space, parser, subparser):
         handle.pretty_print(transaction)
 
     elif vars(name_space)['subparser-name-sponsorship'] == 'cancel':
-        sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
-        transaction = CancelSponsorship(name_space.recipient[0])
+        recipient = handle.get_address(chain_id, parser, name_space.recipient[0])
+        transaction = CancelSponsorship(recipient)
         if vars(name_space)['unsigned'] is False:
             transaction.sign_with(handle.get_account(chain_id, parser, account_name))
+            sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
             if sponsor:
                 transaction.sponsor_with(handle.get_account(chain_id, parser, sponsor))
             if vars(name_space)['no_broadcast'] is False:
@@ -40,7 +42,7 @@ def func(name_space, parser, subparser):
         handle.pretty_print(transaction)
 
     elif vars(name_space)['subparser-name-sponsorship'] == 'out':
-        pass
+        parser.error("Listing outbound sponsorships is not supported")
 
     else:  # inbound
         node = handle.get_node(chain_id, parser)
