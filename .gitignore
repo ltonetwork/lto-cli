@@ -16,3 +16,4 @@ __pycache__/
 /test.txt
 /test.txt
 /src/lto_cli/testing.py
+Pipfile.lock

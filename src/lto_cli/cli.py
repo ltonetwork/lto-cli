@@ -1,5 +1,6 @@
 import argparse
 import sys
+import os
 
 from lto_cli import config
 from lto_cli.commands import transfer
@@ -18,35 +19,17 @@ from lto_cli.commands import data
 from importlib_metadata import version
 
 # IF ERROR MODULE NOT FOUND:
-# export PYTHONPATH=$PYTHONPATH:'pwd.../lto-api.python'
+# export PYTHONPATH=$PYTHONPATH:'pwd.../lto-cli/src'
 
 def main():
     config.check_directory()
+    dir = os.path.dirname(os.path.abspath(__file__))
 
-    parser = argparse.ArgumentParser(prog='lto', description=''
-'          _____       _____                    _______ \n'
-'         /\    \     /\    \                  /::\    \ \n'
-'        /::\____\   /::\    \                /::::\    \ \n'
-'       /:::/    /   \:::\    \              /::::::\    \ \n'
-'      /:::/    /     \:::\    \            /::::::::\    \ \n'
-'     /:::/    /       \:::\    \          /:::/~~\:::\    \ \n'
-'    /:::/    /         \:::\    \        /:::/    \:::\    \ \n'
-'   /:::/    /          /::::\    \      /:::/    / \:::\    \ \n'
-'  /:::/    /          /::::::\    \    /:::/____/   \:::\____\ \n'
-' /:::/    /          /:::/\:::\    \  |:::|    |     |:::|    | \n'
-'/:::/____/          /:::/  \:::\____\ |:::|____|     |:::|____| \n'
-'\:::\    \         /:::/    \::/    /  \:::\    \   /:::/    / \n'
-' \:::\    \       /:::/    / \/____/    \:::\    \ /:::/    / \n'
-'  \:::\    \     /:::/    /              \:::\    /:::/    / \n'
-'   \:::\    \   /:::/    /                \:::\__/:::/    / \n'
-'    \:::\    \  \::/    /                  \::::::::/    / \n'
-'     \:::\    \  \/____/                    \::::::/    / \n'
-'      \:::\    \                             \::::/    / \n'
-'       \:::\____\                             \::/____/ \n'
-'        \::/    /                               \n'
-'         \/____/ \n\n'
-                                                             'LTO Network CLI client, visit the github page for more information https://github.com/ltonetwork/lto-cli',
-                                     usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
+    # Read file header.txt
+    with open(os.path.join(dir, 'header.txt'), 'r') as file:
+        header = file.read()
+
+    parser = argparse.ArgumentParser(prog='lto', description=header, usage=argparse.SUPPRESS, formatter_class=argparse.RawDescriptionHelpFormatter)
 
     parser.add_argument('--version', action='store_true', required=False, help="Display the version of the package")
     subparsers = parser.add_subparsers(dest='subparser-name', help='sub-command help')
@@ -106,7 +89,7 @@ def main():
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_seed.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
-    parser_seed.add_argument('--nonce', '', type=int, nargs=1, required=False, help ='You can create multiple accounts from a single seed phrase, by passing a nonce. Only a numeric nonce is supported.')
+    parser_seed.add_argument('--nonce', type=int, nargs=1, required=False, help ='You can create multiple accounts from a single seed phrase, by passing a nonce. Only a numeric nonce is supported.')
 
     # --------------------------------------------------------------
     parser_balance = subparsers.add_parser('balance', help="Get the account balance, if not specified the default account is selected")
