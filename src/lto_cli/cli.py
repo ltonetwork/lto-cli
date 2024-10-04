@@ -75,7 +75,7 @@ def main():
     parser_account = subparsers.add_parser('account', help="Create remove and manage accounts, type 'lto account --help' for more informations")
     account_subparser = parser_account.add_subparsers(dest='subparser-name-account')
 
-    parser_create = account_subparser.add_parser('create', help="Allow to create an account with two optional parameter, --name and --network")
+    parser_create = account_subparser.add_parser('create', help="Create an account")
     parser_create.add_argument('--name', required=False, type=str, nargs=1)
     parser_create.add_argument('--network', type=str, nargs=1, required=False, help='Optional network parameter, if not specified default is L')
     parser_create.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
@@ -106,6 +106,7 @@ def main():
     parser_seed.add_argument('--name', required=False, type=str, nargs=1)
     parser_seed.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_seed.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')
+    parser_seed.add_argument('--nonce', '', type=int, nargs=1, required=False, help ='You can create multiple accounts from a single seed phrase, by passing a nonce. Only a numeric nonce is supported.')
 
     # --------------------------------------------------------------
     parser_balance = subparsers.add_parser('balance', help="Get the account balance, if not specified the default account is selected")
