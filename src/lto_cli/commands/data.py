@@ -38,13 +38,13 @@ def data_get(name_space, parser):
     if not validate_address(address):
         parser.error(f'{address} address is not valid')
     if key:
-        value = node.get_data_by_key(address, key)
+        value = node.data_by_key(address, key)
         if not value:
             print(f'No data found for {address}')
         else:
             print(value)
     else:
-        value = node.get_data(address)
+        value = node.data(address)
         if not value:
             print(f'No data found for {address}')
         else:
