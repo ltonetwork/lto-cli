@@ -9,25 +9,29 @@ from lto.crypto import validate_address as lto_validate_address
 from lto_cli import config as Config
 from lto.public_node import PublicNode
 
-
-CHAIN_ID = 'L'
-URL = 'https://nodes.lto.network'
-
 path = Path.joinpath(Path.home(), '.lto')
 
 def pretty_print(transaction):
     print(json.dumps(transaction.to_json(), indent=2))
 
 def get_node(chain_id, parser):
+    node_url = ""
     local_path = Path.joinpath(path, f"{chain_id}/config.ini")
-    if not os.path.exists(local_path):
-        parser.error(f"No account found for {chain_id} network, type 'lto account --help' for instructions")
-    config = ConfigParser()
-    config.read(local_path)
-    if not 'Node' in config.sections():
-        parser.error("No node set for this network, type 'lto set-node --help' for instructions")
-    else:
-        return PublicNode(config.get('Node', 'url'))
+
+    if os.path.exists(local_path):
+        config = ConfigParser()
+        config.read(local_path)
+        if 'Node' in config.sections():
+            node_url = config.get('Node', 'url')
+    elif chain_id == 'L':
+        node_url = Config.DEFAULT_URL_MAINNET
+    elif chain_id == 'T':
+        node_url = Config.DEFAULT_URL_TESTNET
+
+    if node_url == "":
+        parser.error(f"No node set for network {chain_id}, type 'lto set-node --help' for instructions")
+
+    return PublicNode(node_url)
 
 
 def get_account(chain_id, parser, name=''):
