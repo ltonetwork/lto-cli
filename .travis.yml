@@ -60,12 +60,14 @@ jobs:
       before_script: skip
       script:
         - python3 -m build
+      before_deploy:
+        - touch setup.py
       deploy:
         provider: pypi
+        edge: true
         username: __token__
         password:
           secure: "oHTDZ5tdtwMGJLMEa1LFzv0YLtQ6prodprgTSQ5KdqaPgDvqWMWbMLxnDXWt5Ft/cXVAcyTygEvAMNBQwBo+OB0pygMrlQbfHUKbCahOxBxS9guK2cQKqRWGkj/5AdRyA9QtZOrTbKUH7lTpslHvannz/dwQPqAyG6B4gdMnW34gAe9iP77GPVbOcjwqjBvVqwisoUWcZBBYxe5suWcQi8v2ARA89ECr/UkSmuQP+y4l9ymsLoIzGpMZ9AOaB12kHC9GxwzbxQ6zT4YendGvDPsswWO2rjOcNCOYQgLTlBuxAUYRsO1KGGLRwY2z3PdJXxeUXdY70FEDYq/5B/2oyCQ1YOsevRm0I+0oV1+8Y/r/E8eTgd7NbDozJmHeRm6FfFio6FGjJ4nGMNtmLRAdTXASqyKUacpqLFXd2/bM1UrtVMdBVw+COY5ED2L0549M8hZ52alPa1vMfen+IxJ06zBsLqjz7nn/98JHyXZu9C3HscBL3jTLPTPYd1VXZaabVybY9wH49yVzPqIpNjVy7z8PhhfNoywufVuSraO3/Tm8BessFc0Clt/tjT/4VFRFGGm9CLSO+lfyiZD2TOBbwxeWkNV6ooOf3NgbXKpMURuOujSlar+gxF6O3c5xdSVz9YD3KE1YVByFEkHvQbFC7jDQxFN5yNtgsyw6eBXoAC0="
         on:
           tags: true
-        skip_cleanup: true
         cleanup: false
