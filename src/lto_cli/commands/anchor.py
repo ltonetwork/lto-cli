@@ -46,8 +46,7 @@ def func(name_space, parser):
         parser.error("Unsupported hashing algorithm")
     if unsigned and not no_broadcast:
         parser.error(
-            "Use the '--unsigned' option only in combination with the '--no-broadcast' option. Type 'lto anchor "
-            "--help' for more information")
+            "Use '--unsigned' only in combination with '--no-broadcast'. Type 'lto anchor --help' for more information")
 
     if data:
         method = algorithms[algo] if algo else hashlib.sha256
@@ -65,12 +64,5 @@ def func(name_space, parser):
             anchors.append(crypto.decode(x[0], encoding))
         transaction = Anchor(*anchors)
 
-
-    if not unsigned:
-        transaction.sign_with(handle.get_account(chain_id, parser, account_name))
-        if sponsor:
-            transaction.sponsor_with(handle.get_account(chain_id, parser, sponsor))
-        if not no_broadcast:
-            transaction = transaction.broadcast_to(handle.get_node(chain_id, parser))
-
+    transaction = handle.sign_and_broadcast(chain_id, parser, transaction, unsigned, no_broadcast, account_name, sponsor)
     handle.pretty_print(transaction)

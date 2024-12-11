@@ -89,6 +89,21 @@ def validate_address(address):
 
 def check(chain_id, parser):
     if not (chain_id.isalpha() and len(chain_id) == 1):
-        parser.error('The --network parameter accepts only CHAR type')
+        parser.error('The --network parameter should be a single character (L for mainnet, T for testnet)')
     return chain_id.upper() if not chain_id.isupper() else chain_id
 
+def sign_and_broadcast(chain_id, parser, transaction, unsigned, no_broadcast, account_name, sponsor):
+    if not unsigned:
+        transaction.sign_with(get_account(chain_id, parser, account_name))
+        if sponsor:
+            transaction.sponsor_with(get_account(chain_id, parser, sponsor))
+    else:
+        if account_name:
+            transaction.sender = get_account(chain_id, parser, account_name).address
+        if sponsor:
+            transaction.sponsor = get_account(chain_id, parser, sponsor).address
+
+    if not no_broadcast:
+        transaction = transaction.broadcast_to(get_node(chain_id, parser))
+
+    return transaction
