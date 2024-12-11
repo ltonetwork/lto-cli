@@ -183,8 +183,8 @@ def main():
     parser_lease_create.add_argument('--unsigned', action='store_true', required=False, help="Use this option to not sign the transaction. Use in combination with the '--no-broadcast' option")
     parser_lease_create.add_argument('--sponsor', type=str , nargs=1, required=False, help="Use this option to select an account for sponsoring the transaction")
 
-    parser_lease_cancel = lease_subparser.add_parser('cancel', help="To cancel a lease --leaseId is required")
-    parser_lease_cancel.add_argument('--leaseId', type=str, nargs=1, required=True)
+    parser_lease_cancel = lease_subparser.add_parser('cancel', help="To cancel a lease, --lease-id is required")
+    parser_lease_cancel.add_argument('--lease-id', type=str, nargs=1, required=True)
     parser_lease_cancel.add_argument('--account', type=str , nargs=1, required=False, help="Use this option to select one of the accounts previously stored. The account can be referenced by name or address, if this option is omitted, the default account is used")
     parser_lease_cancel.add_argument('--network', type=str, nargs=1, required=False, help ='Optional network parameter, if not specified default is L')
     parser_lease_cancel.add_argument('--testnet', '-T', action='store_const', dest='network', const='T', required=False, help='Short for --network=T')

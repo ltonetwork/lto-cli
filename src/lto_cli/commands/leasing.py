@@ -27,7 +27,7 @@ def func_cancel(name_space, parser):
     sponsor = vars(name_space)['sponsor'][0] if vars(name_space)['sponsor'] else None
     unsigned = vars(name_space)['unsigned']
     no_broadcast = vars(name_space)['no_broadcast']
-    lease_id = name_space.leaseId[0]
+    lease_id = name_space.lease_id[0]
 
     if unsigned and not no_broadcast:
         parser.error("Use '--unsigned' only in combination with '--no-broadcast'. Type 'lto lease cancel --help' for more information")
